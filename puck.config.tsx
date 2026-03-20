@@ -38,6 +38,18 @@ type Props = {
     size: 'default' | 'lg' | 'sm';
   };
   CompleteScormButtonBlock: { content: string; alignment: 'left' | 'center' | 'right' };
+  Section: {
+    backgroundImage: string;
+    imagePosition: 'left' | 'center' | 'right';
+    paddingTop: number;
+    paddingBottom: number;
+    slot: any;
+  };
+  Embed: {
+    embedCode: string;
+    width: string;
+    height: string;
+  };
 };
 
 const isEditing = process.env.NODE_ENV === 'development';
@@ -45,7 +57,7 @@ const isEditing = process.env.NODE_ENV === 'development';
 export const config: Config<Props> = {
   categories: {
     layout: {
-      components: ['Container', 'Grid'],
+      components: ['Section', 'Container', 'Grid'],
     },
     typography: {
       components: ['Text', 'RichText', 'Html'],
@@ -179,6 +191,7 @@ export const config: Config<Props> = {
         },
         slot: {
           type: 'slot',
+          disallow: ['Container'],
         },
       },
       defaultProps: {
@@ -188,7 +201,7 @@ export const config: Config<Props> = {
       render: ({ variant, slot: Slot }) => {
         return (
           <Container maxWidth={variant}>
-            <Slot />
+            <Slot className={isEditing ? 'p-6' : ''} />
           </Container>
         );
       },
@@ -205,6 +218,7 @@ export const config: Config<Props> = {
     },
     // RichText
     RichText: {
+      label: 'Rich Text',
       fields: {
         content: {
           type: 'richtext',
@@ -220,6 +234,30 @@ export const config: Config<Props> = {
               {children}
 
               <RichTextMenu.Group>
+                {/* Simple red color selector */}
+                <button
+                  onClick={() => {
+                    editor
+                      ?.chain()
+                      .focus()
+                      .extendMarkRange('textStyle')
+                      .setMark('textStyle', {
+                        style: 'color: #ff0000',
+                      })
+                      .run();
+                  }}
+                  style={{
+                    marginLeft: '8px',
+                    padding: '4px 8px',
+                    background: '#ff0000',
+                    color: 'white',
+                    borderRadius: '4px',
+                    border: 'none',
+                  }}
+                >
+                  🔴
+                </button>
+
                 <button
                   onClick={() => {
                     const url = prompt('Digite a URL');
@@ -314,7 +352,11 @@ export const config: Config<Props> = {
             variant={variant}
           >
             {content}
-            {Slot && Slot.length > 0 ? <Slot /> : <div style={{ height: '20px' }} />}
+            {Slot && Slot.length > 0 ? (
+              <Slot className={isEditing ? 'p-6' : ''} />
+            ) : (
+              <div style={{ height: '20px' }} />
+            )}
           </MainCard>
         );
       },
@@ -428,32 +470,32 @@ export const config: Config<Props> = {
       }) => {
         const gridConfigs = {
           '1/1': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6',
+            containerClass: ' grid grid-cols-1 gap-6',
             spans: [12],
             slots: [Col1],
           },
           '1/2-1/2': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6 md:grid-cols-12',
+            containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
             spans: [6, 6],
             slots: [Col1, Col2],
           },
           '1/3-2/3': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6 md:grid-cols-12',
+            containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
             spans: [4, 8],
             slots: [Col1, Col2],
           },
           '2/3-1/3': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6 md:grid-cols-12',
+            containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
             spans: [8, 4],
             slots: [Col1, Col2],
           },
           '1/3-1/3-1/3': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6 md:grid-cols-12',
+            containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
             spans: [4, 4, 4],
             slots: [Col1, Col2, Col3],
           },
           '1/4-1/4-1/4-1/4': {
-            containerClass: 'mt-10 grid grid-cols-1 gap-6 md:grid-cols-12',
+            containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
             spans: [3, 3, 3, 3],
             slots: [Col1, Col2, Col3, Col4],
           },
@@ -470,13 +512,121 @@ export const config: Config<Props> = {
 
         return (
           <div
-            className={`${isEditing && 'py-4'} ${config.containerClass} ${alignmentClasses[alignment]}`}
+            className={`${isEditing && 'py-4'} mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
           >
             {config.slots.map((Slot, index) => (
               <div key={index} className={`md:col-span-${config.spans[index]}`}>
-                <Slot />
+                <Slot className={isEditing ? 'p-6' : ''} />
               </div>
             ))}
+          </div>
+        );
+      },
+    },
+
+    // Section
+    Section: {
+      fields: {
+        // 🖼️ background image
+        backgroundImage: {
+          type: 'text', // pode trocar por image field depois
+          label: 'Background Image URL',
+        },
+
+        // ↔️ posição da imagem
+        imagePosition: {
+          type: 'radio',
+          label: 'Image Position',
+          options: [
+            { label: 'Left', value: 'left' },
+            { label: 'Center', value: 'center' },
+            { label: 'Right', value: 'right' },
+          ],
+        },
+
+        // 📏 padding
+        paddingTop: {
+          type: 'number',
+          label: 'Padding Top',
+        },
+        paddingBottom: {
+          type: 'number',
+          label: 'Padding Bottom',
+        },
+
+        slot: {
+          type: 'slot',
+          disallow: ['Section'],
+        },
+      },
+
+      defaultProps: {
+        backgroundImage: '',
+        imagePosition: 'center',
+        paddingTop: 80,
+        paddingBottom: 80,
+        slot: [],
+      },
+
+      render: ({ backgroundImage, imagePosition, paddingTop, paddingBottom, slot: Slot }) => {
+        return (
+          <section
+            style={{
+              paddingTop: `${paddingTop}px`,
+              paddingBottom: `${paddingBottom}px`,
+              backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+              backgroundPosition: imagePosition,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+            <Slot className={isEditing ? 'p-6' : ''} />
+          </section>
+        );
+      },
+    },
+
+    // Embed
+    Embed: {
+      fields: {
+        embedCode: {
+          type: 'textarea',
+          label: 'Embed (iframe ou script)',
+        },
+
+        width: {
+          type: 'text',
+          label: 'Width',
+        },
+
+        height: {
+          type: 'text',
+          label: 'Height',
+        },
+      },
+
+      defaultProps: {
+        embedCode: '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" />',
+        width: '100%',
+        height: '400px',
+      },
+
+      render: ({ embedCode, width, height }) => {
+        return (
+          <div
+            style={{
+              width,
+              height,
+              position: 'relative',
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+              dangerouslySetInnerHTML={{ __html: embedCode }}
+            />
           </div>
         );
       },
