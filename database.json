@@ -1,0 +1,48 @@
+{
+  "root": {
+    "props": {}
+  },
+  "content": [
+    {
+      "type": "Container",
+      "props": {
+        "slot": [
+          {
+            "type": "Grid",
+            "props": {
+              "col-4": [],
+              "col-3": [],
+              "col-2": [
+                {
+                  "type": "Card",
+                  "props": {
+                    "title": "Topic Title",
+                    "description": "Topic description...",
+                    "padding": 16,
+                    "id": "Card-89e1e16d-063a-4b64-9db6-508c70dcda52"
+                  }
+                }
+              ],
+              "col-1": [
+                {
+                  "type": "Card",
+                  "props": {
+                    "title": "Topic Title",
+                    "description": "Topic description...",
+                    "padding": 16,
+                    "id": "Card-3f985174-1931-46c9-a4fb-99f105532a58"
+                  }
+                }
+              ],
+              "columnFormat": "1/2-1/2",
+              "id": "Grid-be7cc165-84fa-4ed9-b5c0-5256e0511f19"
+            }
+          }
+        ],
+        "variant": 780,
+        "id": "Container-8860a2ab-0e59-4e0d-99a2-f1557cc4481e"
+      }
+    }
+  ],
+  "zones": {}
+}

@@ -1,0 +1,13 @@
+{
+  // The value "esbenp.prettier-vscode" specifies that the Prettier - Code formatter extension should be used.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // This setting specifies whether to format the document when it is saved.
+  "editor.formatOnSave": true,
+
+  // This setting specifies whether to organize imports when the document is saved.
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  }
+}
