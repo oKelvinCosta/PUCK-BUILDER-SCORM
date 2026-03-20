@@ -14,6 +14,43 @@
               "col-3": [],
               "col-2": [
                 {
+                  "type": "Img",
+                  "props": {
+                    "id": "Img-81b5e757-b7cf-4193-934e-9c0be6cb9e56",
+                    "rounded": true
+                  }
+                }
+              ],
+              "col-1": [
+                {
+                  "type": "RichText",
+                  "props": {
+                    "id": "RichText-eefbca7e-9fa8-4636-a066-9046f65062a3",
+                    "content": "<h3>A grande montanha</h3><p>Mussum Ipsum, cacilds vidis litro abertis.  Diuretics paradis num copo é motivis de denguis. Mauris nec dolor in eros commodo tempor. </p>"
+                  }
+                }
+              ],
+              "columnFormat": "2/3-1/3",
+              "id": "Grid-f1389bbf-dd1f-4105-80d6-9d162ee5017e",
+              "alignment": "center"
+            }
+          }
+        ],
+        "variant": 780,
+        "id": "Container-aa87a75f-5152-432d-95ca-c22418b8b370"
+      }
+    },
+    {
+      "type": "Container",
+      "props": {
+        "slot": [
+          {
+            "type": "Grid",
+            "props": {
+              "col-4": [],
+              "col-3": [],
+              "col-2": [
+                {
                   "type": "Card",
                   "props": {
                     "title": "Topic Title",
@@ -41,6 +78,13 @@
         ],
         "variant": 780,
         "id": "Container-8860a2ab-0e59-4e0d-99a2-f1557cc4481e"
+      }
+    },
+    {
+      "type": "Img",
+      "props": {
+        "rounded": false,
+        "id": "Img-356833e2-962d-4ac5-9655-8ff93dcdb931"
       }
     }
   ],

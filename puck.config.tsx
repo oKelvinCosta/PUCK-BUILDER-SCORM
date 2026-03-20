@@ -1,4 +1,5 @@
 import Container from '@/components/container';
+import Img from '@/components/img';
 import { RichTextMenu, type Config } from '@puckeditor/core';
 import Emoji, { gitHubEmojis } from '@tiptap/extension-emoji';
 import Image from '@tiptap/extension-image';
@@ -9,8 +10,10 @@ type Props = {
   RichText: { content: any };
   Html: { content: string };
   Card: { title: string; description: string; padding: number };
+  Img: { rounded: boolean };
   Grid: {
     columnFormat: '1/1' | '1/2-1/2' | '1/3-2/3' | '2/3-1/3' | '1/3-1/3-1/3' | '1/4-1/4-1/4-1/4';
+    alignment: 'top' | 'center' | 'bottom';
     'col-1': any;
     'col-2': any;
     'col-3': any;
@@ -28,6 +31,9 @@ export const config: Config<Props> = {
     },
     typography: {
       components: ['Text', 'RichText', 'Html'],
+    },
+    media: {
+      components: ['Img'],
     },
   },
   components: {
@@ -189,6 +195,29 @@ export const config: Config<Props> = {
       },
     },
 
+    // Img
+    Img: {
+      fields: {
+        rounded: {
+          type: 'radio',
+          options: [
+            { label: 'Normal', value: false },
+            { label: 'Rounded', value: true },
+          ],
+        },
+      },
+      defaultProps: {
+        rounded: false,
+      },
+      render: ({ rounded }) => (
+        <Img
+          src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop"
+          alt="Placeholder image"
+          isCircle={rounded}
+        />
+      ),
+    },
+
     // Grid
     Grid: {
       fields: {
@@ -201,6 +230,14 @@ export const config: Config<Props> = {
             { label: '2/3 1/3', value: '2/3-1/3' },
             { label: '1/3 1/3 1/3', value: '1/3-1/3-1/3' },
             { label: '1/4 1/4 1/4 1/4', value: '1/4-1/4-1/4-1/4' },
+          ],
+        },
+        alignment: {
+          type: 'radio',
+          options: [
+            { label: 'Top', value: 'top' },
+            { label: 'Center', value: 'center' },
+            { label: 'Bottom', value: 'bottom' },
           ],
         },
         'col-1': {
@@ -222,12 +259,20 @@ export const config: Config<Props> = {
       },
       defaultProps: {
         columnFormat: '1/2-1/2',
+        alignment: 'top',
         'col-1': [],
         'col-2': [],
         'col-3': [],
         'col-4': [],
       },
-      render: ({ columnFormat, 'col-1': Col1, 'col-2': Col2, 'col-3': Col3, 'col-4': Col4 }) => {
+      render: ({
+        columnFormat,
+        alignment,
+        'col-1': Col1,
+        'col-2': Col2,
+        'col-3': Col3,
+        'col-4': Col4,
+      }) => {
         const gridConfigs = {
           '1/1': {
             containerClass: 'mt-10 grid grid-cols-1 gap-6',
@@ -264,8 +309,16 @@ export const config: Config<Props> = {
         const config =
           gridConfigs[columnFormat as keyof typeof gridConfigs] || gridConfigs['1/2-1/2'];
 
+        const alignmentClasses = {
+          top: 'items-start',
+          center: 'items-center',
+          bottom: 'items-end',
+        };
+
         return (
-          <div className={`${isEditing && 'py-4'} ${config.containerClass}`}>
+          <div
+            className={`${isEditing && 'py-4'} ${config.containerClass} ${alignmentClasses[alignment]}`}
+          >
             {config.slots.map((Slot, index) => (
               <div key={index} className={`md:col-span-${config.spans[index]}`}>
                 <Slot />

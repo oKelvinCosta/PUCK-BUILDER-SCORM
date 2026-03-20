@@ -245,6 +245,15 @@ a {
   @apply font-semibold;
 }
 
+/* LISTS ----------------------------------------------------------- */
+ul {
+  @apply list-disc pl-4;
+}
+
+ol {
+  @apply list-decimal pl-4;
+}
+
 /* SIDEBAR COLLAPSE ------------------------------------------------
    Make the minimized (icon) sidebar truly vanish and reclaim space */
 @layer base {
