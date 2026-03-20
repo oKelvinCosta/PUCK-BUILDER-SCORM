@@ -1,15 +1,26 @@
+import CompleteScormButton from '@/components/complete-scorm-button';
 import Container from '@/components/container';
 import Img from '@/components/img';
+import MainCard from '@/components/main-card';
+import { Button } from '@/components/ui/button';
 import { RichTextMenu, type Config } from '@puckeditor/core';
-import Emoji, { gitHubEmojis } from '@tiptap/extension-emoji';
-import Image from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
 
 type Props = {
   Text: { content: string };
   RichText: { content: any };
   Html: { content: string };
-  Card: { title: string; description: string; padding: number };
+  Card: {
+    imgSrc?: string;
+    title?: string;
+    horizontal?: boolean;
+    side?: 'left' | 'right';
+    content?: any;
+    textSize?: 16 | 18 | 24;
+    variant?: 'default' | 'gray';
+    slot?: any[];
+  };
   Img: { rounded: boolean };
   Grid: {
     columnFormat: '1/1' | '1/2-1/2' | '1/3-2/3' | '2/3-1/3' | '1/3-1/3-1/3' | '1/4-1/4-1/4-1/4';
@@ -20,6 +31,13 @@ type Props = {
     'col-4': any;
   };
   Container: { variant: 1280 | 980 | 780 | 580; slot: any };
+  Button: {
+    content: string;
+    alignment: 'left' | 'center' | 'right';
+    variant: 'indigo' | 'gray' | 'lime' | 'red' | 'outline' | 'link';
+    size: 'default' | 'lg' | 'sm';
+  };
+  CompleteScormButtonBlock: { content: string; alignment: 'left' | 'center' | 'right' };
 };
 
 const isEditing = process.env.NODE_ENV === 'development';
@@ -35,8 +53,118 @@ export const config: Config<Props> = {
     media: {
       components: ['Img'],
     },
+    scorm: {
+      components: ['CompleteScormButtonBlock'],
+    },
   },
   components: {
+    // CompleteScormButton
+    CompleteScormButtonBlock: {
+      fields: {
+        content: {
+          type: 'text',
+        },
+        alignment: {
+          type: 'radio',
+          options: [
+            { label: 'left', value: 'left' },
+            { label: 'center', value: 'center' },
+            { label: 'right', value: 'right' },
+          ],
+        },
+      },
+      defaultProps: {
+        content: 'Button',
+        alignment: 'left',
+      },
+      render: ({ content, alignment }) => {
+        const alignmentClasses = {
+          left: 'mr-auto',
+          center: 'mx-auto',
+          right: 'ml-auto',
+        };
+        return <CompleteScormButton text={content} className={alignmentClasses[alignment]} />;
+      },
+    },
+    // Button
+    Button: {
+      fields: {
+        content: {
+          type: 'richtext',
+          renderMenu: ({ editor }) => (
+            <RichTextMenu>
+              <RichTextMenu.Group>
+                <RichTextMenu.Italic />
+                <button
+                  onClick={() => {
+                    const url = prompt('Digite a URL');
+
+                    if (!url) return;
+
+                    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+                  }}
+                >
+                  🔗 Link
+                </button>
+
+                <button
+                  onClick={() => {
+                    editor?.chain().focus().unsetLink().run();
+                  }}
+                >
+                  ❌ link
+                </button>
+              </RichTextMenu.Group>
+            </RichTextMenu>
+          ),
+        },
+        alignment: {
+          type: 'radio',
+          options: [
+            { label: 'left', value: 'left' },
+            { label: 'center', value: 'center' },
+            { label: 'right', value: 'right' },
+          ],
+        },
+        variant: {
+          type: 'radio',
+          options: [
+            { label: 'Indigo', value: 'indigo' },
+            { label: 'Gray', value: 'gray' },
+            { label: 'Lime', value: 'lime' },
+            { label: 'Red', value: 'red' },
+            { label: 'Outline', value: 'outline' },
+            { label: 'Link', value: 'link' },
+          ],
+        },
+        size: {
+          type: 'radio',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Large', value: 'lg' },
+            { label: 'Small', value: 'sm' },
+          ],
+        },
+      },
+      defaultProps: {
+        content: 'Button',
+        alignment: 'left',
+        variant: 'indigo',
+        size: 'default',
+      },
+      render: ({ content, alignment, variant, size }) => {
+        const alignmentClasses = {
+          left: 'mr-auto',
+          center: 'mx-auto',
+          right: 'ml-auto',
+        };
+        return (
+          <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
+            {content}
+          </Button>
+        );
+      },
+    },
     // Container
     Container: {
       fields: {
@@ -83,20 +211,10 @@ export const config: Config<Props> = {
           contentEditable: true,
 
           tiptap: {
-            extensions: [
-              Emoji.configure({
-                emojis: gitHubEmojis,
-                enableEmoticons: true,
-              }),
-
-              Image,
-              Link.configure({
-                openOnClick: false,
-              }),
-            ],
+            extensions: [Bold, Italic],
           },
 
-          renderMenu: ({ children, editor, editorState }) => (
+          renderMenu: ({ children, editor }) => (
             <RichTextMenu>
               {/* Render default menu */}
               {children}
@@ -129,40 +247,75 @@ export const config: Config<Props> = {
       defaultProps: {
         content: 'Rich Text Block',
       },
-      render: ({ content }) => (
-        <div
-          style={{
-            padding: '16px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '8px',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          {content}
-        </div>
-      ),
+      render: ({ content }) => <div className="py-4">{content}</div>,
     },
     // Card
     Card: {
-      // Add the fields for the title, description and padding
       fields: {
+        imgSrc: { type: 'text' },
         title: { type: 'text' },
-        description: { type: 'textarea' },
-        padding: { type: 'number', min: 4, max: 64 },
+        horizontal: {
+          type: 'radio',
+          options: [
+            { label: 'Vertical', value: false },
+            { label: 'Horizontal', value: true },
+          ],
+        },
+        side: {
+          type: 'radio',
+          options: [
+            { label: 'Left', value: 'left' },
+            { label: 'Right', value: 'right' },
+          ],
+        },
+        content: {
+          type: 'richtext',
+          tiptap: {
+            extensions: [Bold, Italic],
+          },
+        },
+        textSize: {
+          type: 'radio',
+          options: [
+            { label: 'Small', value: 16 },
+            { label: 'Medium', value: 18 },
+            { label: 'Large', value: 24 },
+          ],
+        },
+        variant: {
+          type: 'radio',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Gray', value: 'gray' },
+          ],
+        },
+        slot: {
+          type: 'slot',
+        },
       },
-      // Add default values for each field
       defaultProps: {
-        title: 'Topic Title',
-        description: 'Topic description...',
-        padding: 16,
+        title: 'Card Title',
+        content: 'Card content goes here...',
+        horizontal: false,
+        side: 'left',
+        textSize: 16,
+        variant: 'default',
+        imgSrc: '',
+        slot: [],
       },
-      render: ({ title, description, padding }) => {
-        // Render the card using the values from its fields
+      render: ({ imgSrc, title, horizontal, side, content, textSize, variant, slot: Slot }) => {
         return (
-          <article style={{ padding }}>
-            <h2>{title}</h2>
-            <p>{description}</p>
-          </article>
+          <MainCard
+            imgSrc={imgSrc || undefined}
+            title={title}
+            horizontal={horizontal}
+            side={side}
+            textSize={textSize}
+            variant={variant}
+          >
+            {content}
+            {Slot && Slot.length > 0 ? <Slot /> : <div style={{ height: '20px' }} />}
+          </MainCard>
         );
       },
     },

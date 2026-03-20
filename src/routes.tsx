@@ -51,7 +51,7 @@ const routesPROD = [
   {
     path: '/',
     element: <BlankLayout />,
-    children: [{ path: '/', element: <Choices /> }],
+    children: [{ path: '/', element: <Page /> }],
   },
 ];
 
