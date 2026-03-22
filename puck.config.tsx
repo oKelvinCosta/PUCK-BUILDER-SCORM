@@ -7,8 +7,10 @@ import { RichTextMenu, type Config } from '@puckeditor/core';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 
+import Heading from '@tiptap/extension-heading';
+import { Color, TextStyle } from '@tiptap/extension-text-style';
+
 type Props = {
-  Text: { content: string };
   RichText: { content: any };
   Html: { content: string };
   Card: {
@@ -52,6 +54,28 @@ type Props = {
   };
 };
 
+const COLORS = [
+  '#000000',
+  '#EF4444', // red
+  '#3B82F6', // blue
+  '#10B981', // green
+  '#F59E0B', // yellow
+  '#8B5CF6', // purple
+];
+
+// Text styles configuration
+const TEXT_STYLES = [
+  { value: 0, label: 'Parágrafo normal' },
+  { value: 1, label: 'Heading 1' },
+  { value: 2, label: 'Heading 2' },
+  { value: 3, label: 'Heading 3' },
+  { value: 4, label: 'Heading 4' },
+  { value: 5, label: 'Heading 5' },
+  { value: 6, label: 'Heading 6' },
+  { value: 'p-lead', label: 'Parágrafo lead' },
+  { value: 'p-small', label: 'Parágrafo pequeno' },
+  { value: 'p-muted', label: 'Parágrafo muted' },
+];
 const isEditing = process.env.NODE_ENV === 'development';
 
 export const config: Config<Props> = {
@@ -59,14 +83,15 @@ export const config: Config<Props> = {
     layout: {
       components: ['Section', 'Container', 'Grid'],
     },
-    typography: {
-      components: ['Text', 'RichText', 'Html'],
+    tipografia: {
+      components: ['RichText'],
     },
-    media: {
-      components: ['Img'],
+    mídia: {
+      components: ['Img', 'Embed'],
     },
     scorm: {
       components: ['CompleteScormButtonBlock'],
+      defaultExpanded: false,
     },
   },
   components: {
@@ -200,92 +225,211 @@ export const config: Config<Props> = {
       },
       render: ({ variant, slot: Slot }) => {
         return (
-          <Container maxWidth={variant}>
+          <Container maxWidth={variant} className="container-kelvin">
             <Slot className={isEditing ? 'p-6' : ''} />
           </Container>
         );
       },
     },
-    // Text
-    Text: {
-      fields: {
-        content: { type: 'text' },
-      },
-      defaultProps: {
-        content: 'Text Block',
-      },
-      render: ({ content }) => <p>{content}</p>,
-    },
+
     // RichText
     RichText: {
-      label: 'Rich Text',
       fields: {
         content: {
           type: 'richtext',
           contentEditable: true,
 
           tiptap: {
-            extensions: [Bold, Italic],
+            extensions: [
+              TextStyle.extend({
+                addAttributes() {
+                  return {
+                    ...this.parent?.(),
+                    fontSize: {
+                      default: null,
+                      parseHTML: (element) => element.style.fontSize,
+                      renderHTML: (attributes) => {
+                        if (!attributes.fontSize) {
+                          return {};
+                        }
+                        return {
+                          style: `font-size: ${attributes.fontSize}`,
+                        };
+                      },
+                    },
+                  };
+                },
+              }),
+              Color,
+              Heading.configure({
+                levels: [1, 2, 3, 4, 5, 6],
+              }),
+            ],
           },
 
-          renderMenu: ({ children, editor }) => (
-            <RichTextMenu>
-              {/* Render default menu */}
-              {children}
+          renderMenu: ({ editor }) => {
+            if (!editor) return null;
 
-              <RichTextMenu.Group>
-                {/* Simple red color selector */}
-                <button
-                  onClick={() => {
-                    editor
-                      ?.chain()
-                      .focus()
-                      .extendMarkRange('textStyle')
-                      .setMark('textStyle', {
-                        style: 'color: #ff0000',
-                      })
-                      .run();
-                  }}
-                  style={{
-                    marginLeft: '8px',
-                    padding: '4px 8px',
-                    background: '#ff0000',
-                    color: 'white',
-                    borderRadius: '4px',
-                    border: 'none',
-                  }}
-                >
-                  🔴
-                </button>
+            return (
+              <RichTextMenu>
+                <div className="flex flex-wrap">
+                  {/* DEFAULT CONTROLS */}
+                  <RichTextMenu.Group>
+                    <RichTextMenu.Bold />
+                    <RichTextMenu.Italic />
+                    <RichTextMenu.BulletList />
+                    <RichTextMenu.OrderedList />
+                  </RichTextMenu.Group>
 
-                <button
-                  onClick={() => {
-                    const url = prompt('Digite a URL');
+                  {/* 🎨 COLOR PICKER */}
+                  <RichTextMenu.Group>
+                    <details>
+                      <summary style={{ cursor: 'pointer' }}>🎨</summary>
 
-                    if (!url) return;
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(6, 20px)',
+                          gap: 6,
+                          padding: 8,
+                          background: '#fff',
+                          border: '1px solid #ccc',
+                          borderRadius: 6,
+                          marginTop: 6,
+                        }}
+                      >
+                        {COLORS.map((color) => (
+                          <button
+                            key={color}
+                            style={{
+                              width: 20,
+                              height: 20,
+                              background: color,
+                              border: '1px solid #ddd',
+                              cursor: 'pointer',
+                            }}
+                            onClick={() => editor.chain().focus().setColor(color).run()}
+                          />
+                        ))}
 
-                    editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-                  }}
-                >
-                  🔗 Link
-                </button>
+                        {/* remover cor */}
+                        <button
+                          onClick={() => editor.chain().focus().unsetColor().run()}
+                          style={{
+                            gridColumn: 'span 6',
+                            fontSize: 10,
+                          }}
+                        >
+                          Remover cor
+                        </button>
+                      </div>
+                    </details>
+                  </RichTextMenu.Group>
 
-                <button
-                  onClick={() => {
-                    editor?.chain().focus().unsetLink().run();
-                  }}
-                >
-                  ❌ link
-                </button>
-              </RichTextMenu.Group>
-            </RichTextMenu>
-          ),
+                  {/* 🔤 HEADINGS CUSTOM */}
+                  <RichTextMenu.Group>
+                    <select
+                      onChange={(e) => {
+                        const value = e.target.value;
+
+                        if (value === '0') {
+                          editor.chain().focus().setParagraph().unsetMark('textStyle').run();
+                        } else if (value === 'p-lead') {
+                          editor
+                            .chain()
+                            .focus()
+                            .setParagraph()
+                            .setMark('textStyle', { fontSize: '1.125rem' })
+                            .run();
+                        } else if (value === 'p-small') {
+                          editor
+                            .chain()
+                            .focus()
+                            .setParagraph()
+                            .setMark('textStyle', { fontSize: '0.875rem' })
+                            .run();
+                        } else if (value === 'p-muted') {
+                          editor
+                            .chain()
+                            .focus()
+                            .setParagraph()
+                            .setMark('textStyle', { fontSize: '1rem', color: '#6b7280' })
+                            .run();
+                        } else {
+                          const level = Number(value) as 1 | 2 | 3 | 4 | 5 | 6;
+                          editor
+                            .chain()
+                            .focus()
+                            .toggleHeading({ level })
+                            .unsetMark('textStyle')
+                            .run();
+                        }
+                      }}
+                      value={
+                        editor.isActive('heading', { level: 1 })
+                          ? 1
+                          : editor.isActive('heading', { level: 2 })
+                            ? 2
+                            : editor.isActive('heading', { level: 3 })
+                              ? 3
+                              : editor.isActive('heading', { level: 4 })
+                                ? 4
+                                : editor.isActive('heading', { level: 5 })
+                                  ? 5
+                                  : editor.isActive('heading', { level: 6 })
+                                    ? 6
+                                    : 0
+                      }
+                    >
+                      {TEXT_STYLES.map((style) => (
+                        <option key={style.value} value={style.value}>
+                          {style.label}
+                        </option>
+                      ))}
+                    </select>
+                  </RichTextMenu.Group>
+
+                  {/*  LINKS */}
+                  <RichTextMenu.Group>
+                    Link
+                    <button
+                      onClick={() => {
+                        const url = prompt('Digite a URL');
+
+                        if (!url) return;
+
+                        editor
+                          ?.chain()
+                          .focus()
+                          .extendMarkRange('link')
+                          .setLink({ href: url })
+                          .run();
+                      }}
+                      title="Adicionar link"
+                    >
+                      🔗
+                    </button>
+                    <button
+                      onClick={() => {
+                        editor?.chain().focus().unsetLink().run();
+                      }}
+                      title="Remover link"
+                    >
+                      ❌
+                    </button>
+                  </RichTextMenu.Group>
+                </div>
+              </RichTextMenu>
+            );
+          },
         },
       },
+
       defaultProps: {
-        content: 'Rich Text Block',
+        content: 'Texto aqui...',
       },
-      render: ({ content }) => <div className="py-4">{content}</div>,
+
+      render: ({ content }) => <div style={{ padding: 16 }}>{content}</div>,
     },
     // Card
     Card: {
@@ -371,14 +515,14 @@ export const config: Config<Props> = {
       },
       render: ({ content }) => {
         // Validação básica de segurança para HTML
-        const sanitizedContent = content
+        const sanitizedcontent = content
           .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
           .replace(/on\w+="[^"]*"/gi, '')
           .replace(/javascript:/gi, '');
 
         return (
           <div
-            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            dangerouslySetInnerHTML={{ __html: sanitizedcontent }}
             style={{
               border: '1px solid #e2e8f0',
               padding: '16px',
@@ -512,7 +656,7 @@ export const config: Config<Props> = {
 
         return (
           <div
-            className={`${isEditing && 'py-4'} mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
+            className={`${isEditing && 'py-4'} grid-kelvin mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
           >
             {config.slots.map((Slot, index) => (
               <div key={index} className={`md:col-span-${config.spans[index]}`}>

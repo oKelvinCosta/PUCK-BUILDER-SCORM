@@ -30,14 +30,7 @@
                         "type": "RichText",
                         "props": {
                           "id": "RichText-eefbca7e-9fa8-4636-a066-9046f65062a3",
-                          "content": "<h3>A grande montanha</h3><p>Mussum Ipsum, cacilds vidis litro abertis.  Diuretics paradis num copo é motivis de denguis. Mauris nec dolor in eros commodo tempor. </p>"
-                        }
-                      },
-                      {
-                        "type": "CompleteScormButtonBlock",
-                        "props": {
-                          "content": "Concluir Scorm",
-                          "id": "CompleteScormButtonBlock-7a9b57f8-4122-43e9-b8e3-27b15befa8db"
+                          "content": "<h4>A <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"GHJ\">grande </a><span style=\"color: rgb(59, 130, 246);\"><em>montanha</em></span></h4><p>Mussum Ipsum, <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"KEKE\"><span style=\"color: rgb(139, 92, 246);\">cacilds </span></a>vidis litro abertis. Diuretics paradis num copo é motivis de denguis. Mauris nec dolor in eros commodo tempor.</p><p><strong>Vantagens:</strong></p><ul><li><p>Autocontrole;</p></li><li><p>Amizades.</p></li></ul>"
                         }
                       }
                     ],
