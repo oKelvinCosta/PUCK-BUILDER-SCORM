@@ -61,20 +61,25 @@ const COLORS = [
   '#10B981', // green
   '#F59E0B', // yellow
   '#8B5CF6', // purple
+  '#fff',
+  '#fff3', // red
+  '#3B82a6', // blue
+  '#10B989', // green
+  '#F59E0B', // yellow
+  '#8B5CF6', // purple
 ];
 
 // Text styles configuration
 const TEXT_STYLES = [
-  { value: 0, label: 'Parágrafo normal' },
   { value: 1, label: 'Heading 1' },
   { value: 2, label: 'Heading 2' },
   { value: 3, label: 'Heading 3' },
   { value: 4, label: 'Heading 4' },
   { value: 5, label: 'Heading 5' },
   { value: 6, label: 'Heading 6' },
-  { value: 'p-lead', label: 'Parágrafo lead' },
-  { value: 'p-small', label: 'Parágrafo pequeno' },
-  { value: 'p-muted', label: 'Parágrafo muted' },
+  { value: 'p-base', label: 'Parágrafo base' },
+  { value: 'p-lg', label: 'Parágrafo lg', fontSize: '1.5rem' },
+  { value: 'p-sm', label: 'Parágrafo sm', fontSize: '0.875rem' },
 ];
 const isEditing = process.env.NODE_ENV === 'development';
 
@@ -328,65 +333,67 @@ export const config: Config<Props> = {
 
                   {/* 🔤 HEADINGS CUSTOM */}
                   <RichTextMenu.Group>
-                    <select
-                      onChange={(e) => {
-                        const value = e.target.value;
-
-                        if (value === '0') {
-                          editor.chain().focus().setParagraph().unsetMark('textStyle').run();
-                        } else if (value === 'p-lead') {
-                          editor
-                            .chain()
-                            .focus()
-                            .setParagraph()
-                            .setMark('textStyle', { fontSize: '1.125rem' })
-                            .run();
-                        } else if (value === 'p-small') {
-                          editor
-                            .chain()
-                            .focus()
-                            .setParagraph()
-                            .setMark('textStyle', { fontSize: '0.875rem' })
-                            .run();
-                        } else if (value === 'p-muted') {
-                          editor
-                            .chain()
-                            .focus()
-                            .setParagraph()
-                            .setMark('textStyle', { fontSize: '1rem', color: '#6b7280' })
-                            .run();
-                        } else {
-                          const level = Number(value) as 1 | 2 | 3 | 4 | 5 | 6;
-                          editor
-                            .chain()
-                            .focus()
-                            .toggleHeading({ level })
-                            .unsetMark('textStyle')
-                            .run();
+                    {(() => {
+                      // Check headings first
+                      let currentValue: string | number = 'p-base';
+                      for (let i = 1; i <= 6; i++) {
+                        if (editor.isActive('heading', { level: i })) {
+                          currentValue = i;
+                          break;
                         }
-                      }}
-                      value={
-                        editor.isActive('heading', { level: 1 })
-                          ? 1
-                          : editor.isActive('heading', { level: 2 })
-                            ? 2
-                            : editor.isActive('heading', { level: 3 })
-                              ? 3
-                              : editor.isActive('heading', { level: 4 })
-                                ? 4
-                                : editor.isActive('heading', { level: 5 })
-                                  ? 5
-                                  : editor.isActive('heading', { level: 6 })
-                                    ? 6
-                                    : 0
                       }
-                    >
-                      {TEXT_STYLES.map((style) => (
-                        <option key={style.value} value={style.value}>
-                          {style.label}
-                        </option>
-                      ))}
-                    </select>
+
+                      // Check text styles dynamically
+                      if (currentValue === 'p-base') {
+                        const activeStyle = TEXT_STYLES.find((style) => {
+                          if (style.fontSize) {
+                            return editor.isActive('textStyle', { fontSize: style.fontSize });
+                          }
+                          return (
+                            style.value === 'p-base' &&
+                            editor.isActive('paragraph') &&
+                            !editor.isActive('textStyle')
+                          );
+                        });
+
+                        currentValue = activeStyle?.value || 'p-base';
+                      }
+
+                      return (
+                        <select
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            const style = TEXT_STYLES.find((s) => s.value === value);
+
+                            if (value === 'p-base') {
+                              editor.chain().focus().setParagraph().unsetMark('textStyle').run();
+                            } else if (style?.fontSize) {
+                              editor
+                                .chain()
+                                .focus()
+                                .setParagraph()
+                                .setMark('textStyle', { fontSize: style.fontSize })
+                                .run();
+                            } else {
+                              const level = Number(value) as 1 | 2 | 3 | 4 | 5 | 6;
+                              editor
+                                .chain()
+                                .focus()
+                                .toggleHeading({ level })
+                                .unsetMark('textStyle')
+                                .run();
+                            }
+                          }}
+                          value={String(currentValue)}
+                        >
+                          {TEXT_STYLES.map((style) => (
+                            <option key={style.value} value={style.value}>
+                              {style.label}
+                            </option>
+                          ))}
+                        </select>
+                      );
+                    })()}
                   </RichTextMenu.Group>
 
                   {/*  LINKS */}
