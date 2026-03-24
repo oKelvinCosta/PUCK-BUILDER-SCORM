@@ -1,0 +1,60 @@
+import * as Blocks from '@/puck/blocks';
+import { type Config } from '@puckeditor/core';
+
+type Props = {
+  RichText: Blocks.RichTextBlockProps;
+  Html: Blocks.HtmlBlockProps;
+  Card: Blocks.CardBlockProps;
+  Img: Blocks.ImgBlockProps;
+  Grid: Blocks.GridBlockProps;
+  Container: Blocks.ContainerBlockProps;
+  Button: Blocks.ButtonBlockProps;
+  CompleteScormButtonBlock: Blocks.CompleteScormButtonBlockProps;
+  Section: Blocks.SectionBlockProps;
+  Embed: Blocks.EmbedBlockProps;
+};
+
+export const config: Config<Props> = {
+  categories: {
+    layout: {
+      components: ['Section', 'Container', 'Grid'],
+    },
+    tipografia: {
+      components: ['RichText'],
+    },
+    mídia: {
+      components: ['Img', 'Embed'],
+    },
+    scorm: {
+      components: ['CompleteScormButtonBlock'],
+      defaultExpanded: false,
+    },
+  },
+  components: {
+    // CompleteScormButton
+    CompleteScormButtonBlock: Blocks.CompleteScormButtonBlock,
+    // Button
+    Button: Blocks.ButtonBlock,
+    // Container
+    Container: Blocks.ContainerBlock,
+
+    // RichText
+    RichText: Blocks.RichTextBlock,
+    // Card
+    Card: Blocks.CardBlock,
+    // Html
+    Html: Blocks.HtmlBlock,
+
+    // Img
+    Img: Blocks.ImgBlock,
+
+    // Grid
+    Grid: Blocks.GridBlock,
+
+    // Section
+    Section: Blocks.SectionBlock,
+
+    // Embed
+    Embed: Blocks.EmbedBlock,
+  },
+};

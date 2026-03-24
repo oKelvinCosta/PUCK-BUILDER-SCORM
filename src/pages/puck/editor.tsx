@@ -1,7 +1,7 @@
+import { config } from '@/puck/puck.config';
 import { Puck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import database from '@root/database.json';
-import { config } from '@root/puck.config';
 import '@root/src/styles/global.css';
 
 // Describe initial data
