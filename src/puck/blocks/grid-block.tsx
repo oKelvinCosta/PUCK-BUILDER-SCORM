@@ -1,9 +1,19 @@
 // @/components/puck/ImgBlock.tsx
 import type { ComponentConfig } from '@puckeditor/core';
+import {
+  AlignCenterHorizontal,
+  AlignEndHorizontal,
+  AlignStartHorizontal,
+  Monitor,
+  Smartphone,
+  Tablet,
+  XCircle,
+} from 'lucide-react';
 
 export type GridBlockProps = {
   columnFormat: '1/1' | '1/2-1/2' | '1/3-2/3' | '2/3-1/3' | '1/3-1/3-1/3' | '1/4-1/4-1/4-1/4';
   alignment: 'top' | 'center' | 'bottom';
+  mobileBreakpoint: 'never' | 'sm' | 'md' | 'lg';
   'col-1': any;
   'col-2': any;
   'col-3': any;
@@ -12,27 +22,152 @@ export type GridBlockProps = {
 
 const isEditing = process.env.NODE_ENV === 'development';
 
+const systemColor = '#3b82f6';
+
 export const GridBlock: ComponentConfig<GridBlockProps> = {
   fields: {
     columnFormat: {
-      type: 'radio',
-      options: [
-        { label: '1/1', value: '1/1' },
-        { label: '1/2 1/2', value: '1/2-1/2' },
-        { label: '1/3 2/3', value: '1/3-2/3' },
-        { label: '2/3 1/3', value: '2/3-1/3' },
-        { label: '1/3 1/3 1/3', value: '1/3-1/3-1/3' },
-        { label: '1/4 1/4 1/4 1/4', value: '1/4-1/4-1/4-1/4' },
-      ],
+      label: 'Layout colunas',
+      type: 'custom',
+      render: ({ value, onChange }) => {
+        const options = [
+          { label: '1/1', value: '1/1', layout: [12] },
+          { label: '1/2 1/2', value: '1/2-1/2', layout: [6, 6] },
+          { label: '1/3 2/3', value: '1/3-2/3', layout: [4, 8] },
+          { label: '2/3 1/3', value: '2/3-1/3', layout: [8, 4] },
+          { label: '1/3 1/3 1/3', value: '1/3-1/3-1/3', layout: [4, 4, 4] },
+          { label: '1/4 1/4 1/4 1/4', value: '1/4-1/4-1/4-1/4', layout: [3, 3, 3, 3] },
+        ];
+
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ color: '#5A5A5A' }} className="text-sm font-semibold">
+              Layout
+            </span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+              {options.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => onChange(opt.value as GridBlockProps['columnFormat'])}
+                  title={opt.label}
+                  style={{
+                    padding: '4px',
+                    border: `2px solid ${value === opt.value ? systemColor : '#eee'}`,
+                    borderRadius: '4px',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    height: '32px',
+                    display: 'flex',
+                    gap: '2px',
+                  }}
+                >
+                  {opt.layout.map((w, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        flex: w,
+                        background: value === opt.value ? systemColor : '#ddd',
+                        borderRadius: '2px',
+                      }}
+                    />
+                  ))}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      },
     },
     alignment: {
+      label: 'Alinhamento vertical',
       type: 'radio',
       options: [
-        { label: 'Top', value: 'top' },
-        { label: 'Center', value: 'center' },
-        { label: 'Bottom', value: 'bottom' },
+        {
+          label: (
+            <div title="Top" className="flex justify-center">
+              <AlignStartHorizontal size={16} />
+            </div>
+          ) as any,
+          value: 'top',
+        },
+        {
+          label: (
+            <div title="Center" className="flex justify-center">
+              <AlignCenterHorizontal size={16} />
+            </div>
+          ) as any,
+          value: 'center',
+        },
+        {
+          label: (
+            <div title="Bottom" className="flex justify-center">
+              <AlignEndHorizontal size={16} />
+            </div>
+          ) as any,
+          value: 'bottom',
+        },
       ],
     },
+    mobileBreakpoint: {
+      label: 'Quebrar para 1 coluna em:',
+      type: 'custom',
+      render: ({ value, onChange }) => {
+        const options = [
+          { label: 'Nunca', value: 'never', icon: XCircle },
+          { label: 'Mobile', value: 'sm', icon: Smartphone },
+          { label: 'Tablet', value: 'md', icon: Tablet },
+          { label: 'Desktop', value: 'lg', icon: Monitor },
+        ];
+
+        // Se não houver valor (componente antigo ou inicialização), usa o padrão 'md'
+        const currentValue = value || 'md';
+
+        return (
+          <div className="flex flex-col gap-2">
+            <span style={{ color: '#5A5A5A' }} className="text-sm font-semibold">
+              Quebra de Coluna
+            </span>
+            <div className="grid grid-cols-4 gap-4">
+              {options.map((opt) => {
+                const Icon = opt.icon;
+                const isActive = currentValue === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => onChange(opt.value as GridBlockProps['mobileBreakpoint'])}
+                    title={opt.label}
+                    style={{
+                      padding: '12px 4px 6px 4px',
+                      border: `2px solid ${isActive ? systemColor : '#eee'}`,
+                      borderRadius: '6px',
+                      background: '#fff',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '4px',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    <Icon size={16} color={isActive ? systemColor : '#666'} />
+                    <span
+                      style={{
+                        fontSize: '10px',
+                        color: isActive ? systemColor : '#666',
+                        fontWeight: isActive ? 600 : 400,
+                      }}
+                    >
+                      {opt.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      },
+    },
+
     'col-1': {
       type: 'slot',
       disallow: ['Container'],
@@ -53,6 +188,7 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
   defaultProps: {
     columnFormat: '1/2-1/2',
     alignment: 'top',
+    mobileBreakpoint: 'md',
     'col-1': [],
     'col-2': [],
     'col-3': [],
@@ -61,40 +197,79 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
   render: ({
     columnFormat,
     alignment,
+    mobileBreakpoint,
     'col-1': Col1,
     'col-2': Col2,
     'col-3': Col3,
     'col-4': Col4,
   }) => {
+    // Mapeamento explícito para o Tailwind não remover as classes (Purge CSS)
+    const containerBreakpoints: Record<string, string> = {
+      never: 'grid-cols-12',
+      sm: 'grid-cols-1 sm:grid-cols-12',
+      md: 'grid-cols-1 md:grid-cols-12',
+      lg: 'grid-cols-1 lg:grid-cols-12',
+    };
+
     const gridConfigs = {
       '1/1': {
-        containerClass: ' grid grid-cols-1 gap-6',
-        spans: [12],
+        containerClass: 'grid grid-cols-1 gap-6',
+        spans: {
+          never: ['col-span-12'],
+          sm: ['sm:col-span-12'],
+          md: ['md:col-span-12'],
+          lg: ['lg:col-span-12'],
+        },
         slots: [Col1],
       },
       '1/2-1/2': {
-        containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
-        spans: [6, 6],
+        containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+        spans: {
+          never: ['col-span-6', 'col-span-6'],
+          sm: ['sm:col-span-6', 'sm:col-span-6'],
+          md: ['md:col-span-6', 'md:col-span-6'],
+          lg: ['lg:col-span-6', 'lg:col-span-6'],
+        },
         slots: [Col1, Col2],
       },
       '1/3-2/3': {
-        containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
-        spans: [4, 8],
+        containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+        spans: {
+          never: ['col-span-4', 'col-span-8'],
+          sm: ['sm:col-span-4', 'sm:col-span-8'],
+          md: ['md:col-span-4', 'md:col-span-8'],
+          lg: ['lg:col-span-4', 'lg:col-span-8'],
+        },
         slots: [Col1, Col2],
       },
       '2/3-1/3': {
-        containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
-        spans: [8, 4],
+        containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+        spans: {
+          never: ['col-span-8', 'col-span-4'],
+          sm: ['sm:col-span-8', 'sm:col-span-4'],
+          md: ['md:col-span-8', 'md:col-span-4'],
+          lg: ['lg:col-span-8', 'lg:col-span-4'],
+        },
         slots: [Col1, Col2],
       },
       '1/3-1/3-1/3': {
-        containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
-        spans: [4, 4, 4],
+        containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+        spans: {
+          never: ['col-span-4', 'col-span-4', 'col-span-4'],
+          sm: ['sm:col-span-4', 'sm:col-span-4', 'sm:col-span-4'],
+          md: ['md:col-span-4', 'md:col-span-4', 'md:col-span-4'],
+          lg: ['lg:col-span-4', 'lg:col-span-4', 'lg:col-span-4'],
+        },
         slots: [Col1, Col2, Col3],
       },
       '1/4-1/4-1/4-1/4': {
-        containerClass: ' grid grid-cols-1 gap-6 md:grid-cols-12',
-        spans: [3, 3, 3, 3],
+        containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+        spans: {
+          never: ['col-span-3', 'col-span-3', 'col-span-3', 'col-span-3'],
+          sm: ['sm:col-span-3', 'sm:col-span-3', 'sm:col-span-3', 'sm:col-span-3'],
+          md: ['md:col-span-3', 'md:col-span-3', 'md:col-span-3', 'md:col-span-3'],
+          lg: ['lg:col-span-3', 'lg:col-span-3', 'lg:col-span-3', 'lg:col-span-3'],
+        },
         slots: [Col1, Col2, Col3, Col4],
       },
     };
@@ -109,13 +284,16 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
 
     return (
       <div
-        className={`${isEditing && 'py-4'} grid-kelvin mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
+        className={`${isEditing && 'py-4'} mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
       >
-        {config.slots.map((Slot, index) => (
-          <div key={index} className={`md:col-span-${config.spans[index]}`}>
-            <Slot className={isEditing ? 'p-6' : ''} />
-          </div>
-        ))}
+        {config.slots.map((Slot, index) => {
+          const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
+          return (
+            <div key={index} className={spanClass}>
+              <Slot className={isEditing ? 'p-6' : ''} />
+            </div>
+          );
+        })}
       </div>
     );
   },
