@@ -1,3 +1,4 @@
+import Divider from '@/components/divider';
 import type { ComponentConfig } from '@puckeditor/core';
 
 export type SectionBlockProps = {
@@ -6,6 +7,11 @@ export type SectionBlockProps = {
   imagePosition: 'left' | 'center' | 'right';
   paddingTop: number;
   paddingBottom: number;
+  dividerTopType?: string;
+  dividerTopClassName?: string;
+  dividerBottomType?: string;
+  dividerBottomClassName?: string;
+  contentClassName?: string;
   slot: any;
 };
 const isEditing = process.env.NODE_ENV === 'development';
@@ -45,6 +51,58 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
       label: 'Padding Bottom',
     },
 
+    // 🔝 Divider Top
+    dividerTopType: {
+      type: 'select',
+      label: 'Divider Top Type',
+      options: [
+        { label: 'Nenhum', value: '' },
+        { label: 'Type 01', value: 'type01' },
+        { label: 'Type 02', value: 'type02' },
+        { label: 'Type 03', value: 'type03' },
+        { label: 'Type 04', value: 'type04' },
+        { label: 'Type 05', value: 'type05' },
+        { label: 'Type 06', value: 'type06' },
+        { label: 'Type 07', value: 'type07' },
+        { label: 'Type 08', value: 'type08' },
+        { label: 'Type 09', value: 'type09' },
+        { label: 'Type 10', value: 'type10' },
+      ],
+    },
+    dividerTopClassName: {
+      type: 'text',
+      label: 'Divider Top Class Name',
+    },
+
+    // 🔽 Divider Bottom
+    dividerBottomType: {
+      type: 'select',
+      label: 'Divider Bottom Type',
+      options: [
+        { label: 'Nenhum', value: '' },
+        { label: 'Type 01', value: 'type01' },
+        { label: 'Type 02', value: 'type02' },
+        { label: 'Type 03', value: 'type03' },
+        { label: 'Type 04', value: 'type04' },
+        { label: 'Type 05', value: 'type05' },
+        { label: 'Type 06', value: 'type06' },
+        { label: 'Type 07', value: 'type07' },
+        { label: 'Type 08', value: 'type08' },
+        { label: 'Type 09', value: 'type09' },
+        { label: 'Type 10', value: 'type10' },
+      ],
+    },
+    dividerBottomClassName: {
+      type: 'text',
+      label: 'Divider Bottom Class Name',
+    },
+
+    // 📦 Content Wrapper
+    contentClassName: {
+      type: 'text',
+      label: 'Content Class Name (opcional)',
+    },
+
     slot: {
       type: 'slot',
       disallow: ['Section'],
@@ -57,6 +115,11 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
     imagePosition: 'center',
     paddingTop: 80,
     paddingBottom: 80,
+    dividerTopType: '',
+    dividerTopClassName: '',
+    dividerBottomType: '',
+    dividerBottomClassName: '',
+    contentClassName: '',
     slot: [],
   },
 
@@ -66,21 +129,53 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
     imagePosition,
     paddingTop,
     paddingBottom,
+    dividerTopType,
+    dividerTopClassName,
+    dividerBottomType,
+    dividerBottomClassName,
+    contentClassName,
     slot: Slot,
   }) => {
     return (
       <section
+        className={`w-full bg-cover bg-no-repeat`}
         style={{
-          paddingTop: `${paddingTop}px`,
-          paddingBottom: `${paddingBottom}px`,
-          backgroundColor: backgroundColor || '#ffffff',
           backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
           backgroundPosition: imagePosition,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
+          backgroundColor: backgroundColor || '#ffffff',
         }}
       >
-        <Slot className={isEditing ? 'p-6' : ''} />
+        {/* Divider Top */}
+        {dividerTopType && (
+          <Divider
+            type={dividerTopType as any}
+            flipY={true}
+            fitTo="top"
+            className={`mt-[-2px] ${dividerTopClassName}`}
+          />
+        )}
+
+        {/* -------------------------  
+            CENTERED CONTENT WRAPPER  
+           ------------------------- */}
+        <div
+          className={`mx-auto flex w-full flex-col items-center px-4 ${contentClassName}`}
+          style={{
+            paddingTop: `${paddingTop}px`,
+            paddingBottom: `${paddingBottom}px`,
+          }}
+        >
+          <Slot className={isEditing ? 'p-6' : ''} />
+        </div>
+
+        {/* Divider Bottom */}
+        {dividerBottomType && (
+          <Divider
+            type={dividerBottomType as any}
+            fitTo="bottom"
+            className={dividerBottomClassName}
+          />
+        )}
       </section>
     );
   },
