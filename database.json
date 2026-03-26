@@ -70,11 +70,12 @@
                       {
                         "type": "Button",
                         "props": {
-                          "content": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.google.com/search?q=power+rangers&amp;rlz=1C1GCEU_pt-BRBR1175BR1175&amp;oq=power&amp;gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&amp;sourceid=chrome&amp;ie=UTF-8\">Button</a></p>",
+                          "content": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.google.com/search?q=power+rangers&amp;rlz=1C1GCEU_pt-BRBR1175BR1175&amp;oq=power&amp;gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&amp;sourceid=chrome&amp;ie=UTF-8\">Ver pesquisa</a></p>",
                           "alignment": "left",
                           "variant": "indigo",
                           "size": "default",
-                          "id": "Button-0d30f30e-1173-4f06-89f6-1a700afa5ace"
+                          "id": "Button-0d30f30e-1173-4f06-89f6-1a700afa5ace",
+                          "link": "https://www.google.com/search?q=power+rangers&rlz=1C1GCEU_pt-BRBR1175BR1175&oq=power&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
                         }
                       }
                     ],

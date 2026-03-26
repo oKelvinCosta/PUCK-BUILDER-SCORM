@@ -1,10 +1,12 @@
 // @/components/puck/ImgBlock.tsx
 import { Button } from '@/components/ui/button';
+import { AlignmentXField } from '@/puck/fields';
 import type { ComponentConfig } from '@puckeditor/core';
 import { RichTextMenu } from '@puckeditor/core';
 
 export type ButtonBlockProps = {
   content: string;
+  link: string;
   alignment: 'left' | 'center' | 'right';
   variant: 'indigo' | 'gray' | 'lime' | 'red' | 'outline' | 'link';
   size: 'default' | 'lg' | 'sm';
@@ -14,41 +16,19 @@ export const ButtonBlock: ComponentConfig<ButtonBlockProps> = {
   fields: {
     content: {
       type: 'richtext',
-      renderMenu: ({ editor }) => (
+      renderMenu: () => (
         <RichTextMenu>
           <RichTextMenu.Group>
             <RichTextMenu.Italic />
-            <button
-              onClick={() => {
-                const url = prompt('Digite a URL');
-
-                if (!url) return;
-
-                editor?.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-              }}
-            >
-              🔗 Link
-            </button>
-
-            <button
-              onClick={() => {
-                editor?.chain().focus().unsetLink().run();
-              }}
-            >
-              ❌ link
-            </button>
           </RichTextMenu.Group>
         </RichTextMenu>
       ),
     },
-    alignment: {
-      type: 'radio',
-      options: [
-        { label: 'left', value: 'left' },
-        { label: 'center', value: 'center' },
-        { label: 'right', value: 'right' },
-      ],
+    link: {
+      type: 'text',
+      label: 'Link URL',
     },
+    alignment: AlignmentXField(),
     variant: {
       type: 'radio',
       options: [
@@ -71,20 +51,32 @@ export const ButtonBlock: ComponentConfig<ButtonBlockProps> = {
   },
   defaultProps: {
     content: 'Button',
+    link: '',
     alignment: 'left',
     variant: 'indigo',
     size: 'default',
   },
-  render: ({ content, alignment, variant, size }) => {
+  render: ({ content, link, alignment, variant, size }) => {
     const alignmentClasses = {
       left: 'mr-auto',
       center: 'mx-auto',
       right: 'ml-auto',
     };
-    return (
-      <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
-        {content}
-      </Button>
-    );
+
+    if (link) {
+      return (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="inline-block">
+          <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
+            {content}
+          </Button>
+        </a>
+      );
+    } else {
+      return (
+        <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
+          {content}
+        </Button>
+      );
+    }
   },
 };
