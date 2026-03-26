@@ -1,0 +1,213 @@
+{
+  "root": {
+    "props": {}
+  },
+  "content": [
+    {
+      "type": "Section",
+      "props": {
+        "slot": [
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-81b5e757-b7cf-4193-934e-9c0be6cb9e56",
+                          "rounded": true
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "RichText",
+                        "props": {
+                          "id": "RichText-eefbca7e-9fa8-4636-a066-9046f65062a3",
+                          "content": "<h4>A <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"GHJ\">grande </a><span style=\"color: rgb(59, 130, 246);\"><em>montanha</em></span></h4><p>Mussum Ipsum, <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"KEKE\"><span style=\"color: rgb(139, 92, 246);\">cacilds </span></a>vidis litro abertis. Diuretics paradis num copo é motivis de denguis. Mauris nec dolor in eros commodo tempor.</p><p><strong>Vantagens:</strong></p><ul><li><p>Autocontrole;</p></li><li><p>Amizades.</p></li></ul>"
+                        }
+                      }
+                    ],
+                    "columnFormat": "2/3-1/3",
+                    "id": "Grid-f1389bbf-dd1f-4105-80d6-9d162ee5017e",
+                    "alignment": "top"
+                  }
+                }
+              ],
+              "variant": 780,
+              "id": "Container-aa87a75f-5152-432d-95ca-c22418b8b370"
+            }
+          },
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "Embed",
+                  "props": {
+                    "embedCode": "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/8jhC9xnJGYU?si=lhEkSjmSrhmKeJNY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                    "width": "100%",
+                    "height": "400px",
+                    "id": "Embed-110e00cb-e777-44d5-b23d-0396479894c1"
+                  }
+                }
+              ],
+              "variant": 780,
+              "id": "Container-2bf11f19-5159-4ae6-a84d-572b9b43be64"
+            }
+          },
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "Card",
+                        "props": {
+                          "slot": [],
+                          "id": "Card-89e1e16d-063a-4b64-9db6-508c70dcda52",
+                          "title": "Topic Title",
+                          "description": "Topic description...",
+                          "padding": 16
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "Card",
+                        "props": {
+                          "slot": [],
+                          "id": "Card-3f985174-1931-46c9-a4fb-99f105532a58",
+                          "title": "Topic Title",
+                          "description": "Topic description...",
+                          "padding": 16
+                        }
+                      }
+                    ],
+                    "id": "Grid-be7cc165-84fa-4ed9-b5c0-5256e0511f19",
+                    "columnFormat": "1/2-1/2"
+                  }
+                }
+              ],
+              "variant": "980",
+              "id": "Container-8860a2ab-0e59-4e0d-99a2-f1557cc4481e"
+            }
+          },
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-6dec61c8-b181-48ab-9e0a-5de791cc2937",
+                          "rounded": false
+                        }
+                      }
+                    ],
+                    "col-3": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-066cbb7e-2f5e-41b8-937e-6c974a19b2ba",
+                          "rounded": false
+                        }
+                      }
+                    ],
+                    "col-2": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-9721b9da-0b74-4eed-ae15-7c75fa928fce",
+                          "rounded": false
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-356833e2-962d-4ac5-9655-8ff93dcdb931",
+                          "rounded": false
+                        }
+                      }
+                    ],
+                    "columnFormat": "1/4-1/4-1/4-1/4",
+                    "alignment": "top",
+                    "id": "Grid-502c3f87-d824-4875-9acc-af27c5467382"
+                  }
+                }
+              ],
+              "variant": "980",
+              "id": "Container-5743bcd8-4aa4-414b-afdb-ffe5f24235f6"
+            }
+          }
+        ],
+        "backgroundImage": "",
+        "imagePosition": "center",
+        "paddingTop": 80,
+        "paddingBottom": 80,
+        "id": "Section-33841f1d-f59e-4b51-ab98-84a55423e778"
+      }
+    },
+    {
+      "type": "Section",
+      "props": {
+        "slot": [
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "Card",
+                  "props": {
+                    "slot": [
+                      {
+                        "type": "RichText",
+                        "props": {
+                          "content": "<h1>Rich Text Block</h1>",
+                          "id": "RichText-a4785516-9983-4396-8795-cdf60860d5db"
+                        }
+                      }
+                    ],
+                    "title": "Card Title",
+                    "content": "<p>Card content goes here...</p>",
+                    "horizontal": false,
+                    "side": "left",
+                    "textSize": 16,
+                    "variant": "default",
+                    "imgSrc": "",
+                    "id": "Card-b43df5da-db54-4ee6-8bbf-115729daa678"
+                  }
+                }
+              ],
+              "variant": 780,
+              "id": "Container-2c2c2dbb-1a74-4cae-9b1d-65a1f16435eb"
+            }
+          }
+        ],
+        "backgroundImage": "https://t3.ftcdn.net/jpg/08/44/87/76/360_F_844877698_EcYQhmxfOLYdlQNMzDLfQCVYFIxFqvLf.jpg",
+        "imagePosition": "center",
+        "paddingTop": 80,
+        "paddingBottom": 80,
+        "id": "Section-0034bd5b-2816-4e0b-b3d9-baad63b4726a"
+      }
+    }
+  ],
+  "zones": {}
+}

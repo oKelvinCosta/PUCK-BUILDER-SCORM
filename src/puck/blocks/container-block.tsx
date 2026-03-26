@@ -31,7 +31,7 @@ export const ContainerBlock: ComponentConfig<ContainerBlockProps> = {
   render: ({ variant, slot: Slot }) => {
     return (
       <Container maxWidth={variant} className="container-kelvin">
-        <Slot className={isEditing ? 'p-6' : ''} />
+        <Slot className={`${isEditing ? 'p-6' : ''} mx-auto`} />
       </Container>
     );
   },

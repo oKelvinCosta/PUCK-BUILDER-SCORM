@@ -2,6 +2,7 @@ import type { ComponentConfig } from '@puckeditor/core';
 
 export type SectionBlockProps = {
   backgroundImage: string;
+  backgroundColor: string;
   imagePosition: 'left' | 'center' | 'right';
   paddingTop: number;
   paddingBottom: number;
@@ -15,6 +16,12 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
     backgroundImage: {
       type: 'text', // pode trocar por image field depois
       label: 'Background Image URL',
+    },
+
+    // 🎨 background color
+    backgroundColor: {
+      type: 'text',
+      label: 'Background Color',
     },
 
     // ↔️ posição da imagem
@@ -46,18 +53,27 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
 
   defaultProps: {
     backgroundImage: '',
+    backgroundColor: '#ffffff',
     imagePosition: 'center',
     paddingTop: 80,
     paddingBottom: 80,
     slot: [],
   },
 
-  render: ({ backgroundImage, imagePosition, paddingTop, paddingBottom, slot: Slot }) => {
+  render: ({
+    backgroundImage,
+    backgroundColor,
+    imagePosition,
+    paddingTop,
+    paddingBottom,
+    slot: Slot,
+  }) => {
     return (
       <section
         style={{
           paddingTop: `${paddingTop}px`,
           paddingBottom: `${paddingBottom}px`,
+          backgroundColor: backgroundColor || '#ffffff',
           backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
           backgroundPosition: imagePosition,
           backgroundSize: 'cover',

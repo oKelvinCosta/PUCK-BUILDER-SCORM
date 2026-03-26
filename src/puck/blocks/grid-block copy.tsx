@@ -1,7 +1,14 @@
 // @/components/puck/ImgBlock.tsx
-import * as Fields from '@/puck/fields';
 import type { ComponentConfig } from '@puckeditor/core';
-import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
+import {
+  AlignCenterHorizontal,
+  AlignEndHorizontal,
+  AlignStartHorizontal,
+  Monitor,
+  Smartphone,
+  Tablet,
+  XCircle,
+} from 'lucide-react';
 
 export type GridBlockProps = {
   columnFormat: '1/1' | '1/2-1/2' | '1/3-2/3' | '2/3-1/3' | '1/3-1/3-1/3' | '1/4-1/4-1/4-1/4';
@@ -72,7 +79,65 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
         );
       },
     },
-    alignment: Fields.AlignmentYField({ defaultValue: 'center' }),
+    alignment: {
+      label: 'Alinhamento eixo Y',
+      type: 'custom',
+      render: ({ value, onChange }) => {
+        const options = [
+          { label: '', value: 'top', icon: AlignStartHorizontal },
+          { label: '', value: 'center', icon: AlignCenterHorizontal },
+          { label: '', value: 'bottom', icon: AlignEndHorizontal },
+        ];
+
+        // Usa o valor atual ou o defaultValue como fallback
+        const currentValue = value || defaultAlignmentY;
+        console.log('value', value, 'currentValue', currentValue);
+
+        return (
+          <div className="flex flex-col gap-2">
+            <span style={{ color: '#5A5A5A' }} className="text-sm font-semibold">
+              Alinhamento Vertical
+            </span>
+            <div className="grid grid-cols-3 gap-4">
+              {options.map((opt) => {
+                const Icon = opt.icon;
+                const isActive = currentValue === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => onChange(opt.value as GridBlockProps['alignment'])}
+                    title={opt.label}
+                    style={{
+                      padding: '12px 4px 6px 4px',
+                      border: `2px solid ${isActive ? systemColor : '#eee'}`,
+                      borderRadius: '6px',
+                      background: '#fff',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '4px',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    <Icon size={16} color={isActive ? systemColor : '#666'} />
+                    <span
+                      style={{
+                        fontSize: '10px',
+                        color: isActive ? systemColor : '#666',
+                        fontWeight: isActive ? 600 : 400,
+                      }}
+                    >
+                      {opt.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      },
+    },
     mobileBreakpoint: {
       label: 'Quebrar para 1 coluna em:',
       type: 'custom',

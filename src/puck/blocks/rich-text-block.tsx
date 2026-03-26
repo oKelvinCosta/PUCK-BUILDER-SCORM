@@ -80,6 +80,7 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
                 <RichTextMenu.Italic />
                 <RichTextMenu.BulletList />
                 <RichTextMenu.OrderedList />
+                <RichTextMenu.AlignSelect />
               </RichTextMenu.Group>
 
               {/* 🎨 COLOR PICKER */}
@@ -227,5 +228,5 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
     content: 'Texto aqui...',
   },
 
-  render: ({ content }) => <div style={{ padding: 16 }}>{content}</div>,
+  render: ({ content }) => <div className="mx-auto p-3">{content}</div>,
 };

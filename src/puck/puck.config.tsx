@@ -12,6 +12,8 @@ type Props = {
   CompleteScormButtonBlock: Blocks.CompleteScormButtonBlockProps;
   Section: Blocks.SectionBlockProps;
   Embed: Blocks.EmbedBlockProps;
+  HeaderChoicesBlock: Blocks.HeaderChoicesBlockProps;
+  FooterChoicesBlock: Blocks.FooterChoicesBlockProps;
 };
 
 export const config: Config<Props> = {
@@ -56,5 +58,11 @@ export const config: Config<Props> = {
 
     // Embed
     Embed: Blocks.EmbedBlock,
+
+    // HeaderChoices
+    HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
+
+    // FooterChoices
+    FooterChoicesBlock: Blocks.FooterChoicesBlock,
   },
 };

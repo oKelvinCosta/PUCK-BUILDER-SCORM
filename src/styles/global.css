@@ -246,12 +246,25 @@ a {
 }
 
 /* LISTS ----------------------------------------------------------- */
+
+ul,
+ol {
+  @apply flex flex-col gap-2;
+}
 ul {
-  @apply list-disc pl-4;
+  @apply list-inside list-disc;
+}
+ol {
+  @apply list-decimal pl-3;
 }
 
-ol {
-  @apply list-decimal pl-4;
+/* Hack to remove default list markers, bug from tiptap */
+ul li::marker {
+  content: '';
+}
+
+ul p {
+  display: list-item;
 }
 
 /* SIDEBAR COLLAPSE ------------------------------------------------
