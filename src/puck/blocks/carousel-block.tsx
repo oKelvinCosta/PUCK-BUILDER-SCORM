@@ -1,0 +1,114 @@
+import CarouselCard from '@/components/carousel-card';
+import { Button } from '@/components/ui/button';
+import type { ComponentConfig } from '@puckeditor/core';
+
+/**
+ * Props for the CarouselBlock component
+ */
+export type CarouselBlockProps = {
+  items: {
+    title: string;
+    content: any; // Using any for rich text content from Puck
+    imgSrc: string;
+    buttonText?: string;
+    buttonLink?: string;
+    buttonVariant?: 'indigo' | 'gray' | 'lime' | 'red' | 'outline' | 'link';
+  }[];
+  layout: '1:1' | '1:2' | '2:1';
+};
+
+const placeholderImgUrl =
+  'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop';
+
+/**
+ * CarouselBlock configuration for Puck Editor
+ */
+export const CarouselBlock: ComponentConfig<CarouselBlockProps> = {
+  fields: {
+    items: {
+      type: 'array',
+      label: 'Carousel Items',
+      getItemSummary: (item) => item.title || 'New Item',
+      arrayFields: {
+        title: {
+          type: 'text',
+          label: 'Title',
+        },
+        content: {
+          type: 'richtext',
+          label: 'Content',
+        },
+        imgSrc: {
+          type: 'text',
+          label: 'Image URL',
+        },
+        buttonText: {
+          type: 'text',
+          label: 'Button Text',
+        },
+        buttonLink: {
+          type: 'text',
+          label: 'Button Link',
+        },
+        buttonVariant: {
+          type: 'select',
+          label: 'Button Variant',
+          options: [
+            { label: 'Indigo', value: 'indigo' },
+            { label: 'Gray', value: 'gray' },
+            { label: 'Lime', value: 'lime' },
+            { label: 'Red', value: 'red' },
+            { label: 'Outline', value: 'outline' },
+            { label: 'Link', value: 'link' },
+          ],
+        },
+      },
+    },
+    layout: {
+      type: 'select',
+      label: 'Carousel Layout',
+      options: [
+        { label: '1:1 (Square)', value: '1:1' },
+        { label: '1:2 (Smaller Image)', value: '1:2' },
+        { label: '2:1 (Larger Image)', value: '2:1' },
+      ],
+    },
+  },
+  defaultProps: {
+    items: [
+      {
+        title: 'Slide 1 Title',
+        content: '<p>Slide 1 content...</p>',
+        imgSrc: placeholderImgUrl,
+        buttonText: 'Learn More',
+        buttonLink: '#',
+        buttonVariant: 'indigo',
+      },
+    ],
+    layout: '1:2',
+  },
+  render: ({ items, layout }) => {
+    // Transform Puck items into CarouselCard compatible format
+    const adaptedItems = items.map((item) => ({
+      imgSrc: item.imgSrc,
+      title: item.title,
+      content: (
+        <div className="flex flex-col gap-4">
+          {/* Render the rich text content directly */}
+          {item.content}
+
+          {/* Render optional action button */}
+          {item.buttonText && item.buttonLink && (
+            <div className="mt-2">
+              <a href={item.buttonLink} target="_blank" rel="noopener noreferrer">
+                <Button variant={item.buttonVariant || 'indigo'}>{item.buttonText}</Button>
+              </a>
+            </div>
+          )}
+        </div>
+      ),
+    }));
+
+    return <CarouselCard items={adaptedItems} layout={layout} />;
+  },
+};

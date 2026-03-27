@@ -13,7 +13,7 @@ import {
   SidebarSeparator,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { Boxes, Bug, Home, List, Sparkles } from 'lucide-react';
+import { Blocks, Boxes, Bug, Home, List, Sparkles } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const slug = (s: string) =>
@@ -59,6 +59,7 @@ export function AppSidebar() {
     { to: '/', label: 'Home', Icon: Home },
     { to: '/debug-scorm', label: 'Debug SCORM', Icon: Bug },
     { to: '/edit', label: 'Edit', Icon: Sparkles },
+    { to: '/shell', label: 'Shell', Icon: Blocks },
     { to: '/components', label: 'Components', Icon: Boxes },
   ];
 

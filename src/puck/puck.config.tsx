@@ -14,6 +14,8 @@ type Props = {
   Embed: Blocks.EmbedBlockProps;
   HeaderChoicesBlock: Blocks.HeaderChoicesBlockProps;
   FooterChoicesBlock: Blocks.FooterChoicesBlockProps;
+  CarouselBlock: Blocks.CarouselBlockProps;
+  AccordionBlock: Blocks.AccordionBlockProps;
 };
 
 export const config: Config<Props> = {
@@ -21,7 +23,7 @@ export const config: Config<Props> = {
     layout: {
       components: ['Section', 'Container', 'Grid'],
     },
-    tipografia: {
+    texto: {
       components: ['RichText'],
     },
     mídia: {
@@ -29,6 +31,10 @@ export const config: Config<Props> = {
     },
     scorm: {
       components: ['CompleteScormButtonBlock'],
+      defaultExpanded: false,
+    },
+    prebuilt: {
+      components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
       defaultExpanded: false,
     },
   },
@@ -64,5 +70,11 @@ export const config: Config<Props> = {
 
     // FooterChoices
     FooterChoicesBlock: Blocks.FooterChoicesBlock,
+
+    // Carousel
+    CarouselBlock: Blocks.CarouselBlock,
+
+    // Accordion
+    AccordionBlock: Blocks.AccordionBlock,
   },
 };

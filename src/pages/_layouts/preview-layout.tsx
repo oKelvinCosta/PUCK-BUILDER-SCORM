@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Outlet } from 'react-router-dom';
+import '@/styles/product.css';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function PreviewLayout() {
   const navigate = useNavigate();

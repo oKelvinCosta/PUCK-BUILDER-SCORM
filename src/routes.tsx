@@ -9,6 +9,7 @@ import { createHashRouter } from 'react-router-dom';
 import BlankLayout from './pages/_layouts/blank-layout';
 import { Editor } from './pages/puck/editor';
 import { Page } from './pages/puck/page';
+import { ApplicationShell } from './pages/puck/shell';
 
 const isDEV =
   process.env.NODE_ENV === 'development' || import.meta.env.VITE_ENABLE_SCORM_DEBUG_PROD === 'true';
@@ -44,6 +45,11 @@ const routesDEV = [
     path: '/preview',
     element: <BlankLayout />,
     children: [{ path: '', element: <Page /> }],
+  },
+  {
+    path: '/shell',
+    element: <BlankLayout />,
+    children: [{ path: '', element: <ApplicationShell /> }],
   },
 ];
 

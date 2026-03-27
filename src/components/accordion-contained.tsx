@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { RandomId } from '@/lib/random-id';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
@@ -16,38 +15,53 @@ interface AccordionItemData {
 interface AccordionProps {
   items: AccordionItemData[];
   className?: string;
+  forcedOpen?: boolean;
 }
 
-export default function AccordionContained({ items, className, ...props }: AccordionProps) {
+export default function AccordionContained({
+  items,
+  className,
+  forcedOpen = false,
+  ...props
+}: AccordionProps) {
   return (
     <div
       className={cn(
         'w-full overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm',
         className
       )}
+      onClick={(e) => e.stopPropagation()}
       {...props}
     >
-      <Accordion type="single" collapsible className="w-full">
-        {items.map((item, index) => {
-          const id = `${RandomId('accordionItem')}${index}`;
-          const value = `${RandomId('itemValue')}${index}`;
-
-          return (
+      {forcedOpen ? (
+        <Accordion type="multiple" className="w-full" value={items.map((_, i) => `item-${i}`)}>
+          {items.map((item, index) => (
             <AccordionItem
-              key={id}
-              value={value}
+              key={index}
+              value={`item-${index}`}
               className={cn(index !== 0 && 'border-t', 'w-full [&_h3]:mb-0')}
             >
               <AccordionTrigger className="px-4 py-3 text-lg">{item.title}</AccordionTrigger>
-
-              <AccordionContent className="px-4 pb-2 pt-0">
-                {/* 1️⃣ string | React.ReactNode */}
+              <AccordionContent className="px-4 pb-2 pt-0" forceMount>
                 {item.content}
               </AccordionContent>
             </AccordionItem>
-          );
-        })}
-      </Accordion>
+          ))}
+        </Accordion>
+      ) : (
+        <Accordion type="single" collapsible className="w-full">
+          {items.map((item, index) => (
+            <AccordionItem
+              key={index}
+              value={`item-${index}`}
+              className={cn(index !== 0 && 'border-t', 'w-full [&_h3]:mb-0')}
+            >
+              <AccordionTrigger className="px-4 py-3 text-lg">{item.title}</AccordionTrigger>
+              <AccordionContent className="px-4 pb-2 pt-0">{item.content}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      )}
     </div>
   );
 }

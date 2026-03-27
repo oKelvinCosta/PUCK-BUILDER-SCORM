@@ -1,5 +1,7 @@
+export * from './accordion-block';
 export * from './button-block';
 export * from './card-block';
+export * from './carousel-block';
 export * from './choices/footer-choices-block';
 export * from './choices/header-choices-block';
 export * from './complete-scorm-button-block';

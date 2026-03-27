@@ -1,0 +1,21 @@
+/* LISTS ----------------------------------------------------------- */
+
+ul,
+ol {
+  @apply flex flex-col gap-2;
+}
+ul {
+  @apply list-inside list-disc;
+}
+ol {
+  @apply list-decimal pl-3;
+}
+
+/* Hack to remove default list markers, bug from tiptap */
+ul li::marker {
+  content: '';
+}
+
+ul p {
+  display: list-item;
+}

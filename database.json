@@ -41,6 +41,28 @@
             "props": {
               "slot": [
                 {
+                  "type": "CarouselBlock",
+                  "props": {
+                    "items": [
+                      {
+                        "title": "Título do Slide 1",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                        "buttonText": "",
+                        "buttonLink": "",
+                        "buttonVariant": "indigo"
+                      },
+                      {
+                        "title": "Título do Slide 2",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop"
+                      }
+                    ],
+                    "layout": "1:1",
+                    "id": "CarouselBlock-3155d576-b552-486a-93f0-0965517b4fe0"
+                  }
+                },
+                {
                   "type": "Grid",
                   "props": {
                     "col-4": [],
@@ -94,6 +116,23 @@
             "type": "Container",
             "props": {
               "slot": [
+                {
+                  "type": "AccordionBlock",
+                  "props": {
+                    "items": [
+                      {
+                        "title": "Item 1",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop"
+                      },
+                      {
+                        "title": "Item 2",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>"
+                      }
+                    ],
+                    "id": "AccordionBlock-d378bea6-776f-4327-9617-e89b6a1f5a50"
+                  }
+                },
                 {
                   "type": "Grid",
                   "props": {
