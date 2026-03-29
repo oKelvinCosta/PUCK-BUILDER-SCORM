@@ -8,8 +8,8 @@ import ReadmePage from '@/pages/template/readme-page';
 import { createHashRouter } from 'react-router-dom';
 import BlankLayout from './pages/_layouts/blank-layout';
 import { Editor } from './pages/puck/editor';
+import { Home } from './pages/puck/home';
 import { Page } from './pages/puck/page';
-import { ApplicationShell } from './pages/puck/shell';
 
 const isDEV =
   process.env.NODE_ENV === 'development' || import.meta.env.VITE_ENABLE_SCORM_DEBUG_PROD === 'true';
@@ -49,7 +49,7 @@ const routesDEV = [
   {
     path: '/shell',
     element: <BlankLayout />,
-    children: [{ path: '', element: <ApplicationShell /> }],
+    children: [{ path: '', element: <Home /> }],
   },
 ];
 
