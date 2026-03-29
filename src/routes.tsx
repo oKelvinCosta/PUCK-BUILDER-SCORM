@@ -43,7 +43,7 @@ const routesDEV = [
   },
   {
     path: '/preview',
-    element: <BlankLayout />,
+    element: <PreviewLayout />,
     children: [{ path: '', element: <Page /> }],
   },
   {

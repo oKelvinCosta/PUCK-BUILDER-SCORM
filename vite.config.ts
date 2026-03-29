@@ -1,6 +1,8 @@
 import react from '@vitejs/plugin-react-swc';
+import autoprefixer from 'autoprefixer';
 import dotenv from 'dotenv';
 import path from 'path';
+import tailwindcss from 'tailwindcss';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
@@ -24,6 +26,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@root': path.resolve(__dirname, './'),
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
     },
   },
 });

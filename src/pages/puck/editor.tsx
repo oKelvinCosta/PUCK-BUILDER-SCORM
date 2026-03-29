@@ -2,13 +2,13 @@ import { config } from '@/puck/puck.config';
 import { Puck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import database from '@root/database.json';
-import '@root/src/styles/global.css';
+import '@root/src/styles/editor.css';
 
 // Describe initial data
 const initialData = database;
 
 // Save data to your database
-const save = async (data: any) => {
+const save = async (data: unknown) => {
   console.log('Saving data:', data);
 
   try {

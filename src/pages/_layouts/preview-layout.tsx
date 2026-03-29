@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import '@/styles/product.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function PreviewLayout() {

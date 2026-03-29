@@ -1,5 +1,6 @@
 import * as Blocks from '@/puck/blocks';
 import { type Config } from '@puckeditor/core';
+import '@root/src/styles/project.css';
 
 type Props = {
   RichText: Blocks.RichTextBlockProps;
