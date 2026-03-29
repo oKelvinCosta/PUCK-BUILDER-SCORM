@@ -1,8 +1,11 @@
+import { Button } from '@/components/ui/button';
 import { config } from '@/puck/puck.config';
 import { Puck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import database from '@root/database.json';
 import '@root/src/styles/editor.css';
+import { Eye, Rocket } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // Describe initial data
 const initialData = database;
@@ -37,5 +40,35 @@ const save = async (data: unknown) => {
 
 // Render Puck editor
 export function Editor() {
-  return <Puck config={config} data={initialData} onPublish={save} />;
+  const navigate = useNavigate();
+
+  const handlePreview = () => {
+    // Lógica para abrir preview
+    navigate('/preview');
+  };
+
+  const handlePublish = async () => {
+    const data = initialData; // ou pegue o estado atual se necessário
+    await save(data);
+  };
+
+  return (
+    <Puck
+      config={config}
+      data={initialData}
+      onPublish={save}
+      overrides={{
+        headerActions: () => (
+          <>
+            <Button variant="outline" title="Preview" size={'icon'} onClick={handlePreview}>
+              <Eye />
+            </Button>
+            <Button className="flex items-center pt-[7px]" onClick={handlePublish}>
+              <Rocket /> Exportar
+            </Button>
+          </>
+        ),
+      }}
+    />
+  );
 }
