@@ -1,5 +1,5 @@
 // @/components/puck/ImgBlock.tsx
-import WrapperBlock from '@/components/puck/wrapper-block';
+import SlotWrapper from '@/components/puck/slot-wrapper';
 import * as Fields from '@/puck/fields';
 import type { ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
@@ -247,18 +247,18 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
     };
 
     return (
-      <WrapperBlock>
-        <div className={`mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}>
-          {config.slots.map((Slot, index) => {
-            const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
-            return (
-              <div key={index} className={spanClass}>
-                <Slot />
-              </div>
-            );
-          })}
-        </div>
-      </WrapperBlock>
+      <div className={`mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}>
+        {config.slots.map((Slot, index) => {
+          const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
+          return (
+            <div key={index} className={spanClass}>
+              <SlotWrapper>
+                <Slot className="editor-padding" />
+              </SlotWrapper>
+            </div>
+          );
+        })}
+      </div>
     );
   },
 };

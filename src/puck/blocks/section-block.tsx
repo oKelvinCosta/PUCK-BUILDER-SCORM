@@ -1,4 +1,5 @@
 import Divider from '@/components/divider';
+import SlotWrapper from '@/components/puck/slot-wrapper';
 import type { ComponentConfig } from '@puckeditor/core';
 
 export type SectionBlockProps = {
@@ -14,7 +15,6 @@ export type SectionBlockProps = {
   contentClassName?: string;
   slot: any;
 };
-const isEditing = process.env.NODE_ENV === 'development';
 
 export const SectionBlock: ComponentConfig<SectionBlockProps> = {
   fields: {
@@ -165,7 +165,9 @@ export const SectionBlock: ComponentConfig<SectionBlockProps> = {
             paddingBottom: `${paddingBottom}px`,
           }}
         >
-          <Slot className={isEditing ? 'p-6' : ''} />
+          <SlotWrapper>
+            <Slot className="editor-padding" />
+          </SlotWrapper>
         </div>
 
         {/* Divider Bottom */}

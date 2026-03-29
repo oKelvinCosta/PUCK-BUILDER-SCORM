@@ -15,8 +15,6 @@ export type CardBlockProps = {
   slot?: any[];
 };
 
-const isEditing = process.env.NODE_ENV === 'development';
-
 export const CardBlock: ComponentConfig<CardBlockProps> = {
   fields: {
     imgSrc: { type: 'text' },
@@ -81,11 +79,7 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
         variant={variant}
       >
         {content}
-        {Slot && Slot.length > 0 ? (
-          <Slot className={isEditing ? 'p-6' : ''} />
-        ) : (
-          <div style={{ height: '20px' }} />
-        )}
+        {Slot && Slot.length > 0 ? <Slot /> : ''}
       </MainCard>
     );
   },
