@@ -1,9 +1,16 @@
 import { Button } from '@/components/ui/button';
+import { useEditorMode } from '@/stores/editor-mode-store';
 import { ChevronLeft } from 'lucide-react';
+import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function PreviewLayout() {
   const navigate = useNavigate();
+  const { setMode } = useEditorMode();
+
+  useEffect(() => {
+    setMode('preview');
+  }, [setMode]);
 
   return (
     <div className="flex min-h-screen flex-col bg-white">

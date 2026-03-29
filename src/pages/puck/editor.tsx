@@ -1,17 +1,19 @@
 import { Button } from '@/components/ui/button';
 import { config } from '@/puck/puck.config';
+import { useEditorMode } from '@/stores/editor-mode-store';
 import { Puck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import database from '@root/database.json';
 import '@root/src/styles/editor.css';
 import { Eye, Rocket } from 'lucide-react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Describe initial data
 const initialData = database;
 
-// Save data to your database
-const save = async (data: unknown) => {
+// Save data to JSON file
+const saveJsonFile = async (data: unknown) => {
   console.log('Saving data:', data);
 
   try {
@@ -42,27 +44,33 @@ const save = async (data: unknown) => {
 export function Editor() {
   const navigate = useNavigate();
 
+  const { setMode } = useEditorMode();
+
+  useEffect(() => {
+    setMode('editing');
+  }, [setMode]);
+
   const handlePreview = () => {
-    // Lógica para abrir preview
     navigate('/preview');
   };
 
   const handlePublish = async () => {
-    const data = initialData; // ou pegue o estado atual se necessário
-    await save(data);
+    const data = initialData;
+    await saveJsonFile(data);
   };
 
   return (
     <Puck
       config={config}
       data={initialData}
-      onPublish={save}
+      onPublish={saveJsonFile}
       overrides={{
         headerActions: () => (
           <>
             <Button variant="outline" title="Preview" size={'icon'} onClick={handlePreview}>
               <Eye />
             </Button>
+
             <Button className="flex items-center pt-[7px]" onClick={handlePublish}>
               <Rocket /> Exportar
             </Button>

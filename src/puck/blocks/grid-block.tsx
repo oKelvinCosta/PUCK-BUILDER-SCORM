@@ -1,4 +1,5 @@
 // @/components/puck/ImgBlock.tsx
+import WrapperBlock from '@/components/puck/wrapper-block';
 import * as Fields from '@/puck/fields';
 import type { ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
@@ -12,8 +13,6 @@ export type GridBlockProps = {
   'col-3': any;
   'col-4': any;
 };
-
-const isEditing = process.env.NODE_ENV === 'development';
 
 const systemColor = '#3b82f6';
 const defaultAlignmentY = 'center' satisfies GridBlockProps['alignment'];
@@ -248,18 +247,18 @@ export const GridBlock: ComponentConfig<GridBlockProps> = {
     };
 
     return (
-      <div
-        className={`${isEditing && 'py-4'} mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}
-      >
-        {config.slots.map((Slot, index) => {
-          const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
-          return (
-            <div key={index} className={spanClass}>
-              <Slot className={isEditing ? 'p-6' : ''} />
-            </div>
-          );
-        })}
-      </div>
+      <WrapperBlock>
+        <div className={`mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}>
+          {config.slots.map((Slot, index) => {
+            const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
+            return (
+              <div key={index} className={spanClass}>
+                <Slot />
+              </div>
+            );
+          })}
+        </div>
+      </WrapperBlock>
     );
   },
 };

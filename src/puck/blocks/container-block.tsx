@@ -1,12 +1,12 @@
 // @/components/puck/ImgBlock.tsx
 import Container from '@/components/container';
+import { useEditorModeStore } from '@/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
 
 export type ContainerBlockProps = {
   variant: 1280 | 980 | 780 | 580;
   slot: any;
 };
-const isEditing = process.env.NODE_ENV === 'development';
 
 export const ContainerBlock: ComponentConfig<ContainerBlockProps> = {
   fields: {
@@ -29,6 +29,8 @@ export const ContainerBlock: ComponentConfig<ContainerBlockProps> = {
     slot: [],
   },
   render: ({ variant, slot: Slot }) => {
+    const isEditing = useEditorModeStore.getState().isEditing;
+
     return (
       <Container maxWidth={variant} className="container-kelvin">
         <Slot className={`${isEditing ? 'p-6' : ''} mx-auto`} />
