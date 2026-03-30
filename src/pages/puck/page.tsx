@@ -8,5 +8,5 @@ import database from '@root/database.json';
 const initialData = database;
 
 export function Page() {
-  return <Render config={config} data={initialData} />;
+  return <Render config={config()} data={initialData} />;
 }

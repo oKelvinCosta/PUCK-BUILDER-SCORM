@@ -43,9 +43,9 @@ const saveJsonFile = async (data: unknown) => {
 // Render Puck editor
 export function Editor() {
   const navigate = useNavigate();
-
   const { setMode } = useEditorMode();
 
+  // Set editor mode to editing
   useEffect(() => {
     setMode('editing');
   }, [setMode]);
@@ -61,7 +61,7 @@ export function Editor() {
 
   return (
     <Puck
-      config={config}
+      config={config()}
       data={initialData}
       onPublish={saveJsonFile}
       overrides={{
@@ -80,3 +80,7 @@ export function Editor() {
     />
   );
 }
+
+// Observation:
+
+// config and the blocks must be functions, so the zustand store can be used correctly inside them

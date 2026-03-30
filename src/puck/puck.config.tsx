@@ -19,63 +19,65 @@ type Props = {
   AccordionBlock: Blocks.AccordionBlockProps;
 };
 
-export const config: Config<Props> = {
-  categories: {
-    layout: {
-      components: ['Section', 'Container', 'Grid'],
+export function config(): Config<Props> {
+  return {
+    categories: {
+      layout: {
+        components: ['Section', 'Container', 'Grid'],
+      },
+      texto: {
+        components: ['RichText'],
+      },
+      mídia: {
+        components: ['Img', 'Embed'],
+      },
+      scorm: {
+        components: ['CompleteScormButtonBlock'],
+        defaultExpanded: false,
+      },
+      prebuilt: {
+        components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
+        defaultExpanded: false,
+      },
     },
-    texto: {
-      components: ['RichText'],
+    components: {
+      // CompleteScormButton
+      CompleteScormButtonBlock: Blocks.CompleteScormButtonBlock,
+      // Button
+      Button: Blocks.ButtonBlock,
+      // Container
+      Container: Blocks.ContainerBlock(),
+
+      // RichText
+      RichText: Blocks.RichTextBlock,
+      // Card
+      Card: Blocks.CardBlock,
+      // Html
+      Html: Blocks.HtmlBlock,
+
+      // Img
+      Img: Blocks.ImgBlock,
+
+      // Grid
+      Grid: Blocks.GridBlock(),
+
+      // Section
+      Section: Blocks.SectionBlock(),
+
+      // Embed
+      Embed: Blocks.EmbedBlock,
+
+      // HeaderChoices
+      HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
+
+      // FooterChoices
+      FooterChoicesBlock: Blocks.FooterChoicesBlock,
+
+      // Carousel
+      CarouselBlock: Blocks.CarouselBlock,
+
+      // Accordion
+      AccordionBlock: Blocks.AccordionBlock,
     },
-    mídia: {
-      components: ['Img', 'Embed'],
-    },
-    scorm: {
-      components: ['CompleteScormButtonBlock'],
-      defaultExpanded: false,
-    },
-    prebuilt: {
-      components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
-      defaultExpanded: false,
-    },
-  },
-  components: {
-    // CompleteScormButton
-    CompleteScormButtonBlock: Blocks.CompleteScormButtonBlock,
-    // Button
-    Button: Blocks.ButtonBlock,
-    // Container
-    Container: Blocks.ContainerBlock,
-
-    // RichText
-    RichText: Blocks.RichTextBlock,
-    // Card
-    Card: Blocks.CardBlock,
-    // Html
-    Html: Blocks.HtmlBlock,
-
-    // Img
-    Img: Blocks.ImgBlock,
-
-    // Grid
-    Grid: Blocks.GridBlock,
-
-    // Section
-    Section: Blocks.SectionBlock,
-
-    // Embed
-    Embed: Blocks.EmbedBlock,
-
-    // HeaderChoices
-    HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
-
-    // FooterChoices
-    FooterChoicesBlock: Blocks.FooterChoicesBlock,
-
-    // Carousel
-    CarouselBlock: Blocks.CarouselBlock,
-
-    // Accordion
-    AccordionBlock: Blocks.AccordionBlock,
-  },
-};
+  };
+}
