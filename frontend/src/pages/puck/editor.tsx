@@ -4,10 +4,10 @@ import { config } from '@/editor/puck.config';
 import { useEditorMode } from '@/editor/stores/editor-mode-store';
 import { Puck, usePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
-import database from '@root/database.json';
 import { Eye, Rocket } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import database from '../../../../backend/database/database.json';
 
 // Describe initial data
 const initialData = database;

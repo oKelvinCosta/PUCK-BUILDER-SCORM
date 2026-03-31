@@ -12,5 +12,5 @@ export const SlotPuck = ({ Slot, className = '', ...props }: SlotPuckProps) => {
 
   const editorClass = isEditing ? 'p-2' : '';
 
-  return <Slot className={cn(editorClass, className, 'flex flex-col gap-10')} {...props} />;
+  return <Slot className={cn(editorClass, 'flex flex-col gap-10', className)} {...props} />;
 };

@@ -1,0 +1,342 @@
+{
+  "root": {
+    "props": {
+      "title": "Choices - 8º ano | Quanto custo"
+    }
+  },
+  "content": [
+    {
+      "type": "HeaderChoicesBlock",
+      "props": {
+        "gradient": "gradient01",
+        "grade": "8º ano",
+        "subject": "Quanto custo",
+        "backgroundSrc": "./imgs/Hero.webp",
+        "dividerType": "type02",
+        "id": "HeaderChoicesBlock-cfe287d2-0abb-422f-8366-85246f067d94"
+      }
+    },
+    {
+      "type": "Section",
+      "props": {
+        "slot": [
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "RichText",
+                  "props": {
+                    "content": "<h1 style=\"text-align: center;\"><span style=\"color: rgb(139, 92, 246);\">Olá!</span></h1><h4 style=\"text-align: center;\">Hoje vamos conversar sobre:</h4><ul><li><p style=\"text-align: center;\">Estipular metas financeiras para sua família;</p></li><li><p style=\"text-align: center;\">Montar reservas de emergência;</p></li><li><p style=\"text-align: center;\">Planejar o futuro.</p></li></ul>",
+                    "id": "RichText-504a74a1-bf22-4fb7-a817-7194b147002f"
+                  }
+                }
+              ],
+              "variant": 780,
+              "id": "Container-36ffbf1e-b1fc-4252-b21c-f6930c8e521f"
+            }
+          },
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "CarouselBlock",
+                  "props": {
+                    "items": [
+                      {
+                        "title": "Título do Slide 1",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                        "buttonText": "",
+                        "buttonLink": "",
+                        "buttonVariant": "indigo"
+                      },
+                      {
+                        "title": "Título do Slide 2",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop"
+                      }
+                    ],
+                    "layout": "1:1",
+                    "id": "CarouselBlock-3155d576-b552-486a-93f0-0965517b4fe0"
+                  }
+                },
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-c050bdee-3662-4387-8794-e5c2e7e5c00b",
+                          "src": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                          "borderRadius": 0,
+                          "maxWidthValue": 100,
+                          "maxWidthUnit": "%",
+                          "alignment": "center",
+                          "rounded": false
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "content": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.google.com/search?q=power+rangers&amp;rlz=1C1GCEU_pt-BRBR1175BR1175&amp;oq=power&amp;gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&amp;sourceid=chrome&amp;ie=UTF-8\">Ver pesquisa</a></p>",
+                          "alignment": "left",
+                          "variant": "indigo",
+                          "size": "default",
+                          "id": "Button-92a946fa-e460-4d2c-b8f0-2a934118fe4a",
+                          "link": "https://www.google.com/search?q=power+rangers&rlz=1C1GCEU_pt-BRBR1175BR1175&oq=power&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
+                        }
+                      },
+                      {
+                        "type": "RichText",
+                        "props": {
+                          "id": "RichText-30265a8d-ba63-4c46-9ca4-1adaeb456db9",
+                          "content": "<p>Agora que sua família já possui uma reserva financeira, chegou hora de criar as metas financeiras dela.</p>"
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "content": "<p><a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.google.com/search?q=power+rangers&amp;rlz=1C1GCEU_pt-BRBR1175BR1175&amp;oq=power&amp;gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&amp;sourceid=chrome&amp;ie=UTF-8\">Ver pesquisa</a></p>",
+                          "alignment": "left",
+                          "variant": "indigo",
+                          "size": "default",
+                          "id": "Button-872cbc65-6b77-4cfa-9ab9-ff864a546773",
+                          "link": "https://www.google.com/search?q=power+rangers&rlz=1C1GCEU_pt-BRBR1175BR1175&oq=power&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIHCAEQLhiABDIOCAIQRRgnGDsYgAQYigUyBwgDEAAYgAQyBggEEEUYPDIGCAUQRRg8MgYIBhBFGD0yBggHEEUYQdIBCDE0NzFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8"
+                        }
+                      }
+                    ],
+                    "id": "Grid-7de87522-e74f-440f-8b6d-f98064b0db18",
+                    "columnFormat": "1/2-1/2",
+                    "alignment": "center",
+                    "mobileBreakpoint": "md"
+                  }
+                }
+              ],
+              "variant": "980",
+              "id": "Container-a6507091-d3c8-4428-a992-4f1cc44c673c"
+            }
+          },
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "AccordionBlock",
+                  "props": {
+                    "items": [
+                      {
+                        "title": "Item 1",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>",
+                        "imgSrc": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop"
+                      },
+                      {
+                        "title": "Item 2",
+                        "content": "<p>Mussum Ipsum, cacilds vidis litro abertis.  Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mé, boa gentis num é. Paisis, filhis, espiritis santis. Per aumento de cachacis, eu reclamis.</p>"
+                      }
+                    ],
+                    "id": "AccordionBlock-d378bea6-776f-4327-9617-e89b6a1f5a50"
+                  }
+                },
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "RichText",
+                        "props": {
+                          "content": "<p>Estipular objetivos e metas exige muita reflexão, afinal depende do contexto de cada família.</p>",
+                          "id": "RichText-1f5c66af-6729-4e5b-b7f9-69f32bec2904"
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "src": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                          "borderRadius": 0,
+                          "maxWidthValue": 100,
+                          "maxWidthUnit": "%",
+                          "alignment": "center",
+                          "rounded": true,
+                          "id": "Img-c8c44ec3-c47e-4caf-a9d9-b9ab2c6c1eab"
+                        }
+                      }
+                    ],
+                    "columnFormat": "1/3-2/3",
+                    "alignment": "center",
+                    "mobileBreakpoint": "md",
+                    "id": "Grid-963ce584-eebf-455c-a70c-0dec433efb56"
+                  }
+                },
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "Img",
+                        "props": {
+                          "id": "Img-457406a0-8abf-4ebe-afeb-88130ae954f9",
+                          "src": "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=800&h=600&fit=crop",
+                          "borderRadius": 0,
+                          "maxWidthValue": 100,
+                          "maxWidthUnit": "%",
+                          "alignment": "center",
+                          "rounded": true
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "RichText",
+                        "props": {
+                          "id": "RichText-e69e0b24-162b-4a98-8853-00805bc67546",
+                          "content": "<p>Essas metas podem ser a busca de estabilizar a vida financeira, pagando dívidas. Ou ainda conquistar algo que requer investimento financeiro como um bem ou uma viagem.</p>"
+                        }
+                      }
+                    ],
+                    "columnFormat": "2/3-1/3",
+                    "alignment": "center",
+                    "mobileBreakpoint": "md",
+                    "id": "Grid-eab7c915-c93c-49ed-b7d3-fb79f2aaef52"
+                  }
+                }
+              ],
+              "variant": 780,
+              "id": "Container-5ec32804-f334-4aea-9b5d-22b018e4950c"
+            }
+          }
+        ],
+        "backgroundImage": "",
+        "backgroundColor": "#ffffff",
+        "imagePosition": "center",
+        "paddingTop": 80,
+        "paddingBottom": 80,
+        "id": "Section-8c5ca3fd-999c-4278-b7c1-f8faf37a8c48"
+      }
+    },
+    {
+      "type": "Section",
+      "props": {
+        "slot": [
+          {
+            "type": "Container",
+            "props": {
+              "slot": [
+                {
+                  "type": "RichText",
+                  "props": {
+                    "id": "RichText-0860ac6f-5dda-4f46-adca-d0587eecc8e1",
+                    "content": "<h3>Tipos de cenários</h3>"
+                  }
+                },
+                {
+                  "type": "Grid",
+                  "props": {
+                    "col-4": [],
+                    "col-3": [],
+                    "col-2": [
+                      {
+                        "type": "Card",
+                        "props": {
+                          "slot": [],
+                          "id": "Card-9c794af0-3ed6-4f86-956b-08533778b269",
+                          "title": "Card Title",
+                          "content": "<p>Card content goes here...</p>",
+                          "horizontal": false,
+                          "side": "left",
+                          "textSize": 16,
+                          "variant": "default",
+                          "imgSrc": "https://images.ctfassets.net/s5n2t79q9icq/5m54WQbvuGoI21s8PLZLC9/3c14d874b861375b0b464898bbca0d5b/Bioar8rbgkaorbnieob_1920x1000.webp?q=70"
+                        }
+                      }
+                    ],
+                    "col-1": [
+                      {
+                        "type": "Card",
+                        "props": {
+                          "slot": [],
+                          "id": "Card-4bcd79e0-bc39-4800-876f-fa244452b2fa",
+                          "title": "Card Title",
+                          "content": "Card content goes here...",
+                          "horizontal": false,
+                          "side": "left",
+                          "textSize": 16,
+                          "variant": "default",
+                          "imgSrc": "https://images.ctfassets.net/s5n2t79q9icq/5m54WQbvuGoI21s8PLZLC9/3c14d874b861375b0b464898bbca0d5b/Bioar8rbgkaorbnieob_1920x1000.webp?q=70"
+                        }
+                      }
+                    ],
+                    "id": "Grid-86100d24-64f0-4734-8b30-7cd35deebe8c",
+                    "columnFormat": "1/2-1/2",
+                    "alignment": "center",
+                    "mobileBreakpoint": "md"
+                  }
+                },
+                {
+                  "type": "Card",
+                  "props": {
+                    "slot": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "id": "Button-394805ca-aab7-41de-ae23-17e8af5b2a53",
+                          "content": "<p>Button</p>",
+                          "link": "",
+                          "alignment": "left",
+                          "variant": "indigo",
+                          "size": "default"
+                        }
+                      }
+                    ],
+                    "id": "Card-328a9c51-f9ab-4e46-ade7-5c10700e5fc8",
+                    "title": "Card Title",
+                    "content": "<p>Card content goes here...</p>",
+                    "horizontal": true,
+                    "side": "left",
+                    "textSize": 16,
+                    "variant": "gray",
+                    "imgSrc": "https://images.ctfassets.net/s5n2t79q9icq/5m54WQbvuGoI21s8PLZLC9/3c14d874b861375b0b464898bbca0d5b/Bioar8rbgkaorbnieob_1920x1000.webp?q=70"
+                  }
+                }
+              ],
+              "id": "Container-b2b82f6d-7894-4a02-9745-62b894c7b66a",
+              "variant": 780
+            }
+          }
+        ],
+        "backgroundImage": "",
+        "backgroundColor": "#f1ffb8",
+        "imagePosition": "center",
+        "paddingTop": 80,
+        "paddingBottom": 80,
+        "id": "Section-e0873322-b2a8-4f7f-b739-ce6fe7b2d9b2",
+        "dividerTopType": "type04",
+        "dividerTopClassName": "text-white"
+      }
+    },
+    {
+      "type": "FooterChoicesBlock",
+      "props": {
+        "dividerTopType": "type05",
+        "dividerTopClassName": "text-lime-200",
+        "dividerBottomType": "type02",
+        "dividerBottomClassName": "text-primary",
+        "backgroundSrc": "./imgs/bg_final.webp",
+        "id": "FooterChoicesBlock-be453ef6-2766-48f1-ad41-9ecbddac7454"
+      }
+    }
+  ],
+  "zones": {}
+}

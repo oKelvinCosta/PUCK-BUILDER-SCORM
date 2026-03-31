@@ -228,5 +228,5 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
     content: 'Texto aqui...',
   },
 
-  render: ({ content }) => <div className="mx-auto p-3">{content}</div>,
+  render: ({ content }) => <div className="mx-auto">{content}</div>,
 };

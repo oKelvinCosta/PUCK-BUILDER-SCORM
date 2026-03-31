@@ -3,6 +3,7 @@ import MainCard from '@/components/main-card';
 import type { ComponentConfig } from '@puckeditor/core';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
+import { SlotPuck } from '../utils/slot-puck';
 
 export type CardBlockProps = {
   imgSrc?: string;
@@ -79,7 +80,7 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
         variant={variant}
       >
         {content}
-        {Slot && Slot.length > 0 ? <Slot /> : ''}
+        {Slot && Slot.length > 0 ? <SlotPuck Slot={Slot} className="mt-4 gap-4" /> : ''}
       </MainCard>
     );
   },

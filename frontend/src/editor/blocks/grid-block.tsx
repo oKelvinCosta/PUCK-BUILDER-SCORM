@@ -257,7 +257,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
             const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
             return (
               <div key={index} className={spanClass}>
-                <SlotPuck Slot={Slot} />
+                <SlotPuck Slot={Slot} className="gap-6" />
               </div>
             );
           })}
