@@ -12,71 +12,105 @@ type Props = {
   CompleteScormButtonBlock: Blocks.CompleteScormButtonBlockProps;
   Section: Blocks.SectionBlockProps;
   Embed: Blocks.EmbedBlockProps;
-  HeaderChoicesBlock: Blocks.HeaderChoicesBlockProps;
-  FooterChoicesBlock: Blocks.FooterChoicesBlockProps;
   CarouselBlock: Blocks.CarouselBlockProps;
   AccordionBlock: Blocks.AccordionBlockProps;
+  // Choices blocks
+  HeaderChoicesBlock: Blocks.HeaderChoicesBlockProps;
+  FooterChoicesBlock: Blocks.FooterChoicesBlockProps;
 };
 
-export function config(): Config<Props> {
+export function config({ projectType }: { projectType: string }): Config<Props> {
+  const projectConfig = getProjectConfig(projectType);
+
+  const components = {
+    // SCORM & Completion
+    CompleteScormButtonBlock: Blocks.CompleteScormButtonBlock,
+    // Buttons
+    Button: Blocks.ButtonBlock,
+    // Containers
+    Container: Blocks.ContainerBlock(),
+
+    // Text & Content
+    RichText: Blocks.RichTextBlock,
+    Card: Blocks.CardBlock,
+    Html: Blocks.HtmlBlock,
+
+    // Layout
+    Grid: Blocks.GridBlock(),
+    Section: Blocks.SectionBlock(),
+
+    // Media & Interactive
+    Img: Blocks.ImgBlock,
+    Embed: Blocks.EmbedBlock,
+    CarouselBlock: Blocks.CarouselBlock,
+    AccordionBlock: Blocks.AccordionBlock,
+
+    // Dynamic blocks based on project type
+    ...projectConfig.components,
+  };
+
   return {
     categories: {
       layout: {
         components: ['Section', 'Container', 'Grid'],
       },
-      texto: {
-        components: ['RichText'],
+      text: {
+        components: ['RichText', 'Card', 'Html'],
+        title: 'Texto e conteúdo',
       },
-      mídia: {
-        components: ['Img', 'Embed'],
+      media: {
+        components: ['Img', 'Embed', 'CarouselBlock', 'AccordionBlock'],
+        title: 'Mídia e interatividade',
       },
       scorm: {
         components: ['CompleteScormButtonBlock'],
         defaultExpanded: false,
       },
-      prebuilt: {
-        components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
-        defaultExpanded: false,
+      // Dynamic categories based on project type
+      ...projectConfig.categories,
+    },
+    // Type assertion is required because the spread operator above
+    // doesn't guarantee all mandatory keys from 'Props' are present at compile time.
+    components: components as Config<Props>['components'],
+  };
+}
+
+// Simplified type for project-specific configurations
+type ProjectConfig = {
+  components: Partial<Config<Props>['components']>; // O Partial permite que a função getProjectConfig seja especializada. Ela não precisa conhecer ou reimplementar o sistema inteiro; ela apenas "complementa" o objeto de componentes base com o que for específico para aquele projectType
+  categories: Config<Props>['categories'];
+};
+
+/**
+ * Returns specific blocks and categories for a given project type.
+ * Centralized place for project-specific logic (e.g., 'choices', 'quiz').
+ */
+function getProjectConfig(projectType: string): ProjectConfig {
+  const configs: Record<string, ProjectConfig> = {
+    choices: {
+      components: {
+        HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
+        FooterChoicesBlock: Blocks.FooterChoicesBlock,
+      },
+      categories: {
+        'Projeto: Choices': {
+          components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
+        },
       },
     },
-    components: {
-      // CompleteScormButton
-      CompleteScormButtonBlock: Blocks.CompleteScormButtonBlock,
-      // Button
-      Button: Blocks.ButtonBlock,
-      // Container
-      Container: Blocks.ContainerBlock(),
-
-      // RichText
-      RichText: Blocks.RichTextBlock,
-      // Card
-      Card: Blocks.CardBlock,
-      // Html
-      Html: Blocks.HtmlBlock,
-
-      // Img
-      Img: Blocks.ImgBlock,
-
-      // Grid
-      Grid: Blocks.GridBlock(),
-
-      // Section
-      Section: Blocks.SectionBlock(),
-
-      // Embed
-      Embed: Blocks.EmbedBlock,
-
-      // HeaderChoices
-      HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
-
-      // FooterChoices
-      FooterChoicesBlock: Blocks.FooterChoicesBlock,
-
-      // Carousel
-      CarouselBlock: Blocks.CarouselBlock,
-
-      // Accordion
-      AccordionBlock: Blocks.AccordionBlock,
+    'other-project': {
+      components: {
+        HeaderChoicesBlock: Blocks.HeaderChoicesBlock,
+        FooterChoicesBlock: Blocks.FooterChoicesBlock,
+      },
+      categories: {
+        'Projeto: Choices': {
+          components: ['HeaderChoicesBlock', 'FooterChoicesBlock'],
+        },
+      },
     },
+    // Add new project types here (e.g., 'quiz', 'tutorial')
   };
+
+  return configs[projectType] || { components: {}, categories: {} };
 }

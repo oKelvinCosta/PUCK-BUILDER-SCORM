@@ -54,9 +54,15 @@ export function Editor() {
     navigate('/preview');
   };
 
+  // const config2 = useMemo(() => getConfig(projectType), [projectType]);
+
+  const configParams = {
+    projectType: 'choices',
+  };
+
   return (
     <Puck
-      config={config()}
+      config={config(configParams)}
       data={initialData}
       onPublish={saveJsonFile}
       overrides={{

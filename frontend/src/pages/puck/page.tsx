@@ -10,7 +10,7 @@ const initialData = database;
 export function Page() {
   return (
     <div className="puck-canvas">
-      <Render config={config()} data={initialData} />
+      <Render config={config({ projectType: 'choices' })} data={initialData} />
     </div>
   );
 }
