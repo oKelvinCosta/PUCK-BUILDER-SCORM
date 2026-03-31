@@ -1,6 +1,7 @@
 import Divider from '@/components/divider';
 import { useEditorMode } from '@/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
+import { SlotPuck } from '../utils/slot-puck';
 
 export type SectionBlockProps = {
   backgroundImage: string;
@@ -168,7 +169,8 @@ export const SectionBlock = (): ComponentConfig<SectionBlockProps> => {
               paddingBottom: `${paddingBottom}px`,
             }}
           >
-            <Slot className={`${isEditing ? 'p-2' : ''}`} />
+            {/* <Slot className={`${isEditing ? 'p-2' : ''}`} /> */}
+            <SlotPuck Slot={Slot} />
           </div>
 
           {/* Divider Bottom */}

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { config } from '@/puck/puck.config';
 import { useEditorMode } from '@/stores/editor-mode-store';
-import { Puck } from '@puckeditor/core';
+import { Puck, usePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
 import database from '@root/database.json';
 import '@root/src/styles/editor.css';
@@ -54,28 +54,33 @@ export function Editor() {
     navigate('/preview');
   };
 
-  const handlePublish = async () => {
-    const data = initialData;
-    await saveJsonFile(data);
-  };
-
   return (
     <Puck
       config={config()}
       data={initialData}
       onPublish={saveJsonFile}
       overrides={{
-        headerActions: () => (
-          <>
-            <Button variant="outline" title="Preview" size={'icon'} onClick={handlePreview}>
-              <Eye />
-            </Button>
+        // Transforms in function to allow use of hooks
+        headerActions: function HeaderActions() {
+          // usePuck must be used inside <Puck>.
+          const { appState } = usePuck();
 
-            <Button className="flex items-center pt-[7px]" onClick={handlePublish}>
-              <Rocket /> Exportar
-            </Button>
-          </>
-        ),
+          const handlePublish = async () => {
+            await saveJsonFile(appState.data);
+          };
+
+          return (
+            <>
+              <Button variant="outline" title="Preview" size={'icon'} onClick={handlePreview}>
+                <Eye />
+              </Button>
+
+              <Button className="flex items-center pt-[7px]" onClick={handlePublish}>
+                <Rocket /> Exportar
+              </Button>
+            </>
+          );
+        },
       }}
     />
   );

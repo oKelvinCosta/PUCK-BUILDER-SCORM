@@ -3,6 +3,7 @@ import * as Fields from '@/puck/fields';
 import { useEditorMode } from '@/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
+import { SlotPuck } from '../utils/slot-puck';
 
 export type GridBlockProps = {
   columnFormat: '1/1' | '1/2-1/2' | '1/3-2/3' | '2/3-1/3' | '1/3-1/3-1/3' | '1/4-1/4-1/4-1/4';
@@ -251,12 +252,12 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
       };
 
       return (
-        <div className={`mt-10 ${config.containerClass} ${alignmentClasses[alignment]}`}>
+        <div className={`${config.containerClass} ${alignmentClasses[alignment]}`}>
           {config.slots.map((Slot, index) => {
             const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
             return (
               <div key={index} className={spanClass}>
-                <Slot className={`${isEditing ? 'p-2' : ''}`} />
+                <SlotPuck Slot={Slot} />
               </div>
             );
           })}

@@ -2,6 +2,7 @@
 import Container from '@/components/container';
 import { useEditorMode } from '@/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
+import { SlotPuck } from '../utils/slot-puck';
 
 const systemColor = '#3b82f6';
 
@@ -95,7 +96,7 @@ export const ContainerBlock = (): ComponentConfig<ContainerBlockProps> => {
 
       return (
         <Container maxWidth={maxWidthMap[variant]} className="container-kelvin">
-          <Slot className={`${isEditing ? 'p-2' : ''} mx-auto w-full`} />
+          <SlotPuck Slot={Slot} className="mx-auto w-full" />
         </Container>
       );
     },
