@@ -1,6 +1,5 @@
 // @/components/puck/ImgBlock.tsx
 import * as Fields from '@/editor/fields';
-import { useEditorMode } from '@/editor/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
 import { SlotPuck } from '../utils/slot-puck';
@@ -19,7 +18,7 @@ const systemColor = '#3b82f6';
 const defaultAlignmentY = 'center' satisfies GridBlockProps['alignment'];
 
 export const GridBlock = (): ComponentConfig<GridBlockProps> => {
-  const { isEditing } = useEditorMode();
+  // const { isEditing } = useEditorMode();
 
   return {
     fields: {

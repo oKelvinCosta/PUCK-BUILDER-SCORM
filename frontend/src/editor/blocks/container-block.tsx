@@ -1,6 +1,5 @@
 // @/components/puck/ImgBlock.tsx
 import Container from '@/components/layout/container';
-import { useEditorMode } from '@/editor/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
 import { SlotPuck } from '../utils/slot-puck';
 
@@ -12,7 +11,7 @@ export type ContainerBlockProps = {
 };
 
 export const ContainerBlock = (): ComponentConfig<ContainerBlockProps> => {
-  const { isEditing } = useEditorMode();
+  // const { isEditing } = useEditorMode();
 
   return {
     fields: {

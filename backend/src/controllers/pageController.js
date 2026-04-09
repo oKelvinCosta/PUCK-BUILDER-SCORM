@@ -9,21 +9,44 @@ export const createPage = async (req, res) => {
   }
 };
 
-export const getPages = async (req, res) => {
+// GET /pages?userId=123
+// Returns pages for a specific user
+export const getPagesByUserId = async (req, res) => {
   try {
     const { userId } = req.query;
-    const query = userId ? { usersId: userId } : {};
-    const pages = await Page.find(query);
+    
+    // Don't return puckData field to save bandwidth
+    const pages = await Page.find({userId}).select('_id title slug cover updatedAt createdAt userId groupId');
+    // Para debug: descomente para ver se está usando índice
+    // const explanation = await Page.find({userId}).explain('executionStats');
+    // console.log('explanation', explanation.executionStats);
     res.json(pages);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
+// GET /pages/:id
+// Returns a single page by ID
+// For heavy content loading, use this endpoint
 export const getPageById = async (req, res) => {
   const page = await Page.findById(req.params.id);
   res.json(page);
 };
+
+// export const getPagesByGroupId = async (req, res) => {
+//   try {
+//     const { groupId } = req.params;
+    
+//     const pages = await Page.find({ groupId })
+//       .select('_id title cover updatedAt') // Select only necessary fields
+//       .sort({ updatedAt: -1 }); // Most recent first
+    
+//     res.json(pages);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
 
 export const updatePage = async (req, res) => {
   const page = await Page.findByIdAndUpdate(

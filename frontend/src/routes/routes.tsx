@@ -5,7 +5,7 @@ import ExampleComponents from '@/pages/template/example-components';
 
 import { createHashRouter } from 'react-router-dom';
 import BlankLayout from '../pages/_layouts/blank-layout';
-import { Home } from '../pages/home';
+import { App } from '../pages/app/app';
 import { Editor } from '../pages/puck/editor';
 import { Page } from '../pages/puck/page';
 
@@ -34,9 +34,9 @@ const routesDEV = [
     children: [{ path: '', element: <Page /> }],
   },
   {
-    path: '/home',
+    path: '/app',
     element: <BlankLayout />,
-    children: [{ path: '', element: <Home /> }],
+    children: [{ path: '', element: <App /> }],
   },
 ];
 

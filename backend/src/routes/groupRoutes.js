@@ -3,14 +3,16 @@ import {
     createGroup,
     deleteGroup,
     getGroupById,
-    getGroups,
+    getGroupsByUserId,
+    getGroupsWithPages,
     updateGroup
 } from "../controllers/groupController.js";
 
 const router = express.Router();
 
 router.post("/", createGroup);
-router.get("/", getGroups);
+router.get("/", getGroupsByUserId);
+router.get("/with-pages", getGroupsWithPages);
 router.get("/:id", getGroupById);
 router.put("/:id", updateGroup);
 router.delete("/:id", deleteGroup);

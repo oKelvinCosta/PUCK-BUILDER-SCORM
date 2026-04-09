@@ -24,11 +24,21 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { api } from '@/lib/axios';
+import { useQuery } from '@tanstack/react-query';
 
 import Img from '@/components/img';
+import { Skeleton } from '@/components/ui/skeleton';
 import { NavUser } from '@/editor/components/nav-user';
+import { formatRelativeTime } from '@/lib/date';
+import { useState } from 'react';
 
-const Home = () => {
+const App = () => {
+  const mockUser = {
+    name: 'Kelvin costa',
+    email: 'okelvincosta@gmail.com',
+    avatar: 'https://avatars.githubusercontent.com/u/28162385?v=4',
+  };
   const handleCreateProject = () => {
     console.log('Create project');
   };
@@ -41,13 +51,30 @@ const Home = () => {
     console.log('Open group', id);
   };
 
-  const data = {
-    user: {
-      name: 'shadcn',
-      email: 'm@example.com',
-      avatar: '/avatars/shadcn.jpg',
-    },
+  const [userId, setUserId] = useState('69c9a51d260548585aa1fad8');
+
+  // Get pages of user
+  const { data: pagesData, isLoading: isLoadingPages } = useQuery({
+    queryKey: ['userPages', userId],
+    queryFn: () => api.get(`/pages?userId=${userId}`).then((res) => res.data),
+    staleTime: 2 * 60 * 1000, // 10 minutos cache
+    gcTime: 4 * 60 * 1000, // 15 minutos cache
+  });
+
+  // console.log('pagesData', pagesData);
+
+  const useGroupsWithPages = () => {
+    return useQuery({
+      queryKey: ['groupsWithPages', userId],
+      queryFn: () => api.get(`/groups/with-pages?userId=${userId}`).then((res) => res.data),
+      staleTime: 5 * 60 * 1000,
+      gcTime: 8 * 60 * 1000,
+    });
   };
+
+  const { data: groupsWithPages, isLoading: isLoadingGroupsWithPages } = useGroupsWithPages();
+
+  console.log('groupsWithPages', groupsWithPages);
 
   return (
     <div className="flex min-h-dvh w-full">
@@ -59,7 +86,7 @@ const Home = () => {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <NavUser user={data.user} />
+                      <NavUser user={mockUser} />
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 </SidebarMenu>
@@ -146,66 +173,104 @@ const Home = () => {
           <main className="mx-auto size-full flex-1 px-4 py-6 sm:px-6">
             {/* Grid */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-8 lg:grid-cols-12 lg:gap-8 2xl:grid-cols-12">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="cursor-pointer md:col-span-4 2xl:col-span-3"
-                  onClick={() => handleOpenProject(index)}
-                >
+              {/* Pages */}
+              {isLoadingPages ? (
+                <div className="md:col-span-4 2xl:col-span-3">
                   <Card className="overflow-hidden p-0">
                     <CardHeader>
-                      <Img
-                        src="./imgs/core/placeholder.webp"
-                        className="aspect-video !rounded-none"
-                        alt=""
-                      />
+                      <Skeleton className="col-span-2 aspect-video w-full !rounded-none" />
                     </CardHeader>
 
                     <CardFooter className="p-4">
-                      <div className="flex flex-col gap-0">
-                        <span className="!text-sm font-medium">EAD Builder</span>
-                        <span className="!text-xs">Editado há 9 horas atrás</span>
+                      <div className="w-full space-y-2">
+                        <Skeleton className="h-4 w-[80%]" /> {/* Agora funciona */}
+                        <Skeleton className="h-3 w-[100px]" />
                       </div>
                     </CardFooter>
                   </Card>
                 </div>
-              ))}
+              ) : (
+                pagesData?.map((page: any, index: number) => (
+                  <div
+                    key={page._id}
+                    className="cursor-pointer md:col-span-4 2xl:col-span-3"
+                    onClick={() => handleOpenProject(page._id)}
+                  >
+                    <Card className="overflow-hidden p-0">
+                      <CardHeader>
+                        <Img src={page.cover} className="aspect-video !rounded-none" alt="" />
+                      </CardHeader>
 
-              {Array.from({ length: 1 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="cursor-pointer md:col-span-4 2xl:col-span-3"
-                  onClick={() => handleOpenGroup(index)}
-                >
+                      <CardFooter className="p-4">
+                        <div className="flex flex-col gap-0">
+                          <span className="!text-sm font-medium">{page.title || 'Sem título'}</span>
+                          <span className="!text-xs">
+                            Editado há {formatRelativeTime(page.updatedAt)}
+                          </span>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                ))
+              )}
+
+              {/* Groups */}
+              {isLoadingGroupsWithPages ? (
+                <div className="cursor-pointer md:col-span-4 2xl:col-span-3">
                   <Card className="overflow-hidden p-0">
                     <CardContent className="grid grid-cols-4 gap-3 p-4">
-                      <Img
-                        src="./imgs/core/placeholder.webp"
-                        className="col-span-2 aspect-video rounded-2xl"
-                        alt=""
-                      />
-                      <Img
-                        src="./imgs/core/placeholder.webp"
-                        className="col-span-2 aspect-video rounded-2xl"
-                        alt=""
-                      />
-                      <Img
-                        src="./imgs/core/placeholder.webp"
-                        className="col-span-2 aspect-video rounded-2xl"
-                        alt=""
-                      />
+                      <Skeleton className="col-span-2 aspect-video w-full rounded-2xl" />
+                      <Skeleton className="col-span-2 aspect-video w-full rounded-2xl" />
+                      <Skeleton className="col-span-2 aspect-video w-full rounded-2xl" />
                       <Card className="col-span-2 aspect-video rounded-2xl" />
                     </CardContent>
 
                     <CardFooter className="p-4 pt-0">
-                      <div className="flex flex-col gap-0">
-                        <span className="!text-sm font-medium">Grupo de Estudos</span>
-                        <span className="!text-xs">3 projetos</span>
-                      </div>
+                      <Skeleton className="block h-4 w-full" />
+                      <Skeleton className="block h-4 w-full" />
                     </CardFooter>
                   </Card>
                 </div>
-              ))}
+              ) : (
+                groupsWithPages?.map((group: any, index: number) => (
+                  <div
+                    key={index}
+                    className="cursor-pointer md:col-span-4 2xl:col-span-3"
+                    onClick={() => handleOpenGroup(group._id)}
+                  >
+                    <Card className="overflow-hidden p-0">
+                      <CardContent className="grid grid-cols-4 gap-3 p-4">
+                        {group.pages?.slice(0, 3).map((page: any, pageIndex: number) => (
+                          <Img
+                            key={pageIndex}
+                            src={page.cover || './imgs/core/placeholder.webp'}
+                            className="col-span-2 aspect-video rounded-2xl"
+                            alt=""
+                          />
+                        ))}
+                        {
+                          // Fill empty slots to maintain grid structure
+                          Array.from({
+                            length: group.pages?.length < 4 ? 4 - group.pages?.length : 0,
+                          }).map((_, emptyIndex) => (
+                            <Card
+                              key={`empty-${emptyIndex}`}
+                              className="col-span-2 aspect-video rounded-2xl"
+                            />
+                          ))
+                        }
+                      </CardContent>
+
+                      <CardFooter className="p-4 pt-0">
+                        <div className="flex flex-col gap-0">
+                          <span className="!text-sm font-medium">{group.name || 'Sem nome'}</span>
+                          <span className="!text-xs">{group.pages?.length || 0} projetos</span>
+                        </div>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                ))
+              )}
             </div>
             {/* Grid End*/}
           </main>
@@ -233,5 +298,4 @@ const Home = () => {
     </div>
   );
 };
-
-export { Home };
+export { App };

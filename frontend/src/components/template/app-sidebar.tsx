@@ -59,7 +59,7 @@ export function AppSidebar() {
     { to: '/', label: 'Home', Icon: Home },
     { to: '/debug-scorm', label: 'Debug SCORM', Icon: Bug },
     { to: '/edit', label: 'Edit', Icon: Sparkles },
-    { to: '/home', label: 'Shell', Icon: Blocks },
+    { to: '/app', label: 'App', Icon: Blocks },
     { to: '/components', label: 'Components', Icon: Boxes },
   ];
 

@@ -1,5 +1,4 @@
 import Divider from '@/components/layout/divider';
-import { useEditorMode } from '@/editor/stores/editor-mode-store';
 import type { ComponentConfig } from '@puckeditor/core';
 import { SlotPuck } from '../utils/slot-puck';
 
@@ -18,7 +17,7 @@ export type SectionBlockProps = {
 };
 
 export const SectionBlock = (): ComponentConfig<SectionBlockProps> => {
-  const { isEditing } = useEditorMode();
+  // const { isEditing } = useEditorMode();
 
   return {
     fields: {
