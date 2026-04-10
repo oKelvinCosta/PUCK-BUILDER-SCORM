@@ -1,13 +1,5 @@
 import { Plus } from 'lucide-react';
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -25,21 +17,13 @@ export function Header() {
         <div className="flex items-center gap-4">
           <SidebarTrigger className="[&_svg]:!size-5" />
           <Separator orientation="vertical" className="hidden !h-4 sm:block" />
-          <Breadcrumb className="hidden sm:block">
+          {/* <Breadcrumb className="hidden sm:block">
             <BreadcrumbList className="flex">
               <BreadcrumbItem>
-                <BreadcrumbLink href="#">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Free</BreadcrumbPage>
+                <BreadcrumbPage>App</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
-          </Breadcrumb>
+          </Breadcrumb> */}
         </div>
         <div className="flex items-center gap-1.5">
           <Button

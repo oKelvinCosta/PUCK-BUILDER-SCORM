@@ -26,7 +26,7 @@ const routesDEV = [
     ],
   },
   {
-    path: '/edit',
+    path: '/editor/:pageId',
     element: <BlankLayout />,
     children: [{ path: '', element: <Editor /> }],
   },

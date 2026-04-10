@@ -58,7 +58,7 @@ export function AppSidebar() {
   const nav = [
     { to: '/', label: 'Home', Icon: Home },
     { to: '/debug-scorm', label: 'Debug SCORM', Icon: Bug },
-    { to: '/edit', label: 'Edit', Icon: Sparkles },
+    { to: '/editor', label: 'Edit', Icon: Sparkles },
     { to: '/app', label: 'App', Icon: Blocks },
     { to: '/components', label: 'Components', Icon: Boxes },
   ];

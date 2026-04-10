@@ -14,6 +14,6 @@ if (import.meta.env.VITE_ENABLE_API_DELAY === 'TRUE') {
 }
 // between 800 and 2800
 function randomDelay(): number {
-  //   return Math.floor(Math.random() * 2000) + 800;
-  return 1000;
+  return Math.floor(Math.random() * 1000) + 1000;
+  // return 1000;
 }

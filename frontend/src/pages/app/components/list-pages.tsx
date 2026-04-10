@@ -1,24 +1,32 @@
 import Img from '@/components/img';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { api } from '@/lib/axios';
 import { formatRelativeTime } from '@/lib/date';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 
-export function ListPages() {
-  const [userId, setUserId] = useState('69c9a51d260548585aa1fad8');
+import { useNavigate } from 'react-router-dom';
 
-  // Get ungrouped pages of user
-  const { data: pagesData, isLoading: isLoadingPages } = useQuery({
-    queryKey: ['ungroupedPages', userId],
-    queryFn: () => api.get(`/pages/ungrouped?userId=${userId}`).then((res) => res.data),
-    staleTime: 2 * 60 * 1000, // 10 minutos cache
-    gcTime: 4 * 60 * 1000, // 15 minutos cache
-  });
+interface pagesDataProps {
+  _id: string;
+  title: string;
+  slug: string;
+  cover: string;
+  updatedAt: string;
+  createdAt: string;
+  userId: string;
+  groupId?: string;
+}
 
-  const handleOpenProject = (id: number) => {
-    console.log('Open project', id);
+interface ListPagesComponentProps {
+  pagesData: pagesDataProps[];
+  isLoadingPages: boolean;
+}
+
+export function ListPages({ pagesData, isLoadingPages }: ListPagesComponentProps) {
+  const navigate = useNavigate();
+
+  const handleOpenProject = (pageId: string) => {
+    console.log('Open project', pageId);
+    navigate(`/editor/${pageId}`);
   };
 
   return (
@@ -39,7 +47,7 @@ export function ListPages() {
           </Card>
         </div>
       ) : (
-        pagesData?.map((page: any, index: number) => (
+        pagesData?.map((page: pagesDataProps) => (
           <div
             key={page._id}
             className="cursor-pointer md:col-span-4 2xl:col-span-3"

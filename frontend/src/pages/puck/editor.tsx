@@ -1,16 +1,21 @@
 import '@//styles/editor.css';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { config } from '@/editor/puck.config';
 import { useEditorMode } from '@/editor/stores/editor-mode-store';
+import { api } from '@/lib/axios';
 import { Puck, usePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
+import { useQuery } from '@tanstack/react-query';
 import { Eye, Rocket } from 'lucide-react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import database from '../../../../backend/database/database.json';
+import database2 from '../../../../backend/database/database2.json';
 
 // Describe initial data
 const initialData = database;
+const database2Data = database2;
 
 // Save data to JSON file
 const saveJsonFile = async (data: unknown) => {
@@ -44,26 +49,62 @@ const saveJsonFile = async (data: unknown) => {
 export function Editor() {
   const navigate = useNavigate();
   const { setMode } = useEditorMode();
+  const { pageId } = useParams();
+
+  const {
+    data: pageData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['Page', pageId],
+    queryFn: () => api.get(`/pages/${pageId}`).then((res) => res.data),
+    staleTime: 2 * 60 * 1000, // 10 minutos cache
+    gcTime: 4 * 60 * 1000, // 15 minutos cache
+  });
+
+  console.log('pageData', pageData?.puckData);
 
   // Set editor mode to editing
+  // Always before return
   useEffect(() => {
     setMode('editing');
   }, [setMode]);
 
+  // ✅ Guard: não monta o Puck até os dados chegarem
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton style={{ height: '100vh' }} className="flex w-full items-center justify-center">
+          <div>Carregando editor...</div>
+        </Skeleton>
+      </div>
+    );
+  }
+  if (isError || !pageData) return <div>Erro ao carregar página.</div>;
+
+  // Handle preview
   const handlePreview = () => {
     navigate('/preview');
   };
 
-  // const config2 = useMemo(() => getConfig(projectType), [projectType]);
-
+  // Config params
   const configParams = {
     projectType: 'choices',
   };
 
+  // Default data
+  const defaultData = pageData?.puckData?.page ?? {
+    root: { props: {} },
+    content: [],
+    zones: {},
+  };
+
   return (
     <Puck
+      key={isLoading ? 'loading' : pageId}
       config={config(configParams)}
-      data={initialData}
+      data={pageData?.puckData?.page || defaultData}
+      // data={database2Data}
       onPublish={saveJsonFile}
       overrides={{
         // Transforms in function to allow use of hooks
@@ -89,7 +130,23 @@ export function Editor() {
         },
         // Add puck-canvas class to iframe
         iframe: ({ children }) => {
-          return <div className="puck-canvas">{children}</div>;
+          return (
+            <div className="puck-canvas">
+              {
+                // isLoading && (
+                //   <div>
+                //     <Skeleton
+                //       style={{ height: '100vh' }}
+                //       className="flex w-full items-center justify-center"
+                //     >
+                //       <div>Carregando editor...</div>
+                //     </Skeleton>
+                //   </div>
+                // )
+              }
+              {children}
+            </div>
+          );
         },
       }}
     />
