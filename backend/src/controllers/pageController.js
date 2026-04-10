@@ -26,6 +26,43 @@ export const getPagesByUserId = async (req, res) => {
   }
 };
 
+// GET /pages/group/:groupId  
+export const getPagesByGroupId = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const pages = await Page.find({ groupId })
+      .select('_id title slug cover updatedAt createdAt userId groupId')
+      .sort({ updatedAt: -1 });
+    res.json(pages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// GET /pages/ungrouped?userId=123
+// Returns pages without groupId for a specific user
+export const getUngroupedPagesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    
+    // Find pages where groupId is null, undefined, or doesn't exist
+    const pages = await Page.find({ 
+      userId,
+      $or: [
+        { groupId: null },
+        { groupId: undefined },
+        { groupId: { $exists: false } }
+      ]
+    })
+    .select('_id title slug cover updatedAt createdAt userId groupId')
+    .sort({ updatedAt: -1 });
+    
+    res.json(pages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // GET /pages/:id
 // Returns a single page by ID
 // For heavy content loading, use this endpoint
