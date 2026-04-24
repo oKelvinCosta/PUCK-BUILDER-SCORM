@@ -77,6 +77,9 @@ export function useAutoSave() {
   //   };
   // }, [pageId, updatePage]);
 
+  // updatePage só muda a cada 1,5s então se eu sair da pagina antes de 1,5s não vai salvar, logo a unica coisa que seria necessario é um modo de não interromper o save normal se por acaso eu sair enquanto estiver salvando.
+  // Agora se tiver um modo de não depender de updatePage para salvar ao sair da PanelRightInactive, é melhor ainda
+
   return {
     handleAutoSave,
     pendingData,
