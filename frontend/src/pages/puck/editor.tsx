@@ -1,119 +1,111 @@
+// Imports
 import '@//styles/editor.css';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { config } from '@/editor/puck.config';
 import { useEditorMode } from '@/editor/stores/editor-mode-store';
-import { api } from '@/lib/axios';
-import { Puck, usePuck } from '@puckeditor/core';
+import { Puck, createUsePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
-import { useQuery } from '@tanstack/react-query';
 import { Eye, Rocket } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import database from '../../../../backend/database/database.json';
 import database2 from '../../../../backend/database/database2.json';
+import { useAutoSave } from './hooks/use-auto-save';
+import { useJsonExport } from './hooks/use-json-export';
+import { usePageLoader } from './hooks/use-page-loader';
 
-// Describe initial data
+// Static data for testing (can be removed if unused)
 const initialData = database;
 const database2Data = database2;
 
-// Save data to JSON file
-const saveJsonFile = async (data: unknown) => {
-  console.log('Saving data:', data);
+// Custom Puck hook with optimized selector for better performance
+const usePuckData = createUsePuck();
 
-  try {
-    // Create blob with JSON data
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-
-    // Create download link
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'database.json';
-
-    // Trigger download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // Clean up
-    URL.revokeObjectURL(url);
-
-    console.log('Database.json downloaded successfully');
-  } catch (error) {
-    console.error('Error saving data:', error);
-  }
-};
-
-// Render Puck editor
+/**
+ * Main Puck Editor Component
+ * Handles page loading, editing, and auto-save functionality
+ */
 export function Editor() {
+  // Navigation and editor mode hooks
   const navigate = useNavigate();
   const { setMode } = useEditorMode();
   const { pageId } = useParams();
 
-  const {
-    data: pageData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['Page', pageId],
-    queryFn: () => api.get(`/pages/${pageId}`).then((res) => res.data),
-    staleTime: 2 * 60 * 1000, // 10 minutos cache
-    gcTime: 4 * 60 * 1000, // 15 minutos cache
-  });
+  // Page loader hook
+  const { data: pageData, isLoading, isError } = usePageLoader(pageId);
 
-  console.log('pageData', pageData?.puckData);
+  // JSON export hook
+  const { saveJsonFile } = useJsonExport();
 
-  // Set editor mode to editing
-  // Always before return
+  // Auto-save hook with debounce functionality
+  const { handleAutoSave } = useAutoSave();
+
+  // console.log('Page data fetched:', pageData?.puckData);
+
+  // Set editor mode to editing on component mount
+  // To render something different in editor mode
   useEffect(() => {
     setMode('editing');
   }, [setMode]);
-
-  // ✅ Guard: não monta o Puck até os dados chegarem
-  if (isLoading) {
-    return (
-      <div>
-        <Skeleton style={{ height: '100vh' }} className="flex w-full items-center justify-center">
-          <div>Carregando editor...</div>
-        </Skeleton>
-      </div>
-    );
-  }
-  if (isError || !pageData) return <div>Erro ao carregar página.</div>;
 
   // Handle preview
   const handlePreview = () => {
     navigate('/preview');
   };
 
-  // Config params
+  // Configuration for Puck editor
   const configParams = {
     projectType: 'choices',
   };
 
-  // Default data
-  const defaultData = pageData?.puckData?.page ?? {
+  // Ref to store initial Puck data (populated only once)
+  const initialPuckData = useRef<object | null>(null);
+
+  // Loading state - show skeleton while fetching data
+  if (isLoading) {
+    return (
+      <div>
+        <Skeleton style={{ height: '100vh' }} className="flex w-full items-center justify-center">
+          <div className="flex items-center gap-2">
+            <Spinner className="-mt-1 size-4" /> Loading editor...
+          </div>
+        </Skeleton>
+      </div>
+    );
+  }
+
+  // Error state - show error message if fetch fails
+  if (isError || !pageData) {
+    return <div>Error loading page.</div>;
+  }
+
+  const emptyData = {
     root: { props: {} },
     content: [],
     zones: {},
   };
 
+  // Populate initial data ref only once when page data arrives
+  if (pageData && !initialPuckData.current) {
+    initialPuckData.current = pageData?.puckData?.page ?? emptyData;
+  }
+
   return (
     <Puck
       key={isLoading ? 'loading' : pageId}
       config={config(configParams)}
-      data={pageData?.puckData?.page || defaultData}
-      // data={database2Data}
-      onPublish={saveJsonFile}
+      data={initialPuckData.current || emptyData}
+      onChange={handleAutoSave}
       overrides={{
-        // Transforms in function to allow use of hooks
+        // Header actions with preview and export functionality
         headerActions: function HeaderActions() {
-          // usePuck must be used inside <Puck>.
-          const { appState } = usePuck();
+          // Get current Puck data for export
+          const currentAppState = usePuckData((state) => state.appState.data);
 
           const handlePublish = async () => {
-            await saveJsonFile(appState.data);
+            await saveJsonFile(currentAppState);
           };
 
           return (
@@ -128,31 +120,17 @@ export function Editor() {
             </>
           );
         },
-        // Add puck-canvas class to iframe
+
+        // Custom iframe wrapper with puck-canvas class
         iframe: ({ children }) => {
-          return (
-            <div className="puck-canvas">
-              {
-                // isLoading && (
-                //   <div>
-                //     <Skeleton
-                //       style={{ height: '100vh' }}
-                //       className="flex w-full items-center justify-center"
-                //     >
-                //       <div>Carregando editor...</div>
-                //     </Skeleton>
-                //   </div>
-                // )
-              }
-              {children}
-            </div>
-          );
+          return <div className="puck-canvas">{children}</div>;
         },
       }}
     />
   );
 }
 
-// Observation:
-
-// config and the blocks must be functions, so the zustand store can be used correctly inside them
+/*
+Note: config and blocks must be functions so zustand store 
+can be used correctly inside them
+*/

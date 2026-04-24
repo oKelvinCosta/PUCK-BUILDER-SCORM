@@ -86,9 +86,10 @@ export const getPageById = async (req, res) => {
 // };
 
 export const updatePage = async (req, res) => {
+  const { puckData } = req.body;
   const page = await Page.findByIdAndUpdate(
     req.params.id,
-    req.body,
+    { puckData, updatedAt: new Date() },
     { new: true }
   );
   res.json(page);

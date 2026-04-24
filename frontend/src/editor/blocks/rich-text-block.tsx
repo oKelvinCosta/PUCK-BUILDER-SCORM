@@ -1,5 +1,4 @@
 import { RichTextMenu, type ComponentConfig } from '@puckeditor/core';
-import Heading from '@tiptap/extension-heading';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
 
 export type RichTextBlockProps = {
@@ -14,11 +13,9 @@ const COLORS = [
   '#F59E0B', // yellow
   '#8B5CF6', // purple
   '#fff',
-  '#fff3', // red
-  '#3B82a6', // blue
-  '#10B989', // green
-  '#F59E0B', // yellow
-  '#8B5CF6', // purple
+  '#fff3', // light red
+  '#3B82a6', // light blue
+  '#10B989', // light green
 ];
 
 // Text styles configuration
@@ -62,9 +59,6 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
             },
           }),
           Color,
-          Heading.configure({
-            levels: [1, 2, 3, 4, 5, 6],
-          }),
         ],
       },
 
@@ -100,9 +94,9 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
                       marginTop: 6,
                     }}
                   >
-                    {COLORS.map((color) => (
+                    {COLORS.map((color, index) => (
                       <button
-                        key={color}
+                        key={`${color}-${index}`}
                         style={{
                           width: 20,
                           height: 20,

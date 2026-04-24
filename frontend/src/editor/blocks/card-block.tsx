@@ -1,8 +1,6 @@
 // @/components/puck/ImgBlock.tsx
 import MainCard from '@/components/main-card';
 import type { ComponentConfig } from '@puckeditor/core';
-import Bold from '@tiptap/extension-bold';
-import Italic from '@tiptap/extension-italic';
 import { SlotPuck } from '../utils/slot-puck';
 
 export type CardBlockProps = {
@@ -36,9 +34,6 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
     },
     content: {
       type: 'richtext',
-      tiptap: {
-        extensions: [Bold, Italic],
-      },
     },
     textSize: {
       type: 'radio',

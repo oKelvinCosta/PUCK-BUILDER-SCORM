@@ -4,6 +4,7 @@ import { queryClient } from '@/lib/react-query';
 import { router } from '@/routes/routes';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router-dom';
+import { Toaster } from 'sonner';
 
 export default function App() {
   if (import.meta.env.VITE_APP_WITHOUT_SCORM === 'true') {
@@ -28,6 +29,9 @@ export default function App() {
           </>
         )}
       </QueryClientProvider>
+
+      {/* Toast container */}
+      <Toaster />
     </>
   );
 }
