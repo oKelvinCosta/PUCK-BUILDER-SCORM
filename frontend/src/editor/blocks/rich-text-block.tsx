@@ -38,7 +38,7 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
   fields: {
     content: {
       type: 'richtext',
-      contentEditable: true,
+      contentEditable: false,
 
       tiptap: {
         extensions: [
