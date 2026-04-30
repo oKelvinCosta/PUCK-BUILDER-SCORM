@@ -1,5 +1,4 @@
 import { RichTextMenu, type ComponentConfig } from '@puckeditor/core';
-import Highlight from '@tiptap/extension-highlight';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
 
 export type RichTextBlockProps = {
@@ -14,6 +13,7 @@ const COLORS = [
   '#F59E0B', // yellow
   '#8B5CF6', // purple
   '#fff',
+  '#fff3', // light red
   '#3B82a6', // light blue
   '#10B989', // light green
 ];
@@ -59,12 +59,6 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
             },
           }),
           Color,
-          Highlight.configure({
-            multicolor: true,
-            HTMLAttributes: {
-              style: 'padding: 4px 4px 2px 4px; border-radius: 3px; background: inherit;',
-            },
-          }),
         ],
       },
 
@@ -110,27 +104,13 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
                           border: '1px solid #ddd',
                           cursor: 'pointer',
                         }}
-                        onClick={(event) => {
-                          editor.chain().focus().setColor(color).run();
-                          // Fechar o dropdown após selecionar cor
-                          const colorDetails = event.currentTarget.closest('details');
-                          if (colorDetails) {
-                            colorDetails.open = false;
-                          }
-                        }}
+                        onClick={() => editor.chain().focus().setColor(color).run()}
                       />
                     ))}
 
                     {/* remover cor */}
                     <button
-                      onClick={(event) => {
-                        editor.chain().focus().unsetColor().run();
-                        // Fechar o dropdown após remover cor
-                        const colorDetails = event.currentTarget.closest('details');
-                        if (colorDetails) {
-                          colorDetails.open = false;
-                        }
-                      }}
+                      onClick={() => editor.chain().focus().unsetColor().run()}
                       style={{
                         gridColumn: 'span 6',
                         fontSize: 10,
@@ -142,73 +122,7 @@ export const RichTextBlock: ComponentConfig<RichTextBlockProps> = {
                 </details>
               </RichTextMenu.Group>
 
-              {/* �️ HIGHLIGHT PICKER */}
-              <RichTextMenu.Group>
-                <details>
-                  <summary style={{ cursor: 'pointer' }}>🖍️</summary>
-
-                  <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(6, 20px)',
-                      gap: 6,
-                      padding: 8,
-                      background: '#fff',
-                      border: '1px solid #ccc',
-                      borderRadius: 6,
-                      marginTop: 6,
-                    }}
-                  >
-                    {COLORS.map((color, index) => (
-                      <button
-                        key={`highlight-${color}-${index}`}
-                        style={{
-                          width: 20,
-                          height: 20,
-                          background: color,
-                          border: '1px solid #ddd',
-                          cursor: 'pointer',
-                          borderRadius: 2,
-                        }}
-                        onClick={(event) => {
-                          editor.chain().focus().setHighlight({ color }).run();
-                          // Fechar o dropdown após selecionar highlight
-                          const highlightDetails = event.currentTarget.closest('details');
-                          if (highlightDetails) {
-                            highlightDetails.open = false;
-                          }
-                        }}
-                        title={`Highlight ${color}`}
-                      />
-                    ))}
-
-                    {/* remover highlight */}
-                    <button
-                      onClick={(event) => {
-                        editor.chain().focus().unsetHighlight().run();
-                        // Fechar o dropdown após remover highlight
-                        const highlightDetails = event.currentTarget.closest('details');
-                        if (highlightDetails) {
-                          highlightDetails.open = false;
-                        }
-                      }}
-                      style={{
-                        gridColumn: 'span 6',
-                        fontSize: 10,
-                        background: '#f5f5f5',
-                        border: '1px solid #ddd',
-                        borderRadius: 4,
-                        padding: 2,
-                      }}
-                      title="Remover highlight"
-                    >
-                      Remover highlight
-                    </button>
-                  </div>
-                </details>
-              </RichTextMenu.Group>
-
-              {/* �� HEADINGS CUSTOM */}
+              {/* 🔤 HEADINGS CUSTOM */}
               <RichTextMenu.Group>
                 {(() => {
                   // Check headings first
