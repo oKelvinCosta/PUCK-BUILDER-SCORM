@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -17,7 +17,11 @@ export default defineConfig({
     emptyOutDir: true,
   },
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['babel-plugin-react-compiler'],
+      },
+    }),
     svgr({
       svgrOptions: { icon: false },
     }),
