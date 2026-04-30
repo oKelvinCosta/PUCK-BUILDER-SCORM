@@ -6,7 +6,7 @@ import {
     getGroupsByUserId,
     getGroupsWithPages,
     updateGroup
-} from "../controllers/groupController.js";
+} from "../controllers/groupController.ts";
 
 const router = express.Router();
 

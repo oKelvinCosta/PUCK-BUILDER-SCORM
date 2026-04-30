@@ -7,7 +7,7 @@ import {
   getPagesByUserId,
   getUngroupedPagesByUserId,
   updatePage
-} from "../controllers/pageController.js";
+} from "../controllers/pageController.ts";
 
 const router = express.Router();
 

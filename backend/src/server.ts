@@ -1,11 +1,11 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import { connectDB } from './config/db.js';
+import { connectDB } from './config/db.ts';
 
-import groupRoutes from './routes/groupRoutes.js';
-import pageRoutes from './routes/pageRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import groupRoutes from './routes/groupRoutes.ts';
+import pageRoutes from './routes/pageRoutes.ts';
+import userRoutes from './routes/userRoutes.ts';
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ app.use(express.json());
 connectDB();
 
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({ message: 'API funcionando' });
 });
 

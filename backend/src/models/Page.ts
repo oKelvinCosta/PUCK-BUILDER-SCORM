@@ -34,7 +34,12 @@ PageSchema.index({ groupId: 1, order: 1 });
 // Índice para buscar páginas por usuário (se necessário no futuro)
 PageSchema.index({ userId: 1 });
 
-mongoose.connect(process.env.MONGO_URI, {
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+  throw new Error('MONGO_URI environment variable is not defined');
+}
+
+mongoose.connect(mongoUri, {
   autoIndex: true
 });
 export default mongoose.model("Page", PageSchema);
