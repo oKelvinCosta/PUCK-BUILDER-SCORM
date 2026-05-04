@@ -4,8 +4,8 @@
     "dev": "nodemon --exec ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "lint": "eslint src --ext .ts,.js",
-    "lint:fix": "eslint src --ext .ts,.js --fix"
+    "lint": "eslint src/**",
+    "lint:fix": "eslint src/** --fix"
   },
   "dependencies": {
     "express": "^5.2.1",

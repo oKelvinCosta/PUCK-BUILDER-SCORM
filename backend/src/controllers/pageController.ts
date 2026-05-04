@@ -1,16 +1,17 @@
 import * as express from 'express';
+import mongoose from "mongoose";
+
+import Page from "../models/Page.ts";
+
 type Request = express.Request;
 type Response = express.Response;
-
-import mongoose from "mongoose";
-import Page from "../models/Page.ts";
 
 export const createPage = async (req: Request, res: Response) => {
   try {
     const page = await Page.create(req.body);
-    res.json(page);
+    return res.status(201).json(page);
   } catch (err) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -23,12 +24,9 @@ export const getPagesByUserId = async (req: Request, res: Response) => {
     const userObjectId = new mongoose.Types.ObjectId(userId as string);
     // Don't return puckData field to save bandwidth
     const pages = await Page.find({userId: userObjectId}).select('_id title slug cover updatedAt createdAt userId groupId');
-    // Para debug: descomente para ver se está usando índice
-    // const explanation = await Page.find({userId}).explain('executionStats');
-    // console.log('explanation', explanation.executionStats);
-    res.json(pages);
+    return res.json(pages);
   } catch (err) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -40,9 +38,9 @@ export const getPagesByGroupId = async (req: Request, res: Response) => {
     const pages = await Page.find({ groupId: groupObjectId })
       .select('_id title slug cover updatedAt createdAt userId groupId')
       .sort({ updatedAt: -1 });
-    res.json(pages);
+    return res.json(pages);
   } catch (err) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -65,9 +63,9 @@ export const getUngroupedPagesByUserId = async (req: Request, res: Response) => 
     .select('_id title slug cover updatedAt createdAt userId groupId')
     .sort({ updatedAt: -1 });
     
-    res.json(pages);
+    return res.json(pages);
   } catch (err) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -75,35 +73,42 @@ export const getUngroupedPagesByUserId = async (req: Request, res: Response) => 
 // Returns a single page by ID
 // For heavy content loading, use this endpoint
 export const getPageById = async (req: Request, res: Response) => {
-  const page = await Page.findById(req.params.id);
-  res.json(page);
+  try {
+    const page = await Page.findById(req.params.id);
+    if (!page) {
+      return res.status(404).json({ error: 'Page not found' });
+    }
+    return res.json(page);
+  } catch (err) {
+    return res.status(500).json({ error: (err as Error).message });
+  }
 };
 
-// export const getPagesByGroupId = async (req, res) => {
-//   try {
-//     const { groupId } = req.params;
-    
-//     const pages = await Page.find({ groupId })
-//       .select('_id title cover updatedAt') // Select only necessary fields
-//       .sort({ updatedAt: -1 }); // Most recent first
-    
-//     res.json(pages);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
 export const updatePage = async (req: Request, res: Response) => {
-  const { puckData } = req.body;
-  const page = await Page.findByIdAndUpdate(
-    req.params.id,
-    { puckData, updatedAt: new Date() },
-    { new: true }
-  );
-  res.json(page);
+  try {
+    const { puckData } = req.body;
+    const page = await Page.findByIdAndUpdate(
+      req.params.id,
+      { puckData, updatedAt: new Date() },
+      { new: true }
+    );
+    if (!page) {
+      return res.status(404).json({ error: 'Page not found' });
+    }
+    return res.json(page);
+  } catch (err) {
+    return res.status(500).json({ error: (err as Error).message });
+  }
 };
 
 export const deletePage = async (req: Request, res: Response) => {
-  await Page.findByIdAndDelete(req.params.id);
-  res.json({ success: true });
+  try {
+    const page = await Page.findByIdAndDelete(req.params.id);
+    if (!page) {
+      return res.status(404).json({ error: 'Page not found' });
+    }
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ error: (err as Error).message });
+  }
 };

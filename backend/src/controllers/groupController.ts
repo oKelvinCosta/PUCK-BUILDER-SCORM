@@ -1,16 +1,17 @@
 import * as express from 'express';
+import mongoose from "mongoose";
+
+import Group from "../models/Group.ts";
+
 type Request = express.Request;
 type Response = express.Response;
-
-import mongoose from "mongoose";
-import Group from "../models/Group.ts";
 
 export const createGroup = async (req: Request, res: Response) => {
   try {
     const group = await Group.create(req.body);
-    res.json(group);
+    return res.status(201).json(group);
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -21,9 +22,9 @@ export const getGroupsByUserId = async (req: Request, res: Response) => {
     
     const userObjectId = new mongoose.Types.ObjectId(userId as string);
     const groups = await Group.find({ userId: userObjectId });
-    res.json(groups);
+    return res.json(groups);
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -34,9 +35,9 @@ export const getGroupById = async (req: Request, res: Response) => {
     if (!group) {
       return res.status(404).json({ error: 'Group not found' });
     }
-    res.json(group);
+    return res.json(group);
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -91,9 +92,9 @@ export const getGroupsWithPages = async (req: Request, res: Response) => {
       }
     ]);
  
-    res.json(data);
+    return res.json(data);
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -109,9 +110,9 @@ export const updateGroup = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Group not found' });
     }
     
-    res.json(group);
+    return res.json(group);
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };
 
@@ -123,8 +124,8 @@ export const deleteGroup = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Group not found' });
     }
     
-    res.json({ success: true });
+    return res.json({ success: true });
   } catch (err: unknown) {
-    res.status(500).json({ error: (err as Error).message });
+    return res.status(500).json({ error: (err as Error).message });
   }
 };

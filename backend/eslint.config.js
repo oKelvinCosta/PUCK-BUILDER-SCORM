@@ -2,8 +2,11 @@ import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config([
-  { ignores: ['dist/', 'node_modules/'] },
+export default tseslint.config(
+  ...tseslint.configs.recommended,
+  {
+    ignores: ['dist/', 'node_modules/'],
+  },
   {
     files: ['**/*.{js,ts}'],
     plugins: {
@@ -19,12 +22,12 @@ export default tseslint.config([
       },
     },
     rules: {
-      'import/no-unresolved': 'error',
+      'import/no-unresolved': 'off',
       'import/named': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'error',
-      'no-undef': 'error',
-      'no-console': 'off', // Permite console no backend
+      'no-undef': 'off',
+      'no-console': 'off',
       'prefer-const': 'error',
       'no-var': 'error',
       'import/order': [
@@ -50,4 +53,5 @@ export default tseslint.config([
       },
     },
   },
-]);
+);
+

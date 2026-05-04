@@ -1,8 +1,8 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import { connectDB } from './config/db.ts';
 
+import { connectDB } from './config/db.ts';
 import groupRoutes from './routes/groupRoutes.ts';
 import pageRoutes from './routes/pageRoutes.ts';
 import userRoutes from './routes/userRoutes.ts';
