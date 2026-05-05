@@ -10,7 +10,7 @@ export type CarouselBlockProps = {
   items: {
     title: string;
     content: React.ReactNode;
-    imgSrc: string;
+    imgSrc?: string;
     buttonText?: string;
     buttonLink?: string;
     buttonVariant?: 'indigo' | 'gray' | 'lime' | 'red' | 'outline' | 'link';
@@ -91,7 +91,7 @@ export const CarouselBlock: ComponentConfig<CarouselBlockProps> = {
   render: ({ items, layout }) => {
     // Transform Puck items into CarouselCard compatible format
     const adaptedItems = items.map((item) => ({
-      imgSrc: item.imgSrc,
+      imgSrc: item.imgSrc || placeholderImgUrl,
       title: item.title,
       content: (
         <div className="flex flex-col gap-4">

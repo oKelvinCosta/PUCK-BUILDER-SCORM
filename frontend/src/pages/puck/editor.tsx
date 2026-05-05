@@ -44,7 +44,7 @@ export function Editor() {
   const { data: pageData, isLoading, isError } = usePageLoader(pageId);
 
   // JSON export hook
-  const { saveJsonFile } = useJsonExport();
+  const { saveJsonFile, isExporting } = useJsonExport();
 
   // Auto-save hook with debounce functionality
   const { handleAutoSave } = useAutoSave();
@@ -114,12 +114,32 @@ export function Editor() {
 
           return (
             <>
-              <Button variant="outline" title="Preview" size={'icon'} onClick={handlePreview}>
+              <Button 
+                variant="outline" 
+                title="Preview" 
+                size={'icon'} 
+                onClick={handlePreview}
+                disabled={isExporting}
+              >
                 <Eye />
               </Button>
 
-              <Button className="flex items-center pt-[7px]" onClick={handlePublish}>
-                <Rocket /> Exportar
+              <Button 
+                className="flex items-center pt-[7px]" 
+                onClick={handlePublish}
+                disabled={isExporting}
+              >
+                {isExporting ? (
+                  <>
+                    <Spinner className="-mt-1 mr-2 size-4" />
+                    Exportando...
+                  </>
+                ) : (
+                  <>
+                    <Rocket className="mr-2" /> 
+                    Exportar
+                  </>
+                )}
               </Button>
             </>
           );

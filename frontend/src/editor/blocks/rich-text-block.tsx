@@ -3,7 +3,7 @@ import Highlight from '@tiptap/extension-highlight';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
 
 export type RichTextBlockProps = {
-  content: undefined;
+  content: React.ReactNode;
 };
 
 const COLORS = [

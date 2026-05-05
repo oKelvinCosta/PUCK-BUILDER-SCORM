@@ -39,7 +39,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const user = await User.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!user) {
       return res.status(404).json({ error: 'User not found' });

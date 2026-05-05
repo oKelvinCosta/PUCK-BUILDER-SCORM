@@ -7,7 +7,7 @@ const systemColor = '#3b82f6';
 
 export type ContainerBlockProps = {
   variant: '580' | '780' | '980' | '1280';
-  slot: undefined;
+  slot: React.ReactNode;
 };
 
 export const ContainerBlock = (): ComponentConfig<ContainerBlockProps> => {
@@ -95,7 +95,7 @@ export const ContainerBlock = (): ComponentConfig<ContainerBlockProps> => {
 
       return (
         <Container maxWidth={maxWidthMap[variant]} className="container-kelvin">
-          <SlotPuck Slot={Slot} className="mx-auto w-full" />
+          <SlotPuck Slot={Slot as React.ElementType} className="mx-auto w-full" />
         </Container>
       );
     },

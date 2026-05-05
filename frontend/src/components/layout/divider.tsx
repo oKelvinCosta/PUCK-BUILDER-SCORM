@@ -1,4 +1,6 @@
-import { DIVIDERS, type DividerProps } from './divider-sections';
+import { DIVIDERS, type DividerProps, type DividerType } from './divider-sections';
+
+export type { DividerProps, DividerType };
 
 /**
  * Divider

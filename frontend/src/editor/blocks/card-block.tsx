@@ -8,10 +8,10 @@ export type CardBlockProps = {
   title?: string;
   horizontal?: boolean;
   side?: 'left' | 'right';
-  content?: undefined;
+  content?: React.ReactNode;
   textSize?: 16 | 18 | 24;
   variant?: 'default' | 'gray';
-  slot?: undefined[];
+  slot?: React.ReactNode;
 };
 
 export const CardBlock: ComponentConfig<CardBlockProps> = {
@@ -75,7 +75,7 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
         variant={variant}
       >
         {content}
-        {Slot && Slot.length > 0 ? <SlotPuck Slot={Slot} className="mt-4 gap-4" /> : ''}
+        {Slot ? <SlotPuck Slot={Slot as React.ElementType} className="mt-4 gap-4" /> : ''}
       </MainCard>
     );
   },
