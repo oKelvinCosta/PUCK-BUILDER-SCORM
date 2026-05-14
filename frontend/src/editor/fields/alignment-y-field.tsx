@@ -50,7 +50,7 @@ export function AlignmentYField(options?: AlignmentYFieldOptions) {
                     <Button
                       key={opt.value}
                       onClick={() => onChange(opt.value as 'top' | 'center' | 'bottom')}
-                      variant="space"
+                      variant="outline"
                       title={opt.label}
                       style={{
                         border: `1px solid ${isActive ? checkedColor : borderColor}`,

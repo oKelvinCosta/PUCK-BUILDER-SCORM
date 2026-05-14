@@ -1,5 +1,4 @@
 import '@//styles/global.css';
-import '@/project/styles/project.css';
 
 import { ThemeProvider } from 'next-themes';
 import { StrictMode } from 'react';

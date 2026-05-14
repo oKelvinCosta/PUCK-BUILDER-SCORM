@@ -1,5 +1,4 @@
 // Imports
-import '@//styles/editor.css';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
@@ -13,11 +12,14 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import database from '../../../../backend/database/database.json';
 // import database2 from '../../../../backend/database/database2.json';
+import { CanvasWrapper } from '@/editor/components/canvas-wrapper';
+import { CanvasThemePanel } from '@/editor/components/theme-panel';
+import '@/styles/canvas.css';
+import '@/styles/editor.css';
+import { Palette } from 'lucide-react';
 import { useAutoSave } from './hooks/use-auto-save';
 import { useJsonExport } from './hooks/use-json-export';
 import { usePageLoader } from './hooks/use-page-loader';
-
-import '@/styles/puck-theme.css';
 
 // Static data for testing (can be removed if unused)
 // const initialData = database;
@@ -75,6 +77,17 @@ export function PageEditor() {
     return pageData?.puckData?.page ?? emptyData;
   }, [pageData]);
 
+  // Define the theme plugin to add a new tab to the sidebar
+  const themePlugin = React.useMemo(
+    () => ({
+      name: 'theme',
+      label: 'Tema',
+      icon: <Palette size={24} />,
+      render: () => <CanvasThemePanel />,
+    }),
+    []
+  );
+
   // Loading state - show skeleton while fetching data
   if (isLoading) {
     return (
@@ -99,61 +112,64 @@ export function PageEditor() {
   // to comply with React's rules about not accessing refs during render.
 
   return (
-    <Puck
-      key={isLoading ? 'loading' : pageId}
-      config={config(configParams)}
-      data={initialData}
-      onChange={handleAutoSave}
-      overrides={{
-        // Header actions with preview and export functionality
-        headerActions: function HeaderActions() {
-          // Get current Puck data for export
-          const currentAppState = usePuckData((state) => state.appState.data);
+    <div className="klyro-editor">
+      <Puck
+        key={isLoading ? 'loading' : pageId}
+        config={config(configParams)}
+        data={initialData}
+        onChange={handleAutoSave}
+        plugins={[themePlugin]}
+        overrides={{
+          // Header actions with preview and export functionality
+          headerActions: function HeaderActions() {
+            // Get current Puck data for export
+            const currentAppState = usePuckData((state) => state.appState.data);
 
-          const handlePublish = async () => {
-            await saveJsonFile(currentAppState);
-          };
+            const handlePublish = async () => {
+              await saveJsonFile(currentAppState);
+            };
 
-          return (
-            <>
-              <Button
-                variant="muted"
-                title="Preview"
-                size={'icon'}
-                onClick={handlePreview}
-                disabled={isExporting}
-              >
-                <Eye />
-              </Button>
+            return (
+              <>
+                <Button
+                  variant="muted"
+                  title="Preview"
+                  size={'icon'}
+                  onClick={handlePreview}
+                  disabled={isExporting}
+                >
+                  <Eye />
+                </Button>
 
-              <Button
-                className="flex items-center"
-                onClick={handlePublish}
-                disabled={isExporting}
-                variant={'neon'}
-              >
-                {isExporting ? (
-                  <>
-                    <Spinner className="-mt-1 mr-2 size-4" />
-                    Exportando...
-                  </>
-                ) : (
-                  <>
-                    <Rocket className="mr-2" />
-                    Exportar
-                  </>
-                )}
-              </Button>
-            </>
-          );
-        },
+                <Button
+                  className="flex items-center"
+                  onClick={handlePublish}
+                  disabled={isExporting}
+                  variant={'neon'}
+                >
+                  {isExporting ? (
+                    <>
+                      <Spinner className="-mt-1 mr-2 size-4" />
+                      Exportando...
+                    </>
+                  ) : (
+                    <>
+                      <Rocket className="mr-2" />
+                      Exportar
+                    </>
+                  )}
+                </Button>
+              </>
+            );
+          },
 
-        // Custom iframe wrapper with puck-canvas class
-        iframe: ({ children }) => {
-          return <div className="puck-canvas">{children}</div>;
-        },
-      }}
-    />
+          // Custom iframe wrapper with puck-canvas class
+          iframe: ({ children }) => {
+            return <CanvasWrapper>{children}</CanvasWrapper>;
+          },
+        }}
+      />
+    </div>
   );
 }
 

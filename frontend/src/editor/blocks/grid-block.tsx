@@ -1,6 +1,7 @@
 // @/components/puck/ImgBlock.tsx
+import { Button } from '@/components/ui/button';
 import * as Fields from '@/editor/fields';
-import type { ComponentConfig } from '@puckeditor/core';
+import { type ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
 import { SlotPuck } from '../utils/slot-puck';
 import { borderColor, checkedColor, inputColor, inputForegroundColor } from '../utils/styles';
@@ -95,12 +96,12 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
                   const Icon = opt.icon;
                   const isActive = currentValue === opt.value;
                   return (
-                    <button
+                    <Button
                       key={opt.value}
                       onClick={() => onChange(opt.value as GridBlockProps['mobileBreakpoint'])}
                       title={opt.label}
+                      variant="outline"
                       style={{
-                        padding: '12px 4px 6px 4px',
                         border: `1px solid ${isActive ? checkedColor : borderColor}`,
                         borderRadius: '6px',
                         background: inputColor,
@@ -108,9 +109,11 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        gap: '4px',
+                        gap: '8px',
                         transition: 'all 0.2s',
+                        height: 'auto',
                       }}
+                      className="py-3"
                     >
                       <Icon size={16} color={isActive ? checkedColor : inputForegroundColor} />
                       <span
@@ -122,7 +125,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
                       >
                         {opt.label}
                       </span>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>

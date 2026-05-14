@@ -47,7 +47,7 @@ export default function MainCard({
         {/* CONTENT */}
         <div className="flex flex-1 flex-col">
           {title && <CardTitle>{title}</CardTitle>}
-          <CardContent>{children}</CardContent>
+          <CardContent className="text-card-foreground">{children}</CardContent>
         </div>
       </HorizontalCard>
     );

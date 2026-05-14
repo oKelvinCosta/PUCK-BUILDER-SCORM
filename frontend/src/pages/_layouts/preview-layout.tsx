@@ -18,8 +18,8 @@ export default function PreviewLayout() {
 
       <div className="flex items-center justify-between bg-gray-900 px-6 py-3 shadow-md">
         <h2 className="!mb-0 text-sm font-semibold text-gray-400">Editor Preview Mode</h2>
-        <Button className="flex items-center" variant="outline" onClick={() => navigate(-1)}>
-          <ChevronLeft className="-mt-1" /> Voltar
+        <Button className="flex items-center" variant="space" onClick={() => navigate(-1)}>
+          <ChevronLeft /> Voltar
         </Button>
       </div>
 

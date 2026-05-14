@@ -11,7 +11,8 @@ export const buttonVariants = cva(
         'azure-outline':
           'border-2 border-azure-500 text-azure-500 hover:bg-azure-200 hover:border-azure-200',
         purple: 'bg-purple-500 text-white hover:bg-purple-400/80 hover:text-space-600',
-        space: 'bg-space-700 text-space-300 hover:bg-space-400/80 hover:text-space-600',
+        space:
+          'bg-space-700 text-space-300 hover:bg-space-400/80 hover:text-space-600 dark:hover:text-space-900',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/70 hover:text-space-700',
         success: 'bg-success text-success-foreground hover:bg-success/80 hover:text-space-700',

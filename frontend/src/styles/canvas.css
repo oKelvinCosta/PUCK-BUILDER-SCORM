@@ -1,0 +1,210 @@
+/* CANVAS THEME ISOLATION ------------------------------------------ */
+/*
+  O canvas deve ser imune ao dark mode do app.
+  .klyro-canvas reseta todos os tokens shadcn/ui para os valores
+  de :root (light), independente do tema do shell.
+
+  No futuro: variáveis do tema do usuário entram aqui via style prop
+  ex: <div class="klyro-canvas" style="--canvas-bg: #f5f0ff">
+*/
+
+.klyro-canvas {
+  /* Reset de tokens shadcn/ui para light */
+  --background: 255, 25%, 96.86%;
+  --foreground: var(--space-600);
+
+  --card: 0 0% 100%;
+  --card-foreground: var(--space-600);
+
+  --popover: 0 0% 100%;
+  --popover-foreground: var(--space-600);
+
+  --primary: 67.85, 98.34%, 40.25%;
+  --primary-foreground: var(--space-600);
+
+  --secondary: 207 100% 50%;
+  --secondary-foreground: 0 0% 100%;
+
+  --tertiary: 255 100% 57%;
+  --tertiary-foreground: 0 0% 100%;
+
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: var(--space-400);
+
+  --accent: 218 26% 92%;
+  --accent-foreground: 218 19% 26%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+
+  --success: 160.1 84.1% 39.4%;
+  --success-foreground: 0 0% 100%;
+
+  --border: 253 25% 93%;
+  --input: 20 5.9% 90%;
+  --ring: 215 20.2% 65.1%; /* typical ring tone */
+  --radius: 0.5rem;
+
+  /* Charts (optional) */
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+
+  /* Your custom brand tokens */
+  /* Primary — Neon Green */
+  --neon-0: 68 0% 100%;
+  --neon-50: 68 90% 97%;
+  --neon-100: 75 94% 93%;
+  --neon-200: 74 96% 87%;
+  --neon-300: 72 98% 72%;
+  --neon-400: 68 100% 59%;
+  --neon-500: 67.85, 99.34%, 47.25%;
+  --neon-600: 69 90% 42%;
+  --neon-700: 67 78% 30%;
+  --neon-800: 64 68% 20%;
+  --neon-900: 61 58% 12%;
+  --neon-950: 58 50% 8%;
+  --neon-1000: 55 0% 0%;
+
+  /* Secondary — Electric Blue */
+  --azure-0: 207 0% 100%;
+  --azure-50: 207 100% 97%;
+  --azure-100: 207 100% 93%;
+  --azure-200: 207 100% 85%;
+  --azure-300: 207 100% 75%;
+  --azure-400: 207 100% 65%;
+  --azure-500: 207 100% 50%;
+  --azure-600: 207 100% 42%;
+  --azure-700: 207 100% 32%;
+  --azure-800: 207 100% 22%;
+  --azure-900: 207 100% 14%;
+  --azure-950: 207 100% 9%;
+  --azure-1000: 207 0% 0%;
+
+  /* Tertiary — Vivid Purple */
+  --purple-0: 255 0% 100%;
+  --purple-50: 255 100% 98%;
+  --purple-100: 255 100% 94%;
+  --purple-200: 255 100% 87%;
+  --purple-300: 255 100% 78%;
+  --purple-400: 255 100% 68%;
+  --purple-500: 255 100% 57%;
+  --purple-600: 255 98% 44%;
+  --purple-700: 255 95% 34%;
+  --purple-800: 255 90% 24%;
+  --purple-900: 255 85% 15%;
+  --purple-950: 255 80% 9%;
+  --purple-1000: 255 0% 0%;
+
+  /* Gray — Deep Space */
+  --space-0: 253 0% 100%;
+  --space-50: 253 25% 97%;
+  --space-100: 253 25% 93%;
+  --space-200: 253 25% 86%;
+  --space-300: 253 28% 75%;
+  --space-400: 253 28% 63%;
+  --space-500: 253 24% 31%;
+  --space-600: 253 25% 25%;
+  --space-700: 253 25% 22%;
+  --space-800: 253 25% 15%;
+  --space-900: 253 22% 10%;
+  --space-950: 253 20% 6%;
+  --space-1000: 253 0% 0%;
+
+  --title-font-family: 'Comic Sans MS', 'Helvetica', sans-serif;
+  --title-font-weight: 700;
+  --text-font-family: 'Comic Sans MS', 'Helvetica', sans-serif;
+
+  /* Reset de color-scheme para forçar scrollbars e inputs light */
+  color-scheme: light;
+
+  /* Base visual do canvas */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Garante que filhos do canvas não herdem .dark */
+.klyro-canvas * {
+  color-scheme: light;
+}
+
+.klyro-canvas .text-font {
+  font-family: var(--text-font-family);
+}
+.klyro-canvas .title-font {
+  font-family: var(--title-font-family);
+}
+
+.klyro-canvas .display {
+  font-family: var(--title-font-family);
+  font-weight: var(--title-font-weight);
+  @apply mb-6 text-7xl;
+}
+
+.klyro-canvas h1,
+.klyro-canvas h2,
+.klyro-canvas h3,
+.klyro-canvas h4,
+.klyro-canvas h5,
+.klyro-canvas h6 {
+  font-family: var(--title-font-family);
+  font-weight: var(--title-font-weight);
+}
+.klyro-canvas h1 {
+  @apply mb-4 text-6xl;
+}
+.klyro-canvas h2 {
+  @apply mb-4 text-5xl;
+}
+.klyro-canvas h3 {
+  @apply mb-4 text-4xl;
+}
+.klyro-canvas h4 {
+  @apply mb-4 text-2xl;
+}
+.klyro-canvas h5 {
+  @apply text-xl;
+}
+.klyro-canvas h6 {
+  @apply text-lg;
+}
+
+.klyro-canvas p {
+  margin: 1.2rem auto;
+  font-family: var(--text-font-family);
+  line-height: 144% !important;
+  @apply my-3 text-lg;
+}
+
+.klyro-canvas body {
+  font-family: var(--text-font-family);
+  @apply text-lg;
+}
+
+.klyro-canvas a {
+  @apply font-semibold;
+}
+
+/* LISTS ----------------------------------------------------------- */
+
+.klyro-canvas ul,
+.klyro-canvas ol {
+  @apply flex flex-col gap-2;
+}
+.klyro-canvas ul {
+  @apply list-inside list-disc;
+}
+.klyro-canvas ol {
+  @apply list-decimal pl-3;
+}
+
+/* Hack to remove default list markers, bug from tiptap */
+.klyro-canvas ul li::marker {
+  content: '';
+}
+
+.klyro-canvas ul p {
+  display: list-item;
+}

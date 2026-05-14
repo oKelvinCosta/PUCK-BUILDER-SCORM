@@ -1,5 +1,7 @@
 import { Spinner } from '@/components/ui/spinner';
+import { CanvasWrapper } from '@/editor/components/canvas-wrapper';
 import { config } from '@/editor/puck.config';
+import '@/styles/canvas.css';
 import { Render } from '@puckeditor/core';
 import { useParams } from 'react-router-dom';
 import { usePageLoader } from './hooks/use-page-loader';
@@ -25,5 +27,9 @@ export function PagePreview() {
   if (isLoading) return <Spinner />;
   if (isError || !pageData) return <div>Erro ao carregar preview.</div>;
 
-  return <Render config={puckConfig} data={data} />;
+  return (
+    <CanvasWrapper>
+      <Render config={puckConfig} data={data} />
+    </CanvasWrapper>
+  );
 }

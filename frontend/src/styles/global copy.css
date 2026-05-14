@@ -217,11 +217,11 @@
 }
 
 /* SELECTION & FOCUS ---------------------------------------------- */
-.klyro-app ::selection {
+::selection {
   background-color: hsl(var(--lime-400));
   color: hsl(var(--foreground));
 }
-.klyro-app *:focus-visible {
+*:focus-visible {
   outline: hsl(var(--primary)) solid 2px !important;
 }
 
@@ -357,4 +357,10 @@ ul p {
   .sidebar[data-state='collapsed'] .sidebar-content {
     display: none !important;
   }
+}
+
+/* RichTextEditor */
+/* Height text box */
+[class*='_RichTextEditor--editor'] {
+  height: 300px !important;
 }

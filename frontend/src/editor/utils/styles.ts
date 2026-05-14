@@ -1,3 +1,4 @@
+// CSS variables from src/styles/editor.css
 export const checkedColor = 'var(--puck-checked)';
 export const borderColor = 'var(--puck-border)';
 export const inputColor = 'var(--puck-input)';

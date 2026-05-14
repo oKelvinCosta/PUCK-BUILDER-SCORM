@@ -99,7 +99,7 @@ export default function CarouselCard({ items, layout = '1:2', ...props }: Carous
 
                         {/* string | ReactNode */}
                         {item.content && (
-                          <div className="text-base leading-relaxed text-[#333]">
+                          <div className="text-card-foreground text-base leading-relaxed">
                             {item.content}
                           </div>
                         )}

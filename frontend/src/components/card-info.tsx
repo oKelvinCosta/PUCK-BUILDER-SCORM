@@ -29,7 +29,7 @@ export const CardInfo = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'flex min-h-[140px] w-full gap-4 rounded-xl border border-gray-200 p-6 transition-all duration-300',
+          'flex min-h-[140px] w-full gap-4 rounded-xl p-6 transition-all duration-300',
           sizeToClasses[size],
           bgClass,
           centered
@@ -54,7 +54,7 @@ export const CardInfo = React.forwardRef<
         {/* === CONTENT === */}
         <div
           className={cn(
-            '!font-gamay-editorial w-full text-gray-700 [&_p]:m-0',
+            '!font-gamay-editorial text-card-foreground w-full [&_p]:m-0',
             centered ? 'max-w-prose text-center' : 'md:w-2/3'
           )}
         >

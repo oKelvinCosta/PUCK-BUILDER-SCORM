@@ -13,7 +13,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className="klyro-app">
       <MetaTags />
 
       {/* Provide the client to your App */}
@@ -33,6 +33,6 @@ export default function App() {
 
       {/* Toast container */}
       <Toaster />
-    </>
+    </div>
   );
 }

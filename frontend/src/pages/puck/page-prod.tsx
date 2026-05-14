@@ -1,8 +1,9 @@
 import { Spinner } from '@/components/ui/spinner';
+import { CanvasWrapper } from '@/editor/components/canvas-wrapper';
 import { config } from '@/editor/puck.config';
+import '@/styles/canvas.css';
 import { Render, type Data } from '@puckeditor/core';
 import { useEffect, useState } from 'react';
-
 /**
  * Page component that renders static Puck data from a SCORM-generated JSON file.
  * Uses native fetch since the file path is only known at runtime (per-user temp folder).
@@ -50,8 +51,8 @@ export function PageProd() {
   }
 
   return (
-    <div className="animate-in fade-in duration-700">
+    <CanvasWrapper>
       <Render config={puckConfig} data={data} />
-    </div>
+    </CanvasWrapper>
   );
 }
