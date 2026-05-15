@@ -7,10 +7,17 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useCanvasThemeStore, type CanvasTheme } from '@/editor/stores/use-canvas-theme-store';
 import { Palette, RotateCcw, Save } from 'lucide-react';
-import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FontPicker } from './font-picker';
 
 /**
  * UTILS: Color Conversion Functions
@@ -128,10 +135,10 @@ const ColorField = ({
   handleColorChange,
 }: ColorFieldProps) => {
   // inputValue tracks the text shown in the Hex input (independent of the store format)
-  const [inputValue, setInputValue] = React.useState(hslToHex(localTheme[id] as string));
+  const [inputValue, setInputValue] = useState(hslToHex(localTheme[id] as string));
 
   // Sync input value when localTheme changes (e.g., when clicking the color picker or resetting)
-  React.useEffect(() => {
+  useEffect(() => {
     setInputValue(hslToHex(localTheme[id] as string));
   }, [localTheme, id]);
 
@@ -195,16 +202,13 @@ export function CanvasThemePanel() {
   }, [theme]);
 
   // Memoized handlers to keep props stable for ColorField
-  const handleChange = useCallback((key: keyof CanvasTheme, value: string) => {
+  const handleChange = (key: keyof CanvasTheme, value: string) => {
     setLocalTheme((prev) => ({ ...prev, [key]: value }));
-  }, []);
+  };
 
-  const handleColorChange = useCallback(
-    (key: keyof CanvasTheme, hex: string) => {
-      handleChange(key, hexToHsl(hex));
-    },
-    [handleChange]
-  );
+  const handleColorChange = (key: keyof CanvasTheme, hex: string) => {
+    handleChange(key, hexToHsl(hex));
+  };
 
   const handleSave = () => {
     setTheme(localTheme); // Apply changes to the Canvas
@@ -300,14 +304,59 @@ export function CanvasThemePanel() {
                 >
                   Fonte de Título
                 </Label>
-                <Input
+                <FontPicker
                   id="title-font"
-                  type="text"
                   value={localTheme['title-font-family']}
-                  onChange={(e) => handleChange('title-font-family', e.target.value)}
-                  className="h-8 text-xs"
+                  onChange={(val) => handleChange('title-font-family', val)}
                 />
               </div>
+
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor="title-font-weight"
+                  className="text-muted-foreground text-[11px] font-medium uppercase tracking-wider"
+                >
+                  Peso do Título
+                </Label>
+                <Select
+                  value={localTheme['title-font-weight']}
+                  onValueChange={(val) => handleChange('title-font-weight', val)}
+                >
+                  <SelectTrigger id="title-font-weight" className="h-8 text-xs">
+                    <SelectValue placeholder="Peso da fonte" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="100" className="text-xs">
+                      100 - Thin
+                    </SelectItem>
+                    <SelectItem value="200" className="text-xs">
+                      200 - Extra Light
+                    </SelectItem>
+                    <SelectItem value="300" className="text-xs">
+                      300 - Light
+                    </SelectItem>
+                    <SelectItem value="400" className="text-xs">
+                      400 - Regular
+                    </SelectItem>
+                    <SelectItem value="500" className="text-xs">
+                      500 - Medium
+                    </SelectItem>
+                    <SelectItem value="600" className="text-xs">
+                      600 - Semi Bold
+                    </SelectItem>
+                    <SelectItem value="700" className="text-xs">
+                      700 - Bold
+                    </SelectItem>
+                    <SelectItem value="800" className="text-xs">
+                      800 - Extra Bold
+                    </SelectItem>
+                    <SelectItem value="900" className="text-xs">
+                      900 - Black
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="space-y-1.5">
                 <Label
                   htmlFor="text-font"
@@ -315,12 +364,10 @@ export function CanvasThemePanel() {
                 >
                   Fonte de Texto
                 </Label>
-                <Input
+                <FontPicker
                   id="text-font"
-                  type="text"
                   value={localTheme['text-font-family']}
-                  onChange={(e) => handleChange('text-font-family', e.target.value)}
-                  className="h-8 text-xs"
+                  onChange={(val) => handleChange('text-font-family', val)}
                 />
               </div>
             </AccordionContent>

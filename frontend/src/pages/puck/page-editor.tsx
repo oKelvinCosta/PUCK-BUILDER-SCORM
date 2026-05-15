@@ -6,13 +6,13 @@ import { config } from '@/editor/puck.config';
 import { useEditorMode } from '@/editor/stores/editor-mode-store';
 import { Puck, createUsePuck } from '@puckeditor/core';
 import '@puckeditor/core/puck.css';
-import { Eye, Rocket } from 'lucide-react';
-import * as React from 'react';
+import { CloudCheckIcon, Cog, Eye, Rocket } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 // import database from '../../../../backend/database/database.json';
 // import database2 from '../../../../backend/database/database2.json';
 import { CanvasWrapper } from '@/editor/components/canvas-wrapper';
+import { ConfigPanel } from '@/editor/components/config-panel';
 import { CanvasThemePanel } from '@/editor/components/theme-panel';
 import '@/styles/canvas.css';
 import '@/styles/editor.css';
@@ -71,22 +71,30 @@ export function PageEditor() {
     projectType: 'choices',
   };
 
-  // Initial data memoized to stay stable once loaded
-  const initialData = React.useMemo(() => {
-    if (!pageData) return emptyData;
-    return pageData?.puckData?.page ?? emptyData;
-  }, [pageData]);
+  // Initial data for Puck editor
+  const initialData = pageData?.puckData?.page ?? emptyData;
 
   // Define the theme plugin to add a new tab to the sidebar
-  const themePlugin = React.useMemo(
-    () => ({
-      name: 'theme',
-      label: 'Tema',
-      icon: <Palette size={24} />,
-      render: () => <CanvasThemePanel />,
-    }),
-    []
-  );
+  const themePlugin = {
+    name: 'theme',
+    label: 'Tema',
+    icon: <Palette size={24} />,
+    render: () => <CanvasThemePanel />,
+  };
+
+  const SnapshotPlugin = {
+    name: 'snapshots',
+    label: 'Snapshots',
+    icon: <CloudCheckIcon size={24} />,
+    render: () => <SnapshotsPanel />,
+  };
+
+  const ConfigPlugin = {
+    name: 'config',
+    label: 'Config',
+    icon: <Cog size={24} />,
+    render: () => <ConfigPanel />,
+  };
 
   // Loading state - show skeleton while fetching data
   if (isLoading) {
@@ -118,7 +126,7 @@ export function PageEditor() {
         config={config(configParams)}
         data={initialData}
         onChange={handleAutoSave}
-        plugins={[themePlugin]}
+        plugins={[themePlugin, ConfigPlugin]}
         overrides={{
           // Header actions with preview and export functionality
           headerActions: function HeaderActions() {

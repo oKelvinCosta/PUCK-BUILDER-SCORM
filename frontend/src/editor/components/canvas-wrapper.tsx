@@ -1,5 +1,5 @@
-// src/components/canvas/CanvasWrapper.tsx
 import { useCanvasThemeStore } from '@/editor/stores/use-canvas-theme-store';
+import { GoogleFontLoader } from './google-font-loader';
 
 export function CanvasWrapper({ children }: { children: React.ReactNode }) {
   const { theme } = useCanvasThemeStore();
@@ -50,6 +50,7 @@ export function CanvasWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="klyro-canvas" style={cssVars}>
+      <GoogleFontLoader />
       {children}
     </div>
   );
