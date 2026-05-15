@@ -41,7 +41,9 @@ export default function AccordionContained({
               value={`item-${index}`}
               className={cn(index !== 0 && 'border-t', 'w-full [&_h3]:mb-0')}
             >
-              <AccordionTrigger className="px-4 py-3 text-lg">{item.title}</AccordionTrigger>
+              <AccordionTrigger className="text-primary px-4 py-3 text-lg">
+                {item.title}
+              </AccordionTrigger>
               <AccordionContent className="px-4 pb-2 pt-0" forceMount>
                 {item.content}
               </AccordionContent>

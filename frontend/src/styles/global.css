@@ -119,10 +119,6 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 207 100% 50%;
-
-    --puck-checked: hsl(var(--secondary)); /* highlight */
-    --puck-input: hsl(var(--input)); /* input background */
-    --puck-input-foreground: hsl(var(--space-600)); /* input text color */
   }
 
   .dark {
@@ -218,7 +214,7 @@
 
 /* SELECTION & FOCUS ---------------------------------------------- */
 .klyro-app ::selection {
-  background-color: hsl(var(--lime-400));
+  background-color: hsl(var(--neon-400));
   color: hsl(var(--foreground));
 }
 .klyro-app *:focus-visible {

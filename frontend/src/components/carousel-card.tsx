@@ -75,7 +75,7 @@ export default function CarouselCard({ items, layout = '1:2', ...props }: Carous
         <CarouselContent className="items-center">
           {items.map((item, key) => (
             <CarouselItem key={key}>
-              <Card className="rounded-2xl border border-gray-200">
+              <Card className="rounded-2xl">
                 <CardContent className="p-0">
                   <div className={`grid gap-6 ${grid} items-center`}>
                     {/* IMAGE */}
@@ -126,9 +126,7 @@ export default function CarouselCard({ items, layout = '1:2', ...props }: Carous
               onClick={() => api?.scrollTo(index)}
               className={cn(
                 'h-3 w-3 rounded-full border transition-colors duration-300',
-                isActive
-                  ? 'white border-[#4C33CC]'
-                  : 'border-[#E5E7EB] bg-white hover:border-gray-400'
+                isActive ? 'border-space-600' : 'border-[#E5E7EB] bg-white hover:border-gray-400'
               )}
             />
           );

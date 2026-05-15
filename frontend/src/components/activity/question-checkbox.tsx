@@ -3,7 +3,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { cn } from '@/lib/utils';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Alert } from './ui/alert';
+import { Alert } from '../ui/alert';
 
 interface QuestionCheckboxProps {
   enunciation: string | React.ReactNode;

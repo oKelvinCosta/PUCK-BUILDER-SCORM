@@ -10,19 +10,6 @@ export interface CanvasTheme {
 
   primary: string;
   'primary-foreground': string;
-  border: string;
-
-  secondary: string;
-  'secondary-foreground': string;
-
-  tertiary: string;
-  'tertiary-foreground': string;
-
-  muted: string;
-  'muted-foreground': string;
-
-  accent: string;
-  'accent-foreground': string;
 
   destructive: string;
   'destructive-foreground': string;
@@ -30,6 +17,7 @@ export interface CanvasTheme {
   success: string;
   'success-foreground': string;
 
+  border: string;
   input: string;
   ring: string;
   radius: string;
@@ -47,26 +35,12 @@ export interface CanvasTheme {
 
 // Tema padrão mockado — futuramente vem do banco
 const defaultTheme: CanvasTheme = {
-  background: '255 25% 97%',
+  background: '253 0% 100%',
   foreground: '253 25% 25%',
-
   card: '0 0% 100%',
-  'card-foreground': '253 25% 25%',
-
-  primary: '349.7 89.2% 60.2%',
+  'card-foreground': '253 24% 31%',
+  primary: '255 100% 57%',
   'primary-foreground': '253 25% 25%',
-
-  secondary: '207 100% 50%',
-  'secondary-foreground': '0 0% 100%',
-
-  tertiary: '255 100% 57%',
-  'tertiary-foreground': '0 0% 100%',
-
-  muted: '60 4.8% 95.9%',
-  'muted-foreground': '253 25% 40%',
-
-  accent: '218 26% 92%',
-  'accent-foreground': '218 19% 26%',
 
   destructive: '0 84.2% 60.2%',
   'destructive-foreground': '0 0% 100%',
@@ -74,20 +48,20 @@ const defaultTheme: CanvasTheme = {
   success: '160.1 84.1% 39.4%',
   'success-foreground': '0 0% 100%',
 
-  border: '253 25% 93%',
+  border: '253 25% 86%',
   input: '20 5.9% 90%',
   ring: '215 20.2% 65.1%',
   radius: '0.5rem',
 
-  'extra-color-1': '255 100% 57%',
-  'extra-color-2': '207 100% 50%',
-  'extra-color-3': '349.7 89.2% 60.2%',
-  'extra-color-4': '349.7 89.2% 60.2%',
-  'extra-color-5': '349.7 89.2% 60.2%',
+  'extra-color-1': '0 84.2% 60.2%',
+  'extra-color-2': '45.4 93.4% 47.5%',
+  'extra-color-3': '142.1 70.6% 45.3%',
+  'extra-color-4': '198.6 88.7% 48.4%',
+  'extra-color-5': '292.2 84.1% 60.6%',
 
-  'title-font-family': 'Comic Sans MS, Helvetica, sans-serif',
+  'title-font-family': "'Space Grotesk', 'Roboto', 'Helvetica Neue', sans-serif",
   'title-font-weight': '700',
-  'text-font-family': 'Comic Sans MS, Helvetica, sans-serif',
+  'text-font-family': "'Lexend', 'Roboto', 'Helvetica Neue', sans-serif",
 };
 
 interface CanvasThemeStore {

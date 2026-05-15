@@ -76,7 +76,7 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-2.5!">
                   <Link to={'/'}>
-                    <span className="text-space-500 dark:text-primary text-title m-0 text-2xl">
+                    <span className="text-space-500 dark:text-primary title-font m-0 text-2xl font-bold">
                       Klyro
                     </span>
                   </Link>

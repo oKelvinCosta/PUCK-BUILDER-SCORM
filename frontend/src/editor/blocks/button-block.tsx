@@ -1,6 +1,7 @@
 // @/components/puck/ImgBlock.tsx
 import { Button } from '@/components/ui/button';
 import { AlignmentXField } from '@/editor/fields';
+import { cn } from '@/lib/utils';
 import type { ComponentConfig } from '@puckeditor/core';
 import { RichTextMenu } from '@puckeditor/core';
 
@@ -8,8 +9,10 @@ export type ButtonBlockProps = {
   content: string;
   link: string;
   alignment: 'left' | 'center' | 'right';
-  variant: 'indigo' | 'gray' | 'lime' | 'red' | 'outline' | 'link';
-  size: 'default' | 'lg' | 'sm';
+  variant: 'link' | 'canvas-primary' | 'canvas-outline' | 'success' | 'destructive';
+  size: 'canvas-default' | 'canvas-lg' | 'canvas-sm';
+  customBg?: string;
+  customText?: string;
 };
 
 export const ButtonBlock: ComponentConfig<ButtonBlockProps> = {
@@ -32,51 +35,69 @@ export const ButtonBlock: ComponentConfig<ButtonBlockProps> = {
     variant: {
       type: 'radio',
       options: [
-        { label: 'Indigo', value: 'indigo' },
-        { label: 'Gray', value: 'gray' },
-        { label: 'Lime', value: 'lime' },
-        { label: 'Red', value: 'red' },
-        { label: 'Outline', value: 'outline' },
         { label: 'Link', value: 'link' },
+        { label: 'Primary', value: 'canvas-primary' },
+        { label: 'Outline', value: 'canvas-outline' },
+        { label: 'Success', value: 'success' },
+        { label: 'Destructive', value: 'destructive' },
       ],
     },
     size: {
       type: 'radio',
       options: [
-        { label: 'Default', value: 'default' },
-        { label: 'Large', value: 'lg' },
-        { label: 'Small', value: 'sm' },
+        { label: 'Default', value: 'canvas-default' },
+        { label: 'Large', value: 'canvas-lg' },
+        { label: 'Small', value: 'canvas-sm' },
       ],
+    },
+    customBg: {
+      type: 'text',
+      label: 'Cor de Fundo (Hex/HSL)',
+    },
+    customText: {
+      type: 'text',
+      label: 'Cor do Texto (Hex/HSL)',
     },
   },
   defaultProps: {
-    content: 'Button',
+    content: 'Botão',
     link: '',
     alignment: 'left',
-    variant: 'indigo',
-    size: 'default',
+    variant: 'canvas-primary',
+    size: 'canvas-default',
   },
-  render: ({ content, link, alignment, variant, size }) => {
+  render: ({ content, link, alignment, variant, size, customBg, customText }) => {
     const alignmentClasses = {
       left: 'mr-auto',
       center: 'mx-auto',
       right: 'ml-auto',
     };
 
+    const style = {
+      backgroundColor: customBg || undefined,
+      color: customText || undefined,
+      borderColor: variant === 'canvas-outline' && customBg ? customBg : undefined,
+    };
+
+    const buttonElement = (
+      <Button
+        variant={variant}
+        size={size}
+        className={cn(alignmentClasses[alignment], 'transition-opacity hover:opacity-80')}
+        style={style}
+      >
+        {content}
+      </Button>
+    );
+
     if (link) {
       return (
         <a href={link} target="_blank" rel="noopener noreferrer" className="inline-block">
-          <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
-            {content}
-          </Button>
+          {buttonElement}
         </a>
       );
-    } else {
-      return (
-        <Button variant={variant} size={size} className={alignmentClasses[alignment]}>
-          {content}
-        </Button>
-      );
     }
+
+    return buttonElement;
   },
 };

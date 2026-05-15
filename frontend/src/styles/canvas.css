@@ -10,16 +10,16 @@
 
 .klyro-canvas {
   /* Reset de tokens shadcn/ui para light */
-  --background: 255, 25%, 96.86%;
+  --background: var(--space-0);
   --foreground: var(--space-600);
 
   --card: 0 0% 100%;
-  --card-foreground: var(--space-600);
+  --card-foreground: var(--space-500);
 
   --popover: 0 0% 100%;
-  --popover-foreground: var(--space-600);
+  --popover-foreground: var(--space-500);
 
-  --primary: 67.85, 98.34%, 40.25%;
+  --primary: var(--tertiary);
   --primary-foreground: var(--space-600);
 
   --secondary: 207 100% 50%;
@@ -40,7 +40,7 @@
   --success: 160.1 84.1% 39.4%;
   --success-foreground: 0 0% 100%;
 
-  --border: 253 25% 93%;
+  --border: var(--space-200);
   --input: 20 5.9% 90%;
   --ring: 215 20.2% 65.1%; /* typical ring tone */
   --radius: 0.5rem;
@@ -113,9 +113,9 @@
   --space-950: 253 20% 6%;
   --space-1000: 253 0% 0%;
 
-  --title-font-family: 'Comic Sans MS', 'Helvetica', sans-serif;
+  --title-font-family: 'Space Grotesk', 'Roboto', 'Helvetica Neue', sans-serif;
   --title-font-weight: 700;
-  --text-font-family: 'Comic Sans MS', 'Helvetica', sans-serif;
+  --text-font-family: 'Lexend', 'Roboto', 'Helvetica Neue', sans-serif;
 
   /* Reset de color-scheme para forçar scrollbars e inputs light */
   color-scheme: light;
@@ -128,6 +128,14 @@
 /* Garante que filhos do canvas não herdem .dark */
 .klyro-canvas * {
   color-scheme: light;
+}
+
+/* Reset para RichText dentro de botões */
+.klyro-canvas button p {
+  margin: 0 !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  line-height: inherit !important;
 }
 
 .klyro-canvas .text-font {

@@ -43,9 +43,6 @@ const RichTextToolbar = ({ editor }: { editor: any }) => {
   const allColors = [
     ...BASE_COLORS,
     `hsl(${theme.primary})`,
-    `hsl(${theme.secondary})`,
-    `hsl(${theme.tertiary})`,
-    `hsl(${theme.accent})`,
     `hsl(${theme.destructive})`,
     `hsl(${theme.success})`,
     `hsl(${theme['extra-color-1']})`,

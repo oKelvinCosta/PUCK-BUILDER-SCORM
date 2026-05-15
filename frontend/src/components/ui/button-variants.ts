@@ -20,13 +20,21 @@ export const buttonVariants = cva(
           'border-2 border-space-400 bg-background text-space-500 hover:bg-space-200 hover:border-space-200 ',
         muted:
           'text-space-500 dark:text-space-300 hover:bg-space-200 hover:dark:bg-space-700 hover:border-space-200 ',
-        link: 'text-secondary underline-offset-4 hover:underline',
+        link: 'text-primary underline-offset-4 hover:underline',
+
+        // Canvas variants
+        'canvas-primary': 'bg-primary text-primary-foreground hover:opacity-80',
+        'canvas-outline': 'border-2 border-primary text-primary hover:bg-primary/20',
       },
       size: {
         default: 'h-9  px-3',
-        lg: 'h-14 px-9 py-4 text-base',
+        lg: 'h-14 px-9 py-4',
         sm: 'h-9 rounded-md px-3',
         icon: 'h-10 w-10',
+        'canvas-default': 'h-10 px-4 text-base [&_p]:text-base [&_p]:m-0 [&_p]:leading-none',
+        'canvas-lg': 'h-14 px-9 py-4 text-lg [&_p]:text-lg [&_p]:m-0 [&_p]:leading-none',
+        'canvas-sm': 'h-8 rounded-md px-3 text-xs [&_p]:text-xs [&_p]:m-0 [&_p]:leading-none',
+        'canvas-icon': 'h-10 w-10',
       },
     },
     defaultVariants: {

@@ -2,7 +2,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
 import { useForm } from 'react-hook-form';
-import { Alert } from './ui/alert';
+import { Alert } from '../ui/alert';
 
 interface QuestionRadioProps {
   enunciation: string | React.ReactNode;
