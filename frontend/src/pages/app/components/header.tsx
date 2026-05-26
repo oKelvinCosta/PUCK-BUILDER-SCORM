@@ -28,7 +28,10 @@ export function Header({ breadcrumb = false }) {
       return response.data;
     },
     onSuccess: (data) => {
+      // 1. Invalida listas que precisam atualizar
       queryClient.invalidateQueries({ queryKey: ['ungroupedPages'] });
+
+      // 2. Popula o cache do item individual (evita GET desnecessário)
       queryClient.setQueryData(['Project', data.project._id], {
         project: data.project,
         firstPage: data.page,

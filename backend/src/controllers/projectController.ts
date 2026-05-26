@@ -291,12 +291,12 @@ export const updateProjectGroup = async (req: Request, res: Response) => {
     const project = await Project.findByIdAndUpdate(
       req.params.id,
       { groupId: normalizedGroupId },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!project) {
       return res.status(404).json({ error: 'Project not found' });
     }
-    return res.json(project);
+    return res.status(200).json(project);
   } catch (err) {
     return res.status(500).json({ error: (err as Error).message });
   }
@@ -318,7 +318,7 @@ export const trashProject = async (req: Request, res: Response) => {
       Project.findByIdAndUpdate(
         req.params.id,
         { deletedAt },
-        { new: true }
+        { returnDocument: 'after' }
       ),
       Page.updateMany(
         { projectId: req.params.id },
@@ -330,7 +330,7 @@ export const trashProject = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    return res.json(project);
+    return res.status(200).json(project);
   } catch (err) {
     return res.status(500).json({ error: (err as Error).message });
   }
@@ -348,7 +348,7 @@ export const restoreProject = async (req: Request, res: Response) => {
       Project.findByIdAndUpdate(
         req.params.id,
         { deletedAt: null },
-        { new: true }
+        { returnDocument: 'after' }
       ),
       Page.updateMany(
         { projectId: req.params.id },
@@ -360,7 +360,7 @@ export const restoreProject = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Project not found' });
     }
 
-    return res.json(project);
+    return res.status(200).json(project);
   } catch (err) {
     return res.status(500).json({ error: (err as Error).message });
   }
@@ -386,7 +386,7 @@ export const getTrashedProjects = async (req: Request, res: Response) => {
       .select('_id title cover deletedAt updatedAt createdAt userId groupId')
       .sort({ deletedAt: -1 });
 
-    return res.json(projects);
+    return res.status(200).json(projects);
   } catch (err) {
     return res.status(500).json({ error: (err as Error).message });
   }
@@ -408,7 +408,7 @@ export const getTrashedProjects = async (req: Request, res: Response) => {
  */
 export const duplicateProject = async (req: Request, res: Response) => {
   try {
-    const projectId = req.params.id;
+    const projectId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     const newProject = await duplicateProjectWithPages(projectId);
 
     if (!newProject) {

@@ -17,6 +17,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import { api } from '@/lib/axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 interface ProjectsDataProps {
@@ -83,7 +85,11 @@ export function ListProjects({ projectsData, isLoadingPages }: ListProjectsCompo
                   className="absolute left-[50%] top-[50%] max-w-[80px] translate-x-[-50%] translate-y-[-50%] !rounded-none"
                   alt=""
                 />
-                <DropdownMenuIcons />
+                <DropdownMenuIcons
+                  projectId={page._id}
+                  userId={page.userId}
+                  groupId={page.groupId}
+                />
               </CardHeader>
 
               <CardFooter className="p-4">
@@ -102,7 +108,37 @@ export function ListProjects({ projectsData, isLoadingPages }: ListProjectsCompo
   );
 }
 
-export function DropdownMenuIcons() {
+export function DropdownMenuIcons({
+  projectId,
+  userId,
+  groupId,
+}: {
+  projectId: string;
+  userId: string;
+  groupId: string | null;
+}) {
+  const queryClient = useQueryClient();
+
+  const { mutate: duplicateProject } = useMutation({
+    mutationFn: () => api.post(`/projects/${projectId}/duplicate`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['ungroupedPages', userId] });
+      if (groupId) {
+        queryClient.invalidateQueries({ queryKey: ['projectsByGroup', groupId] });
+      }
+    },
+  });
+
+  const { mutate: trashProject } = useMutation({
+    mutationFn: () => api.patch(`/projects/${projectId}/trash`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['ungroupedPages', userId] });
+      if (groupId) {
+        queryClient.invalidateQueries({ queryKey: ['projectsByGroup', groupId] });
+      }
+    },
+  });
+
   return (
     <>
       <DropdownMenu>
@@ -118,7 +154,12 @@ export function DropdownMenuIcons() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              duplicateProject();
+            }}
+          >
             <CopyIcon />
             Duplicar
           </DropdownMenuItem>
@@ -157,7 +198,13 @@ export function DropdownMenuIcons() {
             Compartilhar
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="text-destructive">
+          <DropdownMenuItem
+            className="text-destructive"
+            onClick={(e) => {
+              e.stopPropagation();
+              trashProject();
+            }}
+          >
             <TrashIcon />
             Deletar
           </DropdownMenuItem>
