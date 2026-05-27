@@ -6,19 +6,19 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        gray: 'bg-white text-white hover:bg-gray-400',
+        gray: 'bg-white text-white hover:bg-space-200 bg-space-400 hover:text-space-500',
         neon: 'bg-neon-500 dark:bg-neon-400 text-space-600 hover:bg-space-500 hover:text-neon-500 hover:dark:text-neon-500 hover:dark:bg-space-800',
         azure: 'bg-azure-500 text-white hover:bg-azure-500/80 hover:text-space-500',
         'azure-outline':
           'border-2 border-azure-500 text-azure-500 hover:bg-azure-200 hover:border-azure-200',
         purple: 'bg-purple-500 text-white hover:bg-purple-400/80 hover:text-space-600',
         space:
-          'bg-space-700 text-space-300 hover:bg-space-400/80 hover:text-space-600 dark:hover:text-space-900',
+          'bg-space-700 text-space-200 hover:bg-space-400/80 hover:text-space-600 dark:hover:text-space-900',
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/70 hover:text-space-700',
         success: 'bg-success text-success-foreground hover:bg-success/80 hover:text-space-700',
         outline:
-          'border-2 border-space-400 bg-background text-space-500 hover:bg-space-200 hover:border-space-200 ',
+          'border-2 dark:text-space-300 hover:dark:bg-space-700  border-space-400 bg-background text-space-500 hover:bg-space-200 hover:border-space-200 hover:dark:border-space-700 ',
         muted:
           'text-space-500 dark:text-space-300 hover:bg-space-200 hover:dark:bg-space-700 hover:border-space-200 ',
         link: 'text-primary underline-offset-4 hover:underline',
