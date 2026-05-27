@@ -86,32 +86,40 @@ export function ListProjects({
             </Card>
           </div>
         ) : (
-          projectsData?.map((page: ProjectsDataProps) => (
+          projectsData?.map((project: ProjectsDataProps) => (
             <div
-              key={page._id}
+              key={project._id}
               className={`group md:col-span-4 2xl:col-span-3 ${variant !== 'trash' ? 'cursor-pointer' : 'cursor-default'}`}
-              onClick={() => handleOpenProject(page._id, page.firstPageId)}
+              onClick={() => handleOpenProject(project._id, project.firstPageId)}
             >
               <Card className="overflow-hidden p-0 transition-all duration-200 group-hover:shadow-lg">
                 <CardHeader className="relative">
                   {/* <Img src={page.cover} className="aspect-video !rounded-none" alt="" /> */}
 
                   {/* Provisory */}
-                  <Img src={page.cover} className="aspect-video !rounded-none opacity-0" alt="" />
                   <Img
-                    src={page.cover}
+                    src={project.cover}
+                    className="aspect-video !rounded-none opacity-0"
+                    alt=""
+                  />
+                  <Img
+                    src={project.cover}
                     className="absolute left-[50%] top-[50%] max-w-[80px] translate-x-[-50%] translate-y-[-50%] !rounded-none"
                     alt=""
                   />
                   {
                     // Show trash icons if in trash, otherwise show regular icons
                     variant === 'trash' ? (
-                      <DropdownMenuTrashIcons projectId={page._id} userId={page.userId} />
+                      <DropdownMenuTrashIcons
+                        projectId={project._id}
+                        userId={project.userId}
+                        groupId={project.groupId}
+                      />
                     ) : (
                       <DropdownMenuIcons
-                        projectId={page._id}
-                        userId={page.userId}
-                        groupId={page.groupId}
+                        projectId={project._id}
+                        userId={project.userId}
+                        groupId={project.groupId}
                       />
                     )
                   }
@@ -119,9 +127,9 @@ export function ListProjects({
 
                 <CardFooter className="p-4">
                   <div className="flex flex-col gap-0">
-                    <span className="!text-xs font-medium">{page.title || 'Sem título'}</span>
+                    <span className="!text-xs font-medium">{project.title || 'Sem título'}</span>
                     <span className="text-muted-foreground !text-xs">
-                      Editado há {formatRelativeTime(page.updatedAt)}
+                      Editado há {formatRelativeTime(project.updatedAt)}
                     </span>
                   </div>
                 </CardFooter>
@@ -169,7 +177,11 @@ export function DropdownMenuIcons({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ungroupedPages', userId] });
       queryClient.invalidateQueries({ queryKey: ['deletedProjects', userId] });
-      if (groupId) queryClient.invalidateQueries({ queryKey: ['projectsByGroup', groupId] });
+      queryClient.invalidateQueries({ queryKey: ['groupsWithProjects', userId] });
+      if (groupId) {
+        queryClient.invalidateQueries({ queryKey: ['projectsByGroup', groupId] });
+        queryClient.invalidateQueries({ queryKey: ['groupPages', groupId] });
+      }
     },
   });
 
@@ -332,9 +344,11 @@ export function DropdownMenuIcons({
 export function DropdownMenuTrashIcons({
   projectId,
   userId,
+  groupId,
 }: {
   projectId: string;
   userId: string;
+  groupId?: string | null;
 }) {
   const queryClient = useQueryClient();
 
@@ -342,6 +356,11 @@ export function DropdownMenuTrashIcons({
     mutationFn: () => api.patch(`/projects/${projectId}/restore`).then((res) => res.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['deletedProjects', userId] });
+      queryClient.invalidateQueries({ queryKey: ['groupsWithProjects', userId] });
+      // To select again when come back to group page
+      if (groupId) {
+        queryClient.invalidateQueries({ queryKey: ['groupPages', groupId] });
+      }
     },
   });
 
