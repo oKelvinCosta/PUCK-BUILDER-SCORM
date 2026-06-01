@@ -97,7 +97,7 @@ export function RichTextToolbar({ editor }: RichTextToolbarProps) {
         </div>
 
         {activeMenu && (
-          <div className="bg-muted rounded-md border border-slate-100 p-2">
+          <div className="bg-muted rounded-md border p-2">
             {/* Menu Text Color */}
             {activeMenu === 'color' && (
               <ColorPalette
@@ -139,8 +139,9 @@ export function RichTextToolbar({ editor }: RichTextToolbarProps) {
                 presets={presets}
                 onSavePreset={(preset) => {
                   savePreset(preset);
-                  setActiveMenu('preset');
+                  setActiveMenu(null);
                 }}
+                onSetActiveMenu={(menu) => setActiveMenu(menu)}
                 onDeletePreset={deletePreset}
               />
             )}
