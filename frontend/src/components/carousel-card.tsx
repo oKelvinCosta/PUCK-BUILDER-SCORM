@@ -117,7 +117,7 @@ export default function CarouselCard({ items, layout = '1:2', ...props }: Carous
       </Carousel>
 
       {/* Pagination */}
-      <div className="mt-4 flex items-center justify-start gap-2">
+      <div className="mt-4 flex items-center justify-start gap-2 pb-6">
         {Array.from({ length: count }).map((_, index) => {
           const isActive = current === index + 1;
           return (

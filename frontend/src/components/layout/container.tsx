@@ -5,14 +5,25 @@ interface ContainerProps {
   style?: React.CSSProperties;
 }
 
-export default function Container({ maxWidth = 1280, className, children, style }: ContainerProps) {
+export default function Container({
+  maxWidth = 1280,
+  className,
+  children,
+  style,
+  ...props
+}: ContainerProps) {
   return (
     <div
+      className={className}
       style={{
+        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '0 1rem',
         maxWidth: `${maxWidth}px`,
         ...style,
       }}
-      className={`mx-auto flex w-full px-4 ${className}`}
+      {...props}
     >
       {children}
     </div>

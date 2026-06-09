@@ -167,7 +167,7 @@ export const CarouselBlock: ComponentConfig<CarouselBlockProps> = {
           {item.buttonText && item.buttonLink && (
             <div className="mt-2">
               <a href={item.buttonLink} target="_blank" rel="noopener noreferrer">
-                <Button variant={item.buttonVariant || 'indigo'}>{item.buttonText}</Button>
+                <Button variant={item.buttonVariant as any}>{item.buttonText}</Button>
               </a>
             </div>
           )}

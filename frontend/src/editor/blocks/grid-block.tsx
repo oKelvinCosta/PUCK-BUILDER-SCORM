@@ -1,10 +1,11 @@
 // @/components/puck/ImgBlock.tsx
+import Container from '@/components/layout/container';
 import { Button } from '@/components/ui/button';
 import type { ContainerVariant } from '@/editor/fields';
 import * as Fields from '@/editor/fields';
 import { type ComponentConfig } from '@puckeditor/core';
 import { Monitor, Smartphone, Tablet, XCircle } from 'lucide-react';
-import { SlotPuck } from '../utils/slot-puck';
+import { SlotPuck } from '../components/slot-puck';
 import { borderColor, checkedColor, inputColor, inputForegroundColor } from '../utils/styles';
 
 export type GridBlockProps = {
@@ -249,27 +250,29 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
         gridConfigs[columnFormat as keyof typeof gridConfigs] || gridConfigs['1/2-1/2'];
 
       const alignmentYClasses = {
-        top: 'items-start',
-        center: 'items-center',
-        bottom: 'items-end',
+        top: 'start',
+        center: 'center',
+        bottom: 'end',
       };
 
       return (
-        <div
-          className={`mx-auto ${config.containerClass} ${alignmentYClasses[alignmentY]}`}
+        <Container
           style={{
+            display: 'grid',
             maxWidth: Fields.CONTAINER_MAP[container].maxWidth,
+            alignItems: alignmentYClasses[alignmentY as keyof typeof alignmentYClasses],
           }}
+          className={config.containerClass}
         >
           {config.slots.map((Slot, index) => {
             const spanClass = config.spans[mobileBreakpoint as keyof typeof config.spans][index];
             return (
               <div key={index} className={spanClass}>
-                <SlotPuck Slot={Slot} className="gap-6" />
+                <SlotPuck Slot={Slot} style={{ gap: '2rem' }} />
               </div>
             );
           })}
-        </div>
+        </Container>
       );
     },
   };

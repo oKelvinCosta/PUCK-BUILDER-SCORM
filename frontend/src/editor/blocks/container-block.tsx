@@ -1,7 +1,8 @@
 // @/components/puck/ImgBlock.tsx
+import Container from '@/components/layout/container';
 import { CONTAINER_MAP, type ContainerVariant } from '@/editor/fields/container-field';
 import type { ComponentConfig } from '@puckeditor/core';
-import { SlotPuck } from '../utils/slot-puck';
+import { SlotPuck } from '../components/slot-puck';
 
 export type ContainerBlockProps = {
   variant: ContainerVariant;
@@ -86,12 +87,9 @@ export const ContainerBlock = (): ComponentConfig<ContainerBlockProps> => {
     },
     render: ({ variant, slot: Slot }) => {
       return (
-        <div
-          style={{ maxWidth: CONTAINER_MAP[variant].maxWidth }}
-          className="container-kelvin mx-auto"
-        >
-          <SlotPuck Slot={Slot as React.ElementType} className="mx-auto w-full" />
-        </div>
+        <Container style={{ maxWidth: CONTAINER_MAP[variant].maxWidth }}>
+          <SlotPuck Slot={Slot as React.ElementType} style={{ gap: '4rem' }} />
+        </Container>
       );
     },
   };

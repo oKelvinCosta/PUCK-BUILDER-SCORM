@@ -2,7 +2,7 @@ import Divider from '@/components/layout/divider';
 import { type DividerType } from '@/components/layout/divider-sections';
 import type { ComponentConfig } from '@puckeditor/core';
 
-import { SlotPuck } from '../utils/slot-puck';
+import { SlotPuck } from '../components/slot-puck';
 
 export type SectionBlockProps = {
   backgroundImage: string;

@@ -1,4 +1,5 @@
 // @/components/puck/ImgBlock.tsx
+import Container from '@/components/layout/container';
 import { CONTAINER_MAP, type ContainerVariant } from '@/editor/fields/container-field';
 import type { ComponentConfig } from '@puckeditor/core';
 
@@ -23,7 +24,8 @@ export const HtmlBlock: ComponentConfig<HtmlBlockProps> = {
             <span className="text-label-puck text-sm font-semibold">Largura do Container</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
               {options.map((opt) => {
-                const previewWidth = opt.value === 'full' ? '100%' : `${(Number(opt.value) / 1280) * 100}%`;
+                const previewWidth =
+                  opt.value === 'full' ? '100%' : `${(Number(opt.value) / 1280) * 100}%`;
                 return (
                   <button
                     key={opt.value}
@@ -84,13 +86,7 @@ export const HtmlBlock: ComponentConfig<HtmlBlockProps> = {
       .replace(/javascript:/gi, '');
 
     return (
-      <div
-        style={{
-          maxWidth: CONTAINER_MAP[container || '980'].maxWidth,
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      >
+      <Container style={{ maxWidth: CONTAINER_MAP[container as ContainerVariant].maxWidth }}>
         <div
           dangerouslySetInnerHTML={{ __html: sanitizedcontent }}
           style={{
@@ -100,7 +96,7 @@ export const HtmlBlock: ComponentConfig<HtmlBlockProps> = {
             backgroundColor: '#f8fafc',
           }}
         />
-      </div>
+      </Container>
     );
   },
 };

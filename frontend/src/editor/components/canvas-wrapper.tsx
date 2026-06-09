@@ -20,12 +20,6 @@ export function CanvasWrapper({ children }: { children: React.ReactNode }) {
     '--tertiary': theme.tertiary,
     '--tertiary-foreground': theme['tertiary-foreground'],
 
-    '--muted': theme.muted,
-    '--muted-foreground': theme['muted-foreground'],
-
-    '--accent': theme.accent,
-    '--accent-foreground': theme['accent-foreground'],
-
     '--destructive': theme.destructive,
     '--destructive-foreground': theme['destructive-foreground'],
 

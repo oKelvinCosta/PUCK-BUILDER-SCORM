@@ -1,5 +1,6 @@
 import AccordionContained from '@/components/accordion-contained';
 import Img from '@/components/img';
+import Container from '@/components/layout/container';
 import { CONTAINER_MAP, type ContainerVariant } from '@/editor/fields/container-field';
 import type { ComponentConfig } from '@puckeditor/core';
 
@@ -146,14 +147,13 @@ export const AccordionBlock: ComponentConfig<AccordionBlockProps> = {
     }));
 
     return (
-      <div
+      <Container
         style={{
-          maxWidth: CONTAINER_MAP[container || '980'].maxWidth,
+          maxWidth: CONTAINER_MAP[container as ContainerVariant].maxWidth,
         }}
-        className="mx-auto"
       >
         <AccordionContained items={adaptedItems} forcedOpen={forcedOpen} />
-      </div>
+      </Container>
     );
   },
 };

@@ -17,9 +17,9 @@ const placeholderImgUrl =
 
 const getAlignmentXClasses = (alignment: 'left' | 'center' | 'right') => {
   const alignmentClasses = {
-    left: 'ml-0 mr-auto',
-    center: 'mx-auto',
-    right: 'ml-auto mr-0',
+    left: { marginRight: 'auto', marginLeft: 0 },
+    center: { margin: '0 auto' },
+    right: { marginLeft: 'auto', marginRight: 0 },
   };
   return alignmentClasses[alignment];
 };
@@ -68,8 +68,7 @@ export const ImgBlock: ComponentConfig<ImgBlockProps> = {
   render: ({ src, borderRadius, maxWidthValue, maxWidthUnit, alignment, rounded }) => {
     return (
       <div
-        className={getAlignmentXClasses(alignment)}
-        style={{ maxWidth: `${maxWidthValue}${maxWidthUnit}` }}
+        style={{ maxWidth: `${maxWidthValue}${maxWidthUnit}`, ...getAlignmentXClasses(alignment) }}
       >
         <Img
           src={src}

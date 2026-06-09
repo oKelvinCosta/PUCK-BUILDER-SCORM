@@ -1,8 +1,9 @@
 // @/components/puck/ImgBlock.tsx
+import Container from '@/components/layout/container';
 import MainCard from '@/components/main-card';
 import { CONTAINER_MAP, type ContainerVariant } from '@/editor/fields/container-field';
 import type { ComponentConfig } from '@puckeditor/core';
-import { SlotPuck } from '../utils/slot-puck';
+import { SlotPuck } from '../components/slot-puck';
 
 export type CardBlockProps = {
   imgSrc?: string;
@@ -141,11 +142,10 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
     slot: Slot,
   }) => {
     return (
-      <div
+      <Container
         style={{
-          maxWidth: CONTAINER_MAP[container || '980'].maxWidth,
+          maxWidth: CONTAINER_MAP[container as ContainerVariant].maxWidth,
         }}
-        className="mx-auto"
       >
         <MainCard
           imgSrc={imgSrc || undefined}
@@ -156,9 +156,9 @@ export const CardBlock: ComponentConfig<CardBlockProps> = {
           variant={variant}
         >
           {content}
-          {Slot ? <SlotPuck Slot={Slot as React.ElementType} className="mt-4 gap-4" /> : ''}
+          {Slot ? <SlotPuck Slot={Slot as React.ElementType} style={{ gap: '2rem' }} /> : ''}
         </MainCard>
-      </div>
+      </Container>
     );
   },
 };

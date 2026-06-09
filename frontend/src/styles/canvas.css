@@ -131,6 +131,14 @@
   color-scheme: light;
 }
 
+/* Space between blocks */
+.klyro-canvas > div,
+.space-between-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
 /* Reset para RichText dentro de botões */
 .klyro-canvas button p {
   margin: 0 !important;
