@@ -62,7 +62,7 @@ export function PageEditor() {
   useLayoutEffect(() => {
     if (!pageData) return;
 
-    useThemeStore.getState().setTheme(pageData.project?.theme || {});
+    useThemeStore.getState().hydrateTheme(pageData.project?.theme);
     useTextStylesStore.getState().setTextStyles(pageData.project?.textStyles ?? []);
   }, [pageData]);
 

@@ -1,6 +1,11 @@
-// src/stores/useThemeStore.ts
 import { create } from 'zustand';
 
+/**
+ * CanvasTheme describes the design tokens used inside the Puck canvas.
+ *
+ * Most color values are stored as raw HSL channels because Tailwind/shadcn
+ * tokens consume them as `hsl(var(--token))`.
+ */
 export interface CanvasTheme {
   background: string;
   foreground: string;
@@ -39,8 +44,10 @@ export interface CanvasTheme {
   'text-font-family': string;
 }
 
-// Tema padrão mockado — futuramente vem do banco
-// Always maintan synchronized with canvas.css
+/**
+ * Baseline theme used whenever a project does not provide a full theme from
+ * the database. Keep these values synchronized with `styles/canvas.css`.
+ */
 const defaultTheme: CanvasTheme = {
   background: '253 0% 100%',
   foreground: '253 25% 25%',
@@ -77,14 +84,50 @@ const defaultTheme: CanvasTheme = {
   'text-font-family': "'Lexend', 'Roboto', 'Helvetica Neue', sans-serif",
 };
 
+/**
+ * Returns a fresh theme object every time.
+ *
+ * This avoids sharing the same object reference between resets/hydration and
+ * makes each project load start from a clean default theme.
+ */
+export function createDefaultCanvasTheme(): CanvasTheme {
+  return { ...defaultTheme };
+}
+
 interface CanvasThemeStore {
+  /** Current canvas theme. Components subscribe to this value through `useThemeStore()`. */
   theme: CanvasTheme;
+
+  /**
+   * Merges a partial theme into the current in-memory theme.
+   *
+   * Use this for live edits in the current project/session, where keeping
+   * unchanged values from the same theme is expected.
+   */
   setTheme: (theme: Partial<CanvasTheme>) => void;
+
+  /**
+   * Replaces the current theme with `defaultTheme + project theme`.
+   *
+   * Use this when loading/switching projects. It prevents values from the
+   * previous project from leaking into a project that has no saved value for
+   * a token, such as `border`.
+   */
+  hydrateTheme: (theme?: Partial<CanvasTheme> | null) => void;
+
+  /** Restores the current project/session theme back to the default tokens. */
   resetTheme: () => void;
 }
 
+/**
+ * Zustand creates a small global store and returns a hook.
+ *
+ * Any component can call `useThemeStore()` to read `theme` or call one of the
+ * actions below. When the store changes, only subscribed components re-render.
+ */
 export const useThemeStore = create<CanvasThemeStore>((set) => ({
-  theme: defaultTheme,
+  theme: createDefaultCanvasTheme(),
   setTheme: (partial) => set((state) => ({ theme: { ...state.theme, ...partial } })),
-  resetTheme: () => set({ theme: defaultTheme }),
+  hydrateTheme: (partial) => set({ theme: { ...createDefaultCanvasTheme(), ...(partial ?? {}) } }),
+  resetTheme: () => set({ theme: createDefaultCanvasTheme() }),
 }));
