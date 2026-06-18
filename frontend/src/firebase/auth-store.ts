@@ -27,8 +27,7 @@ interface AuthState {
 async function syncUserWithBackend(name?: string) {
   const idToken = await auth.currentUser?.getIdToken();
   if (!idToken) return;
-
-  await api.post('/api/auth/sync', { name }, { headers: { Authorization: `Bearer ${idToken}` } });
+  await api.post('/auth/sync', { name }, { headers: { Authorization: `Bearer ${idToken}` } });
 }
 
 export const useAuthStore = create<AuthState>((set) => ({

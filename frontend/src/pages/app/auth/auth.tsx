@@ -11,7 +11,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-function traduzErroFirebase(code: string) {
+function translateErrorFirebase(code: string) {
   switch (code) {
     case 'auth/email-already-in-use':
       return 'Este email já está em uso.';
@@ -59,18 +59,6 @@ const loginFormSchema = z.object({
   password: z.string().min(1, 'Senha é obrigatória.'),
 });
 
-const registerFormSchema = z
-  .object({
-    name: z.string().min(1, 'Nome é obrigatório.'),
-    email: z.email('Email inválido.'),
-    password: z.string().min(1, 'Senha é obrigatória.'),
-    confirmPassword: z.string().min(1, 'Confirmação de senha é obrigatória.'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'As senhas não coincidem.',
-    path: ['confirmPassword'],
-  });
-
 function LoginForm() {
   const login = useAuthStore((s) => s.login);
   const navigate = useNavigate();
@@ -88,7 +76,7 @@ function LoginForm() {
       await login(data.email, data.password);
       navigate('/');
     } catch (err: any) {
-      toast.error(traduzErroFirebase(err.code));
+      toast.error(translateErrorFirebase(err.code));
     }
   }
 
@@ -141,7 +129,7 @@ function LoginForm() {
           />
           <div className="text-right">
             <Link to="?forgot-password=true">
-              <Button variant="link" className="text-xs">
+              <Button variant="link" className="text-secondary text-xs">
                 Esqueci minha senha
               </Button>
             </Link>
@@ -165,7 +153,7 @@ function LoginForm() {
       <div className="flex items-center text-sm font-bold">
         Novo no Klyro?{' '}
         <Link to="?signup=true">
-          <Button variant="link" className="text-sm">
+          <Button variant="link" className="text-secondary text-sm">
             Criar uma conta
           </Button>
         </Link>
@@ -173,6 +161,41 @@ function LoginForm() {
     </div>
   );
 }
+
+const registerFormSchema = z
+  .object({
+    name: z
+      .string()
+      .min(1, 'Nome é obrigatório.')
+      .min(3, 'Nome deve ter pelo menos 3 caracteres.')
+      .max(50, 'Nome muito longo.'),
+
+    email: z
+      .string()
+      .min(1, 'Email é obrigatório.')
+      .email('Email inválido.')
+      .max(100, 'Email muito longo.'),
+
+    password: z
+      .string()
+      .min(6, 'A senha deve ter pelo menos 6 caracteres.')
+      .max(50, 'Senha muito longa.')
+      .refine((val) => /[A-Z]/.test(val), {
+        message: 'A senha deve conter pelo menos 1 letra maiúscula.',
+      })
+      .refine((val) => /[a-z]/.test(val), {
+        message: 'A senha deve conter pelo menos 1 letra minúscula.',
+      })
+      .refine((val) => /[0-9]/.test(val), {
+        message: 'A senha deve conter pelo menos 1 número.',
+      }),
+
+    confirmPassword: z.string().min(6, 'Confirmação de senha é obrigatória.'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem.',
+    path: ['confirmPassword'],
+  });
 
 function RegisterForm() {
   const register = useAuthStore((s) => s.register);
@@ -193,7 +216,7 @@ function RegisterForm() {
       await register(data.email, data.password, data.name);
       navigate('/');
     } catch (err: any) {
-      toast.error(traduzErroFirebase(err.code));
+      toast.error(translateErrorFirebase(err.code));
     }
   }
 
@@ -304,7 +327,7 @@ function RegisterForm() {
       <div className="flex items-center text-sm font-bold">
         Já tem uma conta?{' '}
         <Link to="?signup=false">
-          <Button variant="link" className="text-sm">
+          <Button variant="link" className="text-secondary text-sm">
             Entrar
           </Button>
         </Link>
@@ -331,7 +354,7 @@ function ForgotPasswordForm() {
       setSent(true);
       toast.success('Email de recuperação enviado!');
     } catch (err: any) {
-      toast.error(traduzErroFirebase(err.code));
+      toast.error(translateErrorFirebase(err.code));
     }
   }
 
@@ -345,7 +368,7 @@ function ForgotPasswordForm() {
           Verifique sua caixa de entrada para redefinir sua senha.
         </p>
         <Link to="?">
-          <Button variant="neon" className="w-full">
+          <Button variant="neon" className="w-full text-sm" size={'lg'}>
             Voltar para o login
           </Button>
         </Link>
@@ -397,7 +420,7 @@ function ForgotPasswordForm() {
       <div className="flex items-center text-sm font-bold">
         Lembrou a senha?{' '}
         <Link to="?">
-          <Button variant="link" className="text-sm">
+          <Button variant="link" className="text-secondary text-sm">
             Entrar
           </Button>
         </Link>
