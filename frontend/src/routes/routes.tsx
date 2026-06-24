@@ -62,13 +62,13 @@ const routesPROD = [
   },
 ];
 
-const routesExportedSCORM = [
-  {
-    path: '/',
-    element: <BlankLayout />,
-    children: [{ path: '/', element: <PageScorm /> }],
-  },
-];
+// const routesExportedSCORM = [
+//   {
+//     path: '/',
+//     element: <BlankLayout />,
+//     children: [{ path: '/', element: <PageScorm /> }],
+//   },
+// ];
 
 export const router = createHashRouter(isDEV ? routesDEV : routesPROD);
 
