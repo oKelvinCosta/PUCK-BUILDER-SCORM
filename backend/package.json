@@ -1,7 +1,7 @@
 {
   "type": "module",
   "imports": {
-    "#/*": "./dist/*.js"
+    "#/*": "./dist/*"
   },
   "scripts": {
     "dev": "tsx watch src/server.ts",
