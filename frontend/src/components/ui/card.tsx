@@ -1,12 +1,18 @@
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 
-/* ADDED: size support mapped to Tailwind's 16/18/24 tokens */
 type TextSize = 16 | 18 | 24;
+
 const sizeToClasses: Record<TextSize, string> = {
   16: 'text-base leading-6 [&_p]:m-0 [&_p]:text-base [&_li]:text-base [&_span]:text-base',
-  18: 'text-lg leading-7   [&_p]:m-0 [&_p]:text-lg   [&_li]:text-lg   [&_span]:text-lg',
-  24: 'text-2xl leading-8  [&_p]:m-0 [&_p]:text-2xl  [&_li]:text-2xl  [&_span]:text-2xl',
+  18: 'text-lg leading-7 [&_p]:m-0 [&_p]:text-lg [&_li]:text-lg [&_span]:text-lg',
+  24: 'text-2xl leading-8 [&_p]:m-0 [&_p]:text-2xl [&_li]:text-2xl [&_span]:text-2xl',
+};
+
+const editorSizeToClasses: Record<TextSize, string> = {
+  16: 'text-base leading-6 [&_li]:text-base [&_span]:text-base',
+  18: 'text-lg leading-7 [&_li]:text-lg [&_span]:text-lg',
+  24: 'text-2xl leading-8 [&_li]:text-2xl [&_span]:text-2xl',
 };
 
 /* Custom classes */
@@ -32,6 +38,7 @@ const variantClasses: Record<Variant, string> = {
 type DivProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: TextSize;
   variant?: Variant;
+  editorMode?: boolean;
 };
 
 const HorizontalCard = React.forwardRef<
@@ -40,8 +47,9 @@ const HorizontalCard = React.forwardRef<
     size?: TextSize;
     variant?: Variant;
     side?: 'left' | 'right'; // NEW
+    editorMode?: boolean;
   }
->(({ className, children, size = 16, variant = 'default', side = 'left', ...props }, ref) => (
+>(({ className, children, size = 16, variant = 'default', side = 'left', editorMode = false, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -55,7 +63,7 @@ const HorizontalCard = React.forwardRef<
       variantClasses[variant],
       customClasses.childImgs,
       customClasses.childText,
-      sizeToClasses[size],
+      editorMode ? editorSizeToClasses[size] : sizeToClasses[size],
 
       className
     )}
@@ -67,7 +75,7 @@ const HorizontalCard = React.forwardRef<
 HorizontalCard.displayName = 'HorizontalCard';
 
 const Card = React.forwardRef<HTMLDivElement, DivProps>(
-  ({ className, size = 16, variant = 'default', ...props }, ref) => (
+  ({ className, size = 16, variant = 'default', editorMode = false, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -76,7 +84,7 @@ const Card = React.forwardRef<HTMLDivElement, DivProps>(
         customClasses.card,
         customClasses.childImgs,
         customClasses.childText,
-        sizeToClasses[size],
+        editorMode ? editorSizeToClasses[size] : sizeToClasses[size],
         className
       )}
       {...props}

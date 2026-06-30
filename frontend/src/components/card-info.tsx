@@ -5,9 +5,9 @@ type TextSize = 16 | 18 | 24;
 
 /* Explicit text sizing for container + paragraphs */
 const sizeToClasses: Record<TextSize, string> = {
-  16: 'text-base leading-6 [&_p]:m-0 [&_p]:text-base',
-  18: 'text-lg leading-7   [&_p]:m-0 [&_p]:text-lg',
-  24: 'text-2xl leading-8  [&_p]:m-0 [&_p]:text-2xl',
+  16: 'text-base leading-6',
+  18: 'text-lg leading-7',
+  24: 'text-2xl leading-8',
 };
 
 export const CardInfo = React.forwardRef<

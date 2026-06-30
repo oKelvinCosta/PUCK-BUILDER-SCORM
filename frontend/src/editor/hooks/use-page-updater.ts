@@ -48,7 +48,7 @@ export function usePageUpdater() {
         };
       });
       if (!variables.silent) {
-        toast.success('Project saved successfully!');
+        toast.success('Saved');
       }
     },
     onError: (error) => {

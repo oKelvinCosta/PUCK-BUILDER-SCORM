@@ -37,7 +37,7 @@ export default function App() {
         </QueryClientProvider>
 
         {/* Toast container */}
-        <Toaster />
+        <Toaster duration={700} />
       </div>
     </>
   );

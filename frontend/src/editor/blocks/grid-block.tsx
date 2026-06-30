@@ -21,6 +21,8 @@ export type GridBlockProps = {
 
 const defaultAlignmentY = 'center' satisfies GridBlockProps['alignmentY'];
 
+const gap = 'gap-2';
+
 export const GridBlock = (): ComponentConfig<GridBlockProps> => {
   // const { isEditing } = useEditorMode();
 
@@ -185,7 +187,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
 
       const gridConfigs = {
         '1/1': {
-          containerClass: 'grid grid-cols-1 gap-6',
+          containerClass: `grid grid-cols-1 ${gap}`,
           spans: {
             never: ['col-span-12'],
             sm: ['sm:col-span-12'],
@@ -195,7 +197,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
           slots: [Col1],
         },
         '1/2-1/2': {
-          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} ${gap}`,
           spans: {
             never: ['col-span-6', 'col-span-6'],
             sm: ['sm:col-span-6', 'sm:col-span-6'],
@@ -205,7 +207,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
           slots: [Col1, Col2],
         },
         '1/3-2/3': {
-          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} ${gap}`,
           spans: {
             never: ['col-span-4', 'col-span-8'],
             sm: ['sm:col-span-4', 'sm:col-span-8'],
@@ -215,7 +217,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
           slots: [Col1, Col2],
         },
         '2/3-1/3': {
-          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} ${gap}`,
           spans: {
             never: ['col-span-8', 'col-span-4'],
             sm: ['sm:col-span-8', 'sm:col-span-4'],
@@ -225,7 +227,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
           slots: [Col1, Col2],
         },
         '1/3-1/3-1/3': {
-          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} ${gap}`,
           spans: {
             never: ['col-span-4', 'col-span-4', 'col-span-4'],
             sm: ['sm:col-span-4', 'sm:col-span-4', 'sm:col-span-4'],
@@ -235,7 +237,7 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
           slots: [Col1, Col2, Col3],
         },
         '1/4-1/4-1/4-1/4': {
-          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} gap-6`,
+          containerClass: `grid ${containerBreakpoints[mobileBreakpoint]} ${gap}`,
           spans: {
             never: ['col-span-3', 'col-span-3', 'col-span-3', 'col-span-3'],
             sm: ['sm:col-span-3', 'sm:col-span-3', 'sm:col-span-3', 'sm:col-span-3'],
@@ -259,8 +261,9 @@ export const GridBlock = (): ComponentConfig<GridBlockProps> => {
         <Container
           style={{
             display: 'grid',
-            maxWidth: Fields.CONTAINER_MAP[container].maxWidth,
+            maxWidth: Fields.CONTAINER_MAP[container ?? '980'].maxWidth,
             alignItems: alignmentYClasses[alignmentY as keyof typeof alignmentYClasses],
+            padding: 0,
           }}
           className={config.containerClass}
         >

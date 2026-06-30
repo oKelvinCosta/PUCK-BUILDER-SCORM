@@ -11,6 +11,7 @@ interface MainCardProps {
   textSize?: 16 | 18 | 24;
   variant?: 'default' | 'gray';
   imgClassName?: string;
+  editorMode?: boolean;
 }
 
 export default function MainCard({
@@ -23,6 +24,7 @@ export default function MainCard({
   textSize = 16,
   variant = 'default',
   imgClassName,
+  editorMode = false,
 }: MainCardProps) {
   // ===========================
   // 🔥 HORIZONTAL MODE
@@ -33,6 +35,7 @@ export default function MainCard({
         size={textSize}
         variant={variant}
         side={side} // NEW
+        editorMode={editorMode}
         className={className}
       >
         {/* IMAGE */}
@@ -47,7 +50,7 @@ export default function MainCard({
         {/* CONTENT */}
         <div className="flex flex-1 flex-col">
           {title && <CardTitle>{title}</CardTitle>}
-          <CardContent className="text-card-foreground">{children}</CardContent>
+          <CardContent className={editorMode ? 'text-card-foreground' : 'text-card-foreground [&_p]:m-0 [&_p]:text-base'}>{children}</CardContent>
         </div>
       </HorizontalCard>
     );
@@ -57,7 +60,7 @@ export default function MainCard({
   // 🔥 VERTICAL MODE
   // ===========================
   return (
-    <Card size={textSize} variant={variant} className={className}>
+    <Card size={textSize} variant={variant} editorMode={editorMode} className={className}>
       {imgSrc && (
         <div className="mb-4">
           <img
@@ -74,7 +77,7 @@ export default function MainCard({
         </CardHeader>
       )}
 
-      <CardContent>{children}</CardContent>
+      <CardContent className={editorMode ? undefined : '[&_p]:m-0 [&_p]:text-base'}>{children}</CardContent>
     </Card>
   );
 }

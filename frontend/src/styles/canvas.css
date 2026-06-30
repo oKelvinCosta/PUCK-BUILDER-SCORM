@@ -132,7 +132,7 @@
 }
 
 /* Space between blocks */
-.klyro-canvas > div,
+/* .klyro-canvas > div, */
 .space-between-blocks {
   display: flex;
   flex-direction: column;

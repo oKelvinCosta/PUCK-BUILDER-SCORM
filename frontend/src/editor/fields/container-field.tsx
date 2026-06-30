@@ -1,10 +1,17 @@
 import type { ReactElement } from 'react';
+import type { CustomFieldRender, Field } from '@puckeditor/core';
 
+/**
+ * Describes a container width option exposed in the editor.
+ */
 export interface ContainerWidth {
   maxWidth: string;
   label: string;
 }
 
+/**
+ * Available container width presets used by the field UI.
+ */
 export const CONTAINER_MAP = {
   '580': { maxWidth: '580px', label: '580px' },
   '780': { maxWidth: '780px', label: '780px' },
@@ -13,26 +20,40 @@ export const CONTAINER_MAP = {
   full: { maxWidth: '100%', label: 'Largura Total' },
 } as const;
 
+/**
+ * Valid container width keys accepted by the field.
+ */
 export type ContainerVariant = keyof typeof CONTAINER_MAP; //580, 780, 980, 1280, full
 
+/**
+ * Parameters used to configure the container field.
+ */
 export interface ContainerFieldParams {
   defaultValue?: ContainerVariant;
 }
 
+/**
+ * Props passed to the custom field renderer.
+ */
 export interface ContainerFieldRenderProps {
-  value: ContainerVariant;
-  onChange: (v: ContainerVariant) => void;
+  value?: ContainerVariant;
+  onChange: (v: ContainerVariant | undefined) => void;
+  field: Field<ContainerVariant | undefined>;
+  name: string;
+  id: string;
+  readOnly?: boolean;
 }
 
-export interface CustomFieldDescriptor {
-  type: 'custom';
-  render: (props: ContainerFieldRenderProps) => ReactElement;
-}
+/**
+ * Creates the custom field descriptor for selecting container width presets.
+ */
+export const ContainerField = (options?: ContainerFieldParams): Field<ContainerVariant, {}> => {
+  const { defaultValue = '980' } = options || {};
 
-export const ContainerField = (): CustomFieldDescriptor => {
   return {
     type: 'custom' as const,
-    render: ({ value, onChange }: ContainerFieldRenderProps): ReactElement => {
+    render: (({ value, onChange }: ContainerFieldRenderProps): ReactElement => {
+      const currentValue = value ?? defaultValue;
       const options = Object.entries(CONTAINER_MAP).map(([key, item]) => ({
         value: key as ContainerVariant,
         label: item.label,
@@ -53,7 +74,7 @@ export const ContainerField = (): CustomFieldDescriptor => {
                   type="button"
                   style={{
                     padding: '8px',
-                    border: `2px solid ${value === opt.value ? 'hsl(var(--primary))' : 'rgba(0,0,0,0.1)'}`,
+                    border: `2px solid ${currentValue === opt.value ? 'hsl(var(--primary))' : 'rgba(0,0,0,0.1)'}`,
                     borderRadius: '4px',
                     cursor: 'pointer',
                     height: '40px',
@@ -71,7 +92,7 @@ export const ContainerField = (): CustomFieldDescriptor => {
                       borderRadius: '2px',
                       maxWidth: '90%',
                     }}
-                    className={`${value === opt.value ? 'bg-primary' : 'bg-muted'}`}
+                    className={`${currentValue === opt.value ? 'bg-primary' : 'bg-muted'}`}
                   />
                   <span
                     style={{
@@ -80,7 +101,7 @@ export const ContainerField = (): CustomFieldDescriptor => {
                       fontSize: '12px',
                       fontWeight: value === opt.value ? 600 : 400,
                     }}
-                    className={`${value === opt.value ? 'text-primary-foreground' : ''}`}
+                    className={`${currentValue === opt.value ? 'text-primary-foreground' : ''}`}
                   >
                     {opt.label}
                   </span>
@@ -90,6 +111,6 @@ export const ContainerField = (): CustomFieldDescriptor => {
           </div>
         </div>
       );
-    },
-  };
+    }) as CustomFieldRender<ContainerVariant | undefined>,
+  } as unknown as Field<ContainerVariant, {}>;
 };

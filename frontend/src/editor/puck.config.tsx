@@ -27,7 +27,7 @@ export function config({ projectType }: { projectType: string }): Config<Props> 
     // Buttons
     Button: Blocks.ButtonBlock,
     // Containers
-    Container: Blocks.ContainerBlock(),
+    Container: Blocks.ContainerBlock,
 
     // Text & Content
     RichText: Blocks.RichTextBlock,
